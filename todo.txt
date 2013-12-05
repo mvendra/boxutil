@@ -1,0 +1,5 @@
+
+* add assserts (#error macro based)
+* logging caps (yes, IO each op)
+* config file reading (ini/other)
+
