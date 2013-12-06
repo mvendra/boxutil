@@ -7,6 +7,12 @@
 
 using namespace std;
 
+void test_logger(){
+
+    Logger logger("./milkcow.txt");
+    
+}
+
 void test_bytearray(){
 
 	byte testinput[9] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99};
@@ -91,13 +97,14 @@ void test_crop_badinput2(){
 
 int main(int argc, char *argv[]){
 
-	cout << "testing stringmanip..." << endl;
+	//cout << "testing stringmanip..." << endl;
 
 	//test_crop_goodinput();
-	test_crop_badinput();
+	//test_crop_badinput();
 	//test_crop_badinput2();
 	//test_bfl();
 	//test_bytearray();
+    test_logger();
 
 	return 0;
 

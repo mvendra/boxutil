@@ -6,6 +6,7 @@
 #include "stringmanip.h"
 #include "stringvalid.h"
 #include "bytearray.h"
+#include "logger.h"
 
 #include "exceptionbase.h"
 #include "stringmanipexception.h"

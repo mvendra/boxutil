@@ -27,11 +27,11 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 PROJECTNAME=testboxutil
 
 # Active Configuration
-DEFAULTCONF=Debug
+DEFAULTCONF=Debug_64
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=Debug Release 
+ALLCONFS=Debug_64 Release_64 
 
 
 # build

@@ -12,11 +12,11 @@
             <sourceRootList/>
             <confList>
                 <confElem>
-                    <name>Debug</name>
+                    <name>Debug_64</name>
                     <type>3</type>
                 </confElem>
                 <confElem>
-                    <name>Release</name>
+                    <name>Release_64</name>
                     <type>3</type>
                 </confElem>
             </confList>
