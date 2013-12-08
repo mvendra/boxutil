@@ -13,6 +13,7 @@
       <itemPath>src/stringmanipexception.h</itemPath>
       <itemPath>src/stringvalid.h</itemPath>
       <itemPath>src/strveccont.h</itemPath>
+      <itemPath>src/sysutil.h</itemPath>
       <itemPath>src/types.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
@@ -24,6 +25,7 @@
       <itemPath>src/stringmanipexception.cpp</itemPath>
       <itemPath>src/stringvalid.cpp</itemPath>
       <itemPath>src/strveccont.cpp</itemPath>
+      <itemPath>src/sysutil.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -90,6 +92,10 @@
       </item>
       <item path="src/strveccont.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/sysutil.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/sysutil.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/types.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
@@ -153,6 +159,10 @@
       <item path="src/strveccont.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/strveccont.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/sysutil.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/sysutil.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/types.h" ex="false" tool="3" flavor2="0">
       </item>

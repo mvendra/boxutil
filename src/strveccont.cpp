@@ -10,6 +10,7 @@ StrVecCont::StrVecCont(const StrVecCont &_other){
 }
 
 StrVecCont& StrVecCont::operator= (const StrVecCont &_other){
+    if (this == &_other) return *this;
 	CopyOther(_other);
 	return *this;
 }

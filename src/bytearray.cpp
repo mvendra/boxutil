@@ -23,6 +23,7 @@ ByteArray::ByteArray(pcbyte _buff, uint32 _buffsize){
 }
 
 ByteArray& ByteArray::operator= (const ByteArray &_other){
+    if (this == &_other) return *this;
 	CopyOther(_other);
 	return *this;
 }

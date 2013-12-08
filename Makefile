@@ -14,7 +14,8 @@ SRC=	$(SOURCE_BASE)/exceptionbase.cpp \
 	$(SOURCE_BASE)/stringvalid.cpp \
 	$(SOURCE_BASE)/bytearray.cpp \
 	$(SOURCE_BASE)/stringmanipexception.cpp \
-	$(SOURCE_BASE)/logger.cpp
+	$(SOURCE_BASE)/logger.cpp \
+	$(SOURCE_BASE)/sysutil.cpp
 
 OBJ=	$(BUILD_BASE)/$(MACHBRAND)/exceptionbase.o \
 	$(BUILD_BASE)/$(MACHBRAND)/stringmanip.o \
@@ -22,7 +23,8 @@ OBJ=	$(BUILD_BASE)/$(MACHBRAND)/exceptionbase.o \
 	$(BUILD_BASE)/$(MACHBRAND)/stringvalid.o \
 	$(BUILD_BASE)/$(MACHBRAND)/bytearray.o \
 	$(BUILD_BASE)/$(MACHBRAND)/stringmanipexception.o \
-	$(BUILD_BASE)/$(MACHBRAND)/logger.o
+	$(BUILD_BASE)/$(MACHBRAND)/logger.o \
+	$(BUILD_BASE)/$(MACHBRAND)/sysutil.o
 
 #ARCH := $(shell getconf LONG_BIT)
 

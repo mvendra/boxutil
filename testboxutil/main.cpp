@@ -7,9 +7,16 @@
 
 using namespace std;
 
+void test_timestamp(){
+    
+    SysTime sysTime = GetSystemTime();
+
+}
+
 void test_logger(){
 
-    Logger logger("./milkcow.txt");
+    Logger logger("./debug.txt");
+    logger.LogInfo("test for echo");
     
 }
 
@@ -17,6 +24,11 @@ void test_bytearray(){
 
 	byte testinput[9] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99};
 	ByteArray bar(testinput, sizeof(testinput));
+
+    //ByteArray bar2;
+    //bar2 = bar;
+    bar = bar;
+    
 	//byte ti2[2] = {0xaa, 0xbb};
 	//byte ti3[4] = {0xde, 0xad, 0xbe, 0xef};
 
@@ -32,8 +44,8 @@ void test_bytearray(){
 
 	//ByteArray bar2 = bar.GetSection(0, 3);
 
-	bar.EraseSection(2, 4);
-	cout << bar.GetHexString() << endl;
+	//bar.EraseSection(2, 4);
+	//cout << bar.GetHexString() << endl;
 
 }
 
@@ -103,8 +115,9 @@ int main(int argc, char *argv[]){
 	//test_crop_badinput();
 	//test_crop_badinput2();
 	//test_bfl();
-	//test_bytearray();
-    test_logger();
+	test_bytearray();
+    //test_timestamp();
+    //test_logger();
 
 	return 0;
 

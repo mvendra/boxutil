@@ -41,7 +41,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/stringmanip.o \
 	${OBJECTDIR}/src/stringmanipexception.o \
 	${OBJECTDIR}/src/stringvalid.o \
-	${OBJECTDIR}/src/strveccont.o
+	${OBJECTDIR}/src/strveccont.o \
+	${OBJECTDIR}/src/sysutil.o
 
 
 # C Compiler Flags
@@ -104,6 +105,11 @@ ${OBJECTDIR}/src/strveccont.o: src/strveccont.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -s -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/strveccont.o src/strveccont.cpp
+
+${OBJECTDIR}/src/sysutil.o: src/sysutil.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -s -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/sysutil.o src/sysutil.cpp
 
 # Subprojects
 .build-subprojects:

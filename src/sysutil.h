@@ -2,16 +2,16 @@
 #ifndef __sysutil_h__
 #define __sysutil_h__
 
-class SysTime { // this is a POD
+class SysTime { // this is a POD. sort of.
 public:
 
     SysTime();
-    SysTime(const SysTime &other);
+    SysTime(const SysTime &_other);
     virtual ~SysTime();
     
-    operator= (const SysTime &other);
+    SysTime& operator= (const SysTime &_other);
 
-    void copy(const SysTime &other);
+    void copy(const SysTime &_other);
     
     int iSeconds;
     int iMinutes;
@@ -23,6 +23,6 @@ public:
 };
 
 SysTime GetSystemTime();
-
+void GetTimeStampString(char **_pstrBuf);
 
 #endif // __sysutil_h__
