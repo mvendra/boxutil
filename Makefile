@@ -38,11 +38,18 @@ OBJ=	$(BUILD_BASE)/$(MACHBRAND)/exceptionbase.o \
 #CPPFLAGSS = $(INTFLAGS)
 #endif
 
+ifeq (${CONF},)
+	CONF=Debug_64
+endif
+
 ifeq (${CONF},Debug_64)
 MACHBRAND=linux_debug_64
 INTFLAGS = \
 	-g \
 	-Wall \
+	-Wextra \
+	-pedantic \
+	-Weffc++ \
 	-static \
 	-fPIC \
 	-pthread
@@ -56,6 +63,9 @@ MACHBRAND=linux_release_64
 INTFLAGS = \
    	-O2 \
 	-Wall \
+	-Wextra \
+	-pedantic \
+	-Weffc++ \
 	-static \
 	-fPIC \
 	-pthread

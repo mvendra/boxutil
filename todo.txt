@@ -3,4 +3,4 @@
 * file abstraction
 * config file reading (ini/other)
 * Make boxutil thread safe
-
+* wrapper around variadics (format of sorts)
