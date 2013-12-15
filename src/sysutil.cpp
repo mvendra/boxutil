@@ -15,35 +15,35 @@
 #endif
 
 SysTime::SysTime(){
-    this->iSeconds = 0;
-    this->iMinutes = 0;
-    this->iHours = 0;
-    this->iMonthDay = 0;
-    this->iMonth = 0;
-    this->iYear = 0;
+    this->m_seconds = 0;
+    this->m_minutes = 0;
+    this->m_hours = 0;
+    this->m_monthday = 0;
+    this->m_month = 0;
+    this->m_year = 0;
 }
 
-SysTime::SysTime(const SysTime &_other){
-    copy(_other);
+SysTime::SysTime(const SysTime &other){
+    copy(other);
 }
 
 SysTime::~SysTime(){
 
 }
 
-SysTime &SysTime::operator= (const SysTime &_other){
-    if (this == &_other) return *this;
-    copy(_other);
+SysTime &SysTime::operator= (const SysTime &other){
+    if (this == &other) return *this;
+    copy(other);
     return *this;
 }
 
-void SysTime::copy(const SysTime &_other){
-    this->iSeconds = _other.iSeconds;
-    this->iMinutes = _other.iMinutes;
-    this->iHours = _other.iHours;
-    this->iMonthDay = _other.iMonthDay;
-    this->iMonth = _other.iMonth;
-    this->iYear = _other.iYear;
+void SysTime::copy(const SysTime &other){
+    this->m_seconds = other.m_seconds;
+    this->m_minutes = other.m_minutes;
+    this->m_hours = other.m_hours;
+    this->m_monthday = other.m_monthday;
+    this->m_month = other.m_month;
+    this->m_year = other.m_year;
 }
 
 SysTime GetSystemTime(){
@@ -59,23 +59,23 @@ SysTime GetSystemTime(){
     gettimeofday(&tv, &tz);
     tm = localtime(&tv.tv_sec);
 
-    sysTime.iSeconds = tm->tm_sec;
-    sysTime.iMinutes = tm->tm_min;
-    sysTime.iHours = tm->tm_hour;
-    sysTime.iMonthDay = tm->tm_mday;
-    sysTime.iMonth = tm->tm_mon+1;
-    sysTime.iYear = tm->tm_year%100;
+    sysTime.m_seconds = tm->tm_sec;
+    sysTime.m_minutes = tm->tm_min;
+    sysTime.m_hours = tm->tm_hour;
+    sysTime.m_monthday = tm->tm_mday;
+    sysTime.m_month = tm->tm_mon+1;
+    sysTime.m_year = tm->tm_year%100;
 
 #elif _WIN32
     SYSTEMTIME stSysTime;
     GetLocalTime(&stSysTime);
 
-    sysTime.iSeconds = stSysTime.wSecond;
-    sysTime.iMinutes = stSysTime.wMinute;
-    sysTime.iHours = stSysTime.wHour;
-    sysTime.iMonthDay = stSysTime.wDay;
-    sysTime.iMonth = stSysTime.wMonth;
-    sysTime.iYear = stSysTime.wYear%100;
+    sysTime.m_seconds = stSysTime.wSecond;
+    sysTime.m_minutes = stSysTime.wMinute;
+    sysTime.m_hours = stSysTime.wHour;
+    sysTime.m_monthday = stSysTime.wDay;
+    sysTime.m_month = stSysTime.wMonth;
+    sysTime.m_year = stSysTime.wYear%100;
 
 #else
     RAISE_EXCEPT(ExceptionBase, "Not implemented for this platform.")
@@ -85,16 +85,16 @@ SysTime GetSystemTime(){
 
 }
 
-void GetTimeStampString(char **_pstrBuf){
+void GetTimeStampString(pchar8 *pstrBuf){
 
     // mvtodo: assert pstrBuf is null here
 
     SysTime sysTime = GetSystemTime();
-    char chAux[22] = {0}; // sample: "19:48:31 - 01/12/2013"
+    char8 chAux[22] = {0}; // sample: "19:48:31 - 01/12/2013"
 
-    sprintf(chAux, "%02d:%02d:%02d - %02d/%02d/%04d", sysTime.iHours, sysTime.iMinutes, sysTime.iSeconds, sysTime.iMonthDay, sysTime.iMonth, sysTime.iYear);
+    sprintf(chAux, "%02d:%02d:%02d - %02d/%02d/%04d", sysTime.m_hours, sysTime.m_minutes, sysTime.m_seconds, sysTime.m_monthday, sysTime.m_month, sysTime.m_year);
     
-    *_pstrBuf = static_cast<char*>(calloc(22, sizeof(char)));
-    strncpy(*_pstrBuf, chAux, sizeof(chAux)-1);
+    *pstrBuf = static_cast<pchar8>(calloc(22, sizeof(char8)));
+    strncpy(*pstrBuf, chAux, sizeof(chAux)-1);
 
 }

@@ -8,17 +8,17 @@ class ByteArray  {
 
 public:
     ByteArray();
-    ByteArray(const ByteArray &_other);
-    ByteArray& operator= (const ByteArray &_other);
-    ByteArray(pcbyte _buff, uint32 _buffsize);
+    ByteArray(const ByteArray &other);
+    ByteArray& operator= (const ByteArray &other);
+    ByteArray(pcbyte buff, uint32 buffsize);
     virtual ~ByteArray();
 
     pcbyte GetBuffer() const;
     ByteArray GetCopy() const;
-    ByteArray GetSection(const uint32 _offset, const uint32 _length);
-    void Append(const ByteArray &_other);
-    void Append(pcbyte _buff, uint32 _buffsize);
-    void EraseSection(const uint32 _offset, const uint32 _length);
+    ByteArray GetSection(const uint32 offset, const uint32 length);
+    void Append(const ByteArray &other);
+    void Append(pcbyte buff, uint32 buffsize);
+    void EraseSection(const uint32 offset, const uint32 length);
     uint32 GetLength() const;
     std::string GetHexString() const;
     void Clear();
@@ -26,12 +26,12 @@ public:
 private:
     void FlushInternalMem();
     void InitInternalMem();
-    void CopyOther(const ByteArray  &_other);
-    void CopyOther(pcbyte _otherbuff, uint32 _otherbufflen);
-    uint32 ExpandBy(uint32 _amount);
-    void Alloc(uint32 _amount);
-    pbyte internalcontents;
-    uint32 internallength;
+    void CopyOther(const ByteArray  &other);
+    void CopyOther(pcbyte otherbuff, uint32 otherbufflen);
+    uint32 ExpandBy(uint32 amount);
+    void Alloc(uint32 amount);
+    pbyte m_internalcontents;
+    uint32 m_internallength;
 
 
 };

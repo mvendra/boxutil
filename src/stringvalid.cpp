@@ -1,36 +1,36 @@
 
 #include "stringvalid.h"
 
-bool IsAlpha(const std::string &_strValue) {
-	if (_strValue.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") != std::string::npos){
+bool IsAlpha(const std::string &strValue) {
+	if (strValue.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") != std::string::npos){
 		return false;
 	} 
 	return true;
 }
 
-bool IsAlphaExt(const std::string &_strValue) {
-	if (_strValue.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_/.- ") != std::string::npos){
+bool IsAlphaExt(const std::string &strValue) {
+	if (strValue.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_/.- ") != std::string::npos){
 		return false;
 	}
 	return true;
 }
 
-bool IsBCD(const std::string &_strValue) {
-	if (_strValue.find_first_not_of("0123456789") != std::string::npos){
+bool IsBCD(const std::string &strValue) {
+	if (strValue.find_first_not_of("0123456789") != std::string::npos){
 		return false;
 	}
 	return true;
 }
 
-bool IsHexStr(const std::string &_strValue) {
-	if (_strValue.find_first_not_of("abcdefABCDEF0123456789") != std::string::npos){
+bool IsHexStr(const std::string &strValue) {
+	if (strValue.find_first_not_of("abcdefABCDEF0123456789") != std::string::npos){
 		return false;
 	}
 	return true;
 }
 
-bool IsWithinBounds(const std::string &_strValue, const uint32 _min, const uint32 _max) {
-	if (_strValue.size() < _min || _strValue.size() > _max){
+bool IsWithinBounds(const std::string &strValue, const uint32 min, const uint32 max) {
+	if (strValue.size() < min || strValue.size() > max){
 		return false;
 	}
 	return true;

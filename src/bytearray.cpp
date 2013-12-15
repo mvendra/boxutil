@@ -12,19 +12,19 @@ ByteArray::ByteArray(){
 	InitInternalMem();
 }
 
-ByteArray::ByteArray(const ByteArray &_other){
+ByteArray::ByteArray(const ByteArray &other){
 	InitInternalMem();
-	CopyOther(_other);
+	CopyOther(other);
 }
 
-ByteArray::ByteArray(pcbyte _buff, uint32 _buffsize){
+ByteArray::ByteArray(pcbyte buff, uint32 buffsize){
 	InitInternalMem();
-	CopyOther(_buff, _buffsize);
+	CopyOther(buff, buffsize);
 }
 
-ByteArray& ByteArray::operator= (const ByteArray &_other){
-    if (this == &_other) return *this;
-	CopyOther(_other);
+ByteArray& ByteArray::operator= (const ByteArray &other){
+    if (this == &other) return *this;
+	CopyOther(other);
 	return *this;
 }
 
@@ -33,99 +33,99 @@ ByteArray::~ByteArray(){
 }
 
 pcbyte ByteArray::GetBuffer() const {
-	return internalcontents;
+	return m_internalcontents;
 }
 
 ByteArray ByteArray::GetCopy() const {
-	return ByteArray(internalcontents, internallength);
+	return ByteArray(m_internalcontents, m_internallength);
 }
 
 uint32 ByteArray::GetLength() const {
-	return internallength;
+	return m_internallength;
 }
 
-ByteArray ByteArray::GetSection(const uint32 _offset, const uint32 _length){
+ByteArray ByteArray::GetSection(const uint32 offset, const uint32 length){
 
-	if (_offset > internallength || _length > internallength || (_offset+_length) > internallength){
+	if (offset > m_internallength || length > m_internallength || (offset+length) > m_internallength){
 		RAISE_EXCEPT(ExceptionBase, "Range not within bounds");
 	}
 
-	ByteArray retcopy(internalcontents+_offset, _length);
+	ByteArray retcopy(m_internalcontents+offset, length);
 	return retcopy;
 }
 
-void ByteArray::Append(const ByteArray &_other){
-	uint32 offset_free = ExpandBy(_other.GetLength());
-	memcpy(internalcontents+offset_free, _other.GetBuffer(), _other.GetLength());
+void ByteArray::Append(const ByteArray &other){
+	uint32 offset_free = ExpandBy(other.GetLength());
+	memcpy(m_internalcontents+offset_free, other.GetBuffer(), other.GetLength());
 }
 
-void ByteArray::Append(pcbyte _buff, uint32 _buffsize){
-	uint32 offset_free = ExpandBy(_buffsize);
-	memcpy(internalcontents+offset_free, _buff, _buffsize);
+void ByteArray::Append(pcbyte buff, uint32 buffsize){
+	uint32 offset_free = ExpandBy(buffsize);
+	memcpy(m_internalcontents+offset_free, buff, buffsize);
 }
 
-void ByteArray::EraseSection(const uint32 _offset, const uint32 _length){
+void ByteArray::EraseSection(const uint32 offset, const uint32 length){
 
-	if (_offset > internallength || _length > internallength || (_offset+_length) > internallength){
+	if (offset > m_internallength || length > m_internallength || (offset+length) > m_internallength){
 		RAISE_EXCEPT(ExceptionBase, "Range not within bounds");
 	}
 
-	uint32 len_low = _offset;
-	uint32 len_high = internallength-_offset-_length;
+	uint32 len_low = offset;
+	uint32 len_high = m_internallength-offset-length;
 
 	pbyte backup_low = static_cast<pbyte>(calloc(len_low, sizeof(byte)));
 	pbyte backup_high = static_cast<pbyte>(calloc(len_high, sizeof(byte)));
 
-	memcpy(backup_low, internalcontents, len_low);
-	memcpy(backup_high, internalcontents+internallength-len_high, len_high);
+	memcpy(backup_low, m_internalcontents, len_low);
+	memcpy(backup_high, m_internalcontents+m_internallength-len_high, len_high);
 
 	FlushInternalMem();
 	Alloc(len_low+len_high);
 
-	memcpy(internalcontents, backup_low, len_low);
-	memcpy(internalcontents+len_low, backup_high, len_high);
+	memcpy(m_internalcontents, backup_low, len_low);
+	memcpy(m_internalcontents+len_low, backup_high, len_high);
 
 	free(backup_low);
 	free(backup_high);
 
 }
 
-void ByteArray::CopyOther(const ByteArray  &_other){
+void ByteArray::CopyOther(const ByteArray  &other){
 	FlushInternalMem();
-	uint32 newlen = _other.GetLength();
-	pcbyte newbuf = _other.GetBuffer();
+	uint32 newlen = other.GetLength();
+	pcbyte newbuf = other.GetBuffer();
 	Alloc(newlen);
-	memcpy(internalcontents, newbuf, newlen); 
+	memcpy(m_internalcontents, newbuf, newlen); 
 }
 
-void ByteArray::CopyOther(pcbyte _otherbuff, uint32 _otherbufflen){
+void ByteArray::CopyOther(pcbyte otherbuff, uint32 otherbufflen){
 	FlushInternalMem();
-	Alloc(_otherbufflen);
-	memcpy(internalcontents, _otherbuff, _otherbufflen); 
+	Alloc(otherbufflen);
+	memcpy(m_internalcontents, otherbuff, otherbufflen); 
 }
 
-uint32 ByteArray::ExpandBy(uint32 _amount){
-	pbyte backupbuff = static_cast<pbyte>(calloc(internallength, sizeof(byte)));
-	memcpy(backupbuff, internalcontents, internallength);
-	uint32 backuplen = internallength;
+uint32 ByteArray::ExpandBy(uint32 amount){
+	pbyte backupbuff = static_cast<pbyte>(calloc(m_internallength, sizeof(byte)));
+	memcpy(backupbuff, m_internalcontents, m_internallength);
+	uint32 backuplen = m_internallength;
 	FlushInternalMem();
-	Alloc(backuplen+_amount);
-	memcpy(internalcontents, backupbuff, backuplen);
+	Alloc(backuplen+amount);
+	memcpy(m_internalcontents, backupbuff, backuplen);
 	free(backupbuff);
 	return backuplen;
 }
 
 void ByteArray::FlushInternalMem(){
-	if (internalcontents){
-		free(internalcontents);
-		internalcontents = NULL;
-		internallength = 0;
+	if (m_internalcontents){
+		free(m_internalcontents);
+		m_internalcontents = NULL;
+		m_internallength = 0;
 	}
 }
 
 void ByteArray::InitInternalMem(){
-	internalcontents = NULL;
-	internallength = 0;
+	m_internalcontents = NULL;
+	m_internallength = 0;
 }
 
 void ByteArray::Clear(){
@@ -133,13 +133,13 @@ void ByteArray::Clear(){
 	InitInternalMem();
 }
 
-void ByteArray::Alloc(uint32 _amount){
-	internalcontents = static_cast<pbyte>(calloc(_amount, sizeof(byte)));
-	internallength = _amount;
+void ByteArray::Alloc(uint32 amount){
+	m_internalcontents = static_cast<pbyte>(calloc(amount, sizeof(byte)));
+	m_internallength = amount;
 }
 
 std::string ByteArray::GetHexString() const {
-	std::string strRet = HexStrFromBuffer(internalcontents, internallength);
+	std::string strRet = HexStrFromBuffer(m_internalcontents, m_internallength);
 	return strRet;
 }
 

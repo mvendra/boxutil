@@ -111,11 +111,11 @@ int main(int argc, char *argv[]){
 
 	//cout << "testing stringmanip..." << endl;
 
-	//test_crop_goodinput();
+	test_crop_goodinput();
 	//test_crop_badinput();
 	//test_crop_badinput2();
 	//test_bfl();
-	test_bytearray();
+	//test_bytearray();
     //test_timestamp();
     //test_logger();
 

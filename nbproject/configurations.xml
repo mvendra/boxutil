@@ -7,7 +7,6 @@
       <itemPath>src/boxutil.h</itemPath>
       <itemPath>src/bytearray.h</itemPath>
       <itemPath>src/exceptionbase.h</itemPath>
-      <itemPath>src/logger.cpp</itemPath>
       <itemPath>src/logger.h</itemPath>
       <itemPath>src/stringmanip.h</itemPath>
       <itemPath>src/stringmanipexception.h</itemPath>
@@ -21,6 +20,7 @@
                    projectFiles="true">
       <itemPath>src/bytearray.cpp</itemPath>
       <itemPath>src/exceptionbase.cpp</itemPath>
+      <itemPath>src/logger.cpp</itemPath>
       <itemPath>src/stringmanip.cpp</itemPath>
       <itemPath>src/stringmanipexception.cpp</itemPath>
       <itemPath>src/stringvalid.cpp</itemPath>

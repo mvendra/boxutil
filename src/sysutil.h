@@ -2,6 +2,8 @@
 #ifndef __sysutil_h__
 #define __sysutil_h__
 
+#include "types.h"
+
 class SysTime { // this is a POD. sort of.
 public:
 
@@ -13,16 +15,16 @@ public:
 
     void copy(const SysTime &_other);
     
-    int iSeconds;
-    int iMinutes;
-    int iHours;
-    int iMonthDay;
-    int iMonth;
-    int iYear;
+    sint32 m_seconds;
+    sint32 m_minutes;
+    sint32 m_hours;
+    sint32 m_monthday;
+    sint32 m_month;
+    sint32 m_year;
 
 };
 
 SysTime GetSystemTime();
-void GetTimeStampString(char **_pstrBuf);
+void GetTimeStampString(pchar8 *_pstrBuf);
 
 #endif // __sysutil_h__

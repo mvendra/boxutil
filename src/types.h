@@ -11,6 +11,8 @@
 #define sint32 int
 #define uchar8 unsigned char
 #define char8 char
+#define pcchar8 const char *
+#define pchar8 char *
 
 #endif // __types_h__
 

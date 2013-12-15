@@ -2,17 +2,19 @@
 #ifndef __logger_h__
 #define __logger_h__
 
+#include "types.h"
+
 class Logger {
 
 public:
     
-    explicit Logger(const char *_pszFilename);
+    explicit Logger(pcchar8 pszFilename);
     
-    void LogDebug(const char *_pszMessage);
-    void LogInfo(const char *_pszMessage);
-    void LogWarning(const char *_pszMessage);
-    void LogError(const char *_pszMessage);
-    void LogCustom(const char *_pszId, const char *_pszMessage);
+    void LogDebug(pcchar8 pszMessage);
+    void LogInfo(pcchar8 pszMessage);
+    void LogWarning(pcchar8 pszMessage);
+    void LogError(pcchar8 pszMessage);
+    void LogCustom(pcchar8 pszId, pcchar8 pszMessage);
 
     virtual ~Logger();
 
