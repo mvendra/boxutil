@@ -24,7 +24,7 @@ SysTime::SysTime(){
 }
 
 SysTime::SysTime(const SysTime &other){
-    copy(other);
+    Copy(other);
 }
 
 SysTime::~SysTime(){
@@ -33,11 +33,11 @@ SysTime::~SysTime(){
 
 SysTime &SysTime::operator= (const SysTime &other){
     if (this == &other) return *this;
-    copy(other);
+    Copy(other);
     return *this;
 }
 
-void SysTime::copy(const SysTime &other){
+void SysTime::Copy(const SysTime &other){
     this->m_seconds = other.m_seconds;
     this->m_minutes = other.m_minutes;
     this->m_hours = other.m_hours;

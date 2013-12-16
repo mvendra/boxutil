@@ -22,7 +22,7 @@ private:
 
     Logger(const Logger &other);
     void operator= (const Logger &other);
-    char *pszFilename;
+    char *m_pszFilename;
     
 };
 

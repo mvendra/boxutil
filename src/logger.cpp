@@ -6,15 +6,15 @@
 #include <cstdlib>
 #include <cstring>
 
-Logger::Logger(pcchar8 pszFilename):pszFilename(NULL){
+Logger::Logger(pcchar8 pszFilename):m_pszFilename(NULL){
     size_t thesize = strlen(pszFilename);
-    this->pszFilename = static_cast<pchar8>(calloc(thesize+1, sizeof(char8)));
-    strncpy(this->pszFilename, pszFilename, thesize);
+    this->m_pszFilename = static_cast<pchar8>(calloc(thesize+1, sizeof(char8)));
+    strncpy(this->m_pszFilename, pszFilename, thesize);
 }
 
 Logger::~Logger(){
-    if (pszFilename){
-        free(pszFilename);
+    if (m_pszFilename){
+        free(m_pszFilename);
     }
 }
 
@@ -71,7 +71,7 @@ void Logger::LogCustom(pcchar8 pszId, pcchar8 pszMessage){
     strncpy(msgbuffer+(idlen+5+tslen), pszMessage, msglen);
     strncpy(msgbuffer+(idlen+5+msglen+tslen), "\n", 1);
     
-    FILE *fp = fopen(this->pszFilename, "a");
+    FILE *fp = fopen(this->m_pszFilename, "a");
     if (fp != NULL){
         fwrite(msgbuffer, sizeof(char8), total_len, fp);
     } else {

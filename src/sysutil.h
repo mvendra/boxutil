@@ -8,12 +8,12 @@ class SysTime { // this is a POD. sort of.
 public:
 
     SysTime();
-    SysTime(const SysTime &_other);
+    SysTime(const SysTime &other);
     virtual ~SysTime();
     
-    SysTime& operator= (const SysTime &_other);
+    SysTime& operator= (const SysTime &other);
 
-    void copy(const SysTime &_other);
+    void Copy(const SysTime &other);
     
     sint32 m_seconds;
     sint32 m_minutes;
@@ -25,6 +25,6 @@ public:
 };
 
 SysTime GetSystemTime();
-void GetTimeStampString(pchar8 *_pstrBuf);
+void GetTimeStampString(pchar8 *pstrBuf);
 
 #endif // __sysutil_h__

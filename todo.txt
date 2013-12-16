@@ -4,3 +4,6 @@
 * config file reading (ini/other)
 * Make boxutil thread safe
 * wrapper around variadics (format of sorts)
+* Timer funcs
+* Put it in a namespace
+
