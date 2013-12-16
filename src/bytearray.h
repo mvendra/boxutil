@@ -4,6 +4,8 @@
 
 #include <string>
 
+#include "types.h"
+
 class ByteArray  {
 
 public:

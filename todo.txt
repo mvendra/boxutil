@@ -6,4 +6,5 @@
 * wrapper around variadics (format of sorts)
 * Timer funcs
 * Put it in a namespace
+* get rid of all warnings
 
