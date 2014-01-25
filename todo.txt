@@ -7,4 +7,7 @@
 * Timer funcs
 * Put it in a namespace
 * get rid of all warnings
+* Boxutil::console with polymorphic-frontend (either stdin and out or a ingame rendered console)
+* Boxutil: get system id(enum)
+* fix the exception class: make a base INTERFACE with NO implementation (pure virtuals only). then, a base concrete type. then, the derived specialised types.
 
