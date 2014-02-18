@@ -4,7 +4,7 @@
 
 #include "exceptionbase.h"
 
-class StringManipException : public ExceptionBase {
+class StringManipException : private ExceptionBase {
 
 public:
     StringManipException(const char8 *msg, const char8 *func, uint32 line);
