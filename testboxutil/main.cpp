@@ -71,7 +71,7 @@ void test_crop_goodinput(){
 		std::string strResult = GetStringMidByBoundingChars(strTeste, '*');
 		printresult(strResult);
 	} catch (const ExceptionBase &sme){
-		cout << "fucked..." << endl;
+		cout << "bugged..." << endl;
 	}
 
 }
@@ -85,9 +85,9 @@ void test_crop_badinput(){
 		std::string strResult = GetStringMidByBoundingChars(strTeste, '!');
 		printresult(strResult);
 	} catch (const StringManipException &sme){
-		cout << "fucked, derived" << endl;
+		cout << "bugged, derived" << endl;
 	} catch (const ExceptionBase &eb){
-		cout << "fucked, base" << endl;
+		cout << "bugged, base" << endl;
 	}
 
 }
@@ -101,7 +101,7 @@ void test_crop_badinput2(){
 		std::string strResult = GetStringMidByBoundingChars(strTeste, '@');
 		printresult(strResult);
 	} catch (const ExceptionBase &sme){
-		cout << "fucked..." << endl;
+		cout << "bugged..." << endl;
 	}
 
 }
