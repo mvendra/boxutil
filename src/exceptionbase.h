@@ -13,28 +13,28 @@ class ExceptionBase {
 
 public:
 
-	ExceptionBase(const ExceptionBase &other);
-	ExceptionBase(const char8 *msg, const char8 *func, uint32 line);
-	const char *GetMessage() const;
-	const char *GetFunction() const;
-	uint32 GetLine() const;
-	virtual ~ExceptionBase();
+  ExceptionBase(const ExceptionBase &other);
+  ExceptionBase(const char8 *msg, const char8 *func, uint32 line);
+  const char *GetMessage() const;
+  const char *GetFunction() const;
+  uint32 GetLine() const;
+  virtual ~ExceptionBase();
 
 protected:
 
-	char *m_message;
-	char *m_function;
-	uint32 m_line;
+  char *m_message;
+  char *m_function;
+  uint32 m_line;
 
 private:
 
-	void SetMsg(const char8 *newmsg);
-	void SetFunc(const char8 *newfunc);
-	void SetLine(uint32 line);
+  void SetMsg(const char8 *newmsg);
+  void SetFunc(const char8 *newfunc);
+  void SetLine(uint32 line);
 
-	void operator=(const ExceptionBase &other); // forbidden attrib op
-	ExceptionBase(); // forbidding unparametrised constructor
-	void *operator new(size_t size); // forbidding heap allocation
+  void operator=(const ExceptionBase &other); // forbidden attrib op
+  ExceptionBase(); // forbidding unparametrised constructor
+  void *operator new(size_t size); // forbidding heap allocation
 
 };
 
