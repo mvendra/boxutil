@@ -1,49 +1,20 @@
 
-.PHONY : all clean compile
+.PHONY : all clean compile testapp 
 
 LIBNAME= libboxutil.a 
 LIBLINKFNAME = boxutil
+TESTAPPNAME= testboxutil
 
-SOURCE_BASE=./src
-BUILD_BASE=./build
-DIST_BASE=./dist
+SRC= ./src/bytearray.cpp ./src/exceptionbase.cpp ./src/logger.cpp ./src/stringmanip.cpp ./src/stringmanipexception.cpp ./src/stringvalid.cpp ./src/strveccont.cpp ./src/sysutil.cpp
+OBJ= bytearray.o exceptionbase.o logger.o stringmanip.o stringmanipexception.o stringvalid.o strveccont.o sysutil.o
 
-SRC=	$(SOURCE_BASE)/exceptionbase.cpp \
-	$(SOURCE_BASE)/stringmanip.cpp \
-	$(SOURCE_BASE)/strveccont.cpp \
-	$(SOURCE_BASE)/stringvalid.cpp \
-	$(SOURCE_BASE)/bytearray.cpp \
-	$(SOURCE_BASE)/stringmanipexception.cpp \
-	$(SOURCE_BASE)/logger.cpp \
-	$(SOURCE_BASE)/sysutil.cpp
+ARCH := $(shell getconf LONG_BIT)
 
-OBJ=	$(BUILD_BASE)/$(MACHBRAND)/exceptionbase.o \
-	$(BUILD_BASE)/$(MACHBRAND)/stringmanip.o \
-	$(BUILD_BASE)/$(MACHBRAND)/strveccont.o \
-	$(BUILD_BASE)/$(MACHBRAND)/stringvalid.o \
-	$(BUILD_BASE)/$(MACHBRAND)/bytearray.o \
-	$(BUILD_BASE)/$(MACHBRAND)/stringmanipexception.o \
-	$(BUILD_BASE)/$(MACHBRAND)/logger.o \
-	$(BUILD_BASE)/$(MACHBRAND)/sysutil.o
-
-#ARCH := $(shell getconf LONG_BIT)
-
-#ifeq (${CONF},)
-	#MODE=debug
-#endif
-
-#ifeq ($(ARCH),64)
-#CPPFLAGS = $(INTFLAGS) -m64
-#else 
-#CPPFLAGSS = $(INTFLAGS)
-#endif
-
-ifeq (${CONF},)
-	CONF=Debug_64
+ifeq ($(MODE),)
+	MODE=debug
 endif
 
-ifeq (${CONF},Debug_64)
-MACHBRAND=linux_debug_64
+ifeq ($(MODE),debug)
 INTFLAGS = \
 	-g \
 	-Wall \
@@ -53,13 +24,11 @@ INTFLAGS = \
 	-static \
 	-fPIC \
 	-pthread
-CPPFLAGS = $(INTFLAGS) -m64
 POSTBUILD=
 #DEFINES= -D _DEBUG -D _LOG 
 endif
 
-ifeq (${CONF},Release_64)
-MACHBRAND=linux_release_64
+ifeq ($(MODE),release)
 INTFLAGS = \
    	-O2 \
 	-Wall \
@@ -69,22 +38,29 @@ INTFLAGS = \
 	-static \
 	-fPIC \
 	-pthread
-CPPFLAGS = $(INTFLAGS) -m64
-POSTBUILD= strip $(DIST_BASE)/$(MACHBRAND)/$(LIBNAME)
+POSTBUILD= strip $(LIBNAME)
 #DEFINES= -D _LOG 
 endif
 
-INCLUDES=-I. -I$(SOURCE_BASE)
+ifeq ($(ARCH),64)
+CPPFLAGS = $(INTFLAGS) -m64
+else 
+CPPFLAGSS = $(INTFLAGS)
+endif
 
-all: compile
+INCLUDES=-I./src/
+
+all: compile testapp
 
 compile:
-	g++ $(CPPFLAGS) -c $(SRC)
-	mv ./*.o $(BUILD_BASE)/$(MACHBRAND)
-	ar -rcs $(BUILD_BASE)/$(MACHBRAND)/$(LIBNAME) $(OBJ)
-	mv $(BUILD_BASE)/$(MACHBRAND)/$(LIBNAME) $(DIST_BASE)/$(MACHBRAND)
+	g++ -c $(SRC) $(CPPFLAGS)
+	ar -rcs $(LIBNAME) $(OBJ)
 	$(POSTBUILD)
 
+testapp:
+	make -C ./testboxutil
+
 clean:
+	rm -rf $(LIBNAME)
 	rm -rf $(OBJ)
-	rm -rf $(DIST_BASE)/$(MACHBRAND)/$(LIBNAME)
+
