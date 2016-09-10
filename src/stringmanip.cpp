@@ -50,7 +50,7 @@ std::string TxtStrFromBuffer(pcbyte pcbBuffer, const uint32 iBuffSize){
 std::string HexStrFromBuffer(pcbyte pcbBuffer, const uint32 iBuffSize){
 
   std::string strRet;
-  char chAux[2] = {0};
+  char chAux[3] = {0};
   for (uint32 i = 0; i < iBuffSize; i++){
     sprintf(chAux, "%02X", pcbBuffer[i]);
     strRet += chAux;
