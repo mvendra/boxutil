@@ -179,7 +179,7 @@ bool DirExists(const std::string &strDirName){
 #endif
 
 #ifdef _WIN32
-bool TSEDPPlusUtil::DirExists(const std::string &strDirName)
+bool DirExists(const std::string &strDirName)
 {
 
     DWORD ftyp = GetFileAttributesA(strDirName.c_str());
