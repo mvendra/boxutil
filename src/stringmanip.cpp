@@ -99,7 +99,7 @@ void BuildFileList(const std::string &strPath, const std::string &strInputExt, S
 
   svcFileList.Clear();
   DIR *dp;
-     struct dirent *dirp;
+  struct dirent *dirp;
   std::string filepath;
 
   if((dp = opendir(strPath.c_str())) == NULL) {
