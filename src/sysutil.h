@@ -4,7 +4,10 @@
 
 #include "types.h"
 
-class SysTime { // this is a POD. sort of.
+#include <string>
+#include <ostream>
+
+class SysTime {
 public:
 
     SysTime();
@@ -12,6 +15,8 @@ public:
     virtual ~SysTime();
     
     SysTime& operator= (const SysTime &other);
+    bool operator== (const SysTime &other);
+    std::string ToString();
 
     void Copy(const SysTime &other);
     
@@ -26,5 +31,6 @@ public:
 
 SysTime GetSystemTime();
 void GetTimeStampString(pchar8 *pstrBuf);
+void GetTimeStampString(std::string &strTimestamp);
 
 #endif // __sysutil_h__

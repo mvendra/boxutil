@@ -37,6 +37,25 @@ SysTime &SysTime::operator= (const SysTime &other){
     return *this;
 }
 
+bool SysTime::operator== (const SysTime &other){
+    if (this->m_seconds == other.m_seconds &&
+        this->m_minutes == other.m_minutes &&
+        this->m_hours == other.m_hours &&
+        this->m_monthday == other.m_monthday &&
+        this->m_month == other.m_month &&
+        this->m_year == other.m_year)
+    {
+        return true;
+    }
+    return false;
+}
+
+std::string SysTime::ToString(){
+    char8 chAux[22] = {0}; // sample: "19:48:31 - 01/12/2013"
+    std::sprintf(chAux, "%02d:%02d:%02d - %02d/%02d/%04d", m_hours, m_minutes, m_seconds, m_monthday, m_month, m_year);
+    return chAux;
+}
+
 void SysTime::Copy(const SysTime &other){
     this->m_seconds = other.m_seconds;
     this->m_minutes = other.m_minutes;
@@ -86,15 +105,13 @@ SysTime GetSystemTime(){
 }
 
 void GetTimeStampString(pchar8 *pstrBuf){
-
-    // mvtodo: assert pstrBuf is null here
-
     SysTime sysTime = GetSystemTime();
-    char8 chAux[22] = {0}; // sample: "19:48:31 - 01/12/2013"
-
-    sprintf(chAux, "%02d:%02d:%02d - %02d/%02d/%04d", sysTime.m_hours, sysTime.m_minutes, sysTime.m_seconds, sysTime.m_monthday, sysTime.m_month, sysTime.m_year);
-    
     *pstrBuf = static_cast<pchar8>(calloc(22, sizeof(char8)));
-    strncpy(*pstrBuf, chAux, sizeof(chAux)-1);
+    std::string sysTimeStr = sysTime.ToString();
+    strncpy(*pstrBuf, sysTimeStr.c_str(), sysTimeStr.size());
+}
 
+void GetTimeStampString(std::string &strTimestamp){
+    SysTime sysTime = GetSystemTime();
+    strTimestamp = sysTime.ToString();
 }

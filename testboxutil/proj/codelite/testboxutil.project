@@ -67,6 +67,7 @@
       <Compiler Options="-g;-O0;-pedantic;-W;-std=c++14;-Wall;-Wextra;-Weffc++;-Werror;-fPIC" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="../../src"/>
         <IncludePath Value="../../../src"/>
+        <IncludePath Value="../../lib/testforecho/include/"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <LibraryPath Value="../../../run/linux_x64_debug/"/>
@@ -110,6 +111,7 @@
       <Compiler Options="-g;-O0;-pedantic;-W;-std=c++14;-Wall;-Wextra;-Weffc++;-Werror;-fPIC" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="../../src"/>
         <IncludePath Value="../../../src"/>
+        <IncludePath Value="../../lib/testforecho/include/"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <LibraryPath Value="../../../run/linux_x64_debug/"/>
@@ -153,6 +155,7 @@
       <Compiler Options="-O2;-pedantic;-W;-std=c++14;-Wall;-Wextra;-Weffc++;-Werror;-fPIC" C_Options="-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="../../src"/>
         <IncludePath Value="../../../src"/>
+        <IncludePath Value="../../lib/testforecho/include/"/>
         <Preprocessor Value="NDEBUG"/>
       </Compiler>
       <Linker Options="" Required="yes">
@@ -199,6 +202,7 @@
       <Compiler Options="-O2;-pedantic;-W;-std=c++14;-Wall;-Wextra;-Weffc++;-Werror;-fPIC" C_Options="-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="../../src"/>
         <IncludePath Value="../../../src"/>
+        <IncludePath Value="../../lib/testforecho/include/"/>
         <Preprocessor Value="NDEBUG"/>
       </Compiler>
       <Linker Options="" Required="yes">
