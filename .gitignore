@@ -1,7 +1,6 @@
 
 *.swp
 *.o
-testboxutil
 
 build
 run
