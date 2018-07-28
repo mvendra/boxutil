@@ -94,7 +94,7 @@ bool FileExists(const std::string &strFileName){
     return bRet;
 }
 
-#if  defined(__linux__) || defined(_AIX)
+#if defined(__linux__) || defined(_AIX)
 void BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFileList) {
 
   svcFileList.Clear();
@@ -102,11 +102,11 @@ void BuildFileList(const std::string &strPath, const std::string &strInputExt, S
   struct dirent *dirp;
   std::string filepath;
 
-  if((dp = opendir(strPath.c_str())) == NULL) {
+  if((dp = opendir(strPath.c_str())) == nullptr) {
     RAISE_EXCEPT(StringManipException, "Unable to open dir for listing");
   }
 
-  while ((dirp = readdir(dp)) != NULL) {
+  while ((dirp = readdir(dp)) != nullptr) {
 #ifdef __linux__
     if (dirp->d_type == DT_DIR)
       continue; // ignore folders
@@ -165,7 +165,7 @@ void BuildFileList(const std::string &strPath, const std::string &strInputExt, S
 }
 #endif
 
-#if  defined(__linux__) || defined(_AIX)
+#if defined(__linux__) || defined(_AIX)
 bool DirExists(const std::string &strDirName){
 
     struct stat sb;
@@ -196,7 +196,7 @@ bool DirExists(const std::string &strDirName)
 #endif
 
 
-#if  defined(__linux__) || defined(_AIX)
+#if defined(__linux__) || defined(_AIX)
 bool HasWritePermission(const std::string &strDirName){
 
     struct stat sb;
@@ -222,7 +222,7 @@ bool HasWritePermission(const std::string &strDirName){
 #endif
 
 
-#if  defined(__linux__) || defined(_AIX)
+#if defined(__linux__) || defined(_AIX)
 bool HasReadPermission(const std::string &strDirName){
 
     struct stat sb;

@@ -13,4 +13,3 @@
 #include "stringmanipexception.h"
 
 #endif // __boxutil_h__
-

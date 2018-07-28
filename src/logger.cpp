@@ -6,50 +6,40 @@
 #include <cstdlib>
 #include <cstring>
 
-Logger::Logger(pcchar8 pszFilename):m_pszFilename(NULL){
+Logger::Logger(pcchar8 pszFilename):m_pszFilename(nullptr){
     size_t thesize = strlen(pszFilename);
     this->m_pszFilename = static_cast<pchar8>(calloc(thesize+1, sizeof(char8)));
     strncpy(this->m_pszFilename, pszFilename, thesize);
 }
 
 Logger::~Logger(){
-    if (m_pszFilename){
-        free(m_pszFilename);
-    }
-}
-
-Logger::Logger(const Logger &other){
-    // private
-}
-
-void Logger::operator= (const Logger &other){
-    // private
+    free(m_pszFilename);
 }
 
 void Logger::LogDebug(pcchar8 pszMessage){
-    if (pszMessage == NULL) return;
+    if (pszMessage == nullptr) return;
     LogCustom("DEBUG", pszMessage);
 }
 
 void Logger::LogInfo(pcchar8 pszMessage){
-    if (pszMessage == NULL) return;
+    if (pszMessage == nullptr) return;
     LogCustom("INFO", pszMessage);
 }
 
 void Logger::LogWarning(pcchar8 pszMessage){
-    if (pszMessage == NULL) return;
+    if (pszMessage == nullptr) return;
     LogCustom("WARNING", pszMessage);
 }
 
 void Logger::LogError(pcchar8 pszMessage){
-    if (pszMessage == NULL) return;
+    if (pszMessage == nullptr) return;
     LogCustom("ERROR", pszMessage);
 }
 
 void Logger::LogCustom(pcchar8 pszId, pcchar8 pszMessage){
 
-    if (pszId == NULL) return;
-    if (pszMessage == NULL) return;
+    if (pszId == nullptr) return;
+    if (pszMessage == nullptr) return;
 
     pchar8 pszTSBuff;
     GetTimeStampString(&pszTSBuff);
@@ -70,17 +60,20 @@ void Logger::LogCustom(pcchar8 pszId, pcchar8 pszMessage){
     strncpy(msgbuffer+(3+idlen+tslen), ": ", 2);
     strncpy(msgbuffer+(idlen+5+tslen), pszMessage, msglen);
     strncpy(msgbuffer+(idlen+5+msglen+tslen), "\n", 1);
-    
-    FILE *fp = fopen(this->m_pszFilename, "a");
-    if (fp != NULL){
-        fwrite(msgbuffer, sizeof(char8), total_len, fp);
-    } else {
-        goto cppfinally;
-    }
-    fclose(fp);
-   
-cppfinally:
+
+    Log(msgbuffer, total_len);
+
     free(msgbuffer);
     free(pszTSBuff);
-    return;
+
+}
+
+void Logger::Log(pcchar8 pszMessage, uint32 pszMsgLen){
+
+    FILE *fp = fopen(this->m_pszFilename, "a");
+    if (fp != nullptr){
+        fwrite(pszMessage, sizeof(char8), pszMsgLen, fp);
+        fclose(fp);
+    } 
+
 }

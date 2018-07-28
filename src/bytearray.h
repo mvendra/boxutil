@@ -26,15 +26,16 @@ public:
     void Clear();
 
 private:
+
     void FlushInternalMem();
     void InitInternalMem();
     void CopyOther(const ByteArray  &other);
     void CopyOther(pcbyte otherbuff, uint32 otherbufflen);
     uint32 ExpandBy(uint32 amount);
     void Alloc(uint32 amount);
+
     pbyte m_internalcontents;
     uint32 m_internallength;
-
 
 };
 

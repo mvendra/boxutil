@@ -3,3 +3,12 @@
 *.o
 testboxutil
 
+build
+run
+
+proj/codelite/boxutil.mk
+proj/codelite/boxutil.txt
+
+/proj/msvc15/.vs
+/proj/msvc15/boxutil.VC.db
+/proj/msvc15/boxutil.vcxproj.user

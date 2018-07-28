@@ -8,16 +8,22 @@
 #include <cstring>
 #include <cstdlib>
 
-ByteArray::ByteArray(){
+ByteArray::ByteArray():
+m_internalcontents{nullptr}, m_internallength{0}
+{
   InitInternalMem();
 }
 
-ByteArray::ByteArray(const ByteArray &other){
+ByteArray::ByteArray(const ByteArray &other):
+m_internalcontents{nullptr}, m_internallength{0}
+{
   InitInternalMem();
   CopyOther(other);
 }
 
-ByteArray::ByteArray(pcbyte buff, uint32 buffsize){
+ByteArray::ByteArray(pcbyte buff, uint32 buffsize):
+m_internalcontents{nullptr}, m_internallength{0}
+{
   InitInternalMem();
   CopyOther(buff, buffsize);
 }
@@ -118,13 +124,13 @@ uint32 ByteArray::ExpandBy(uint32 amount){
 void ByteArray::FlushInternalMem(){
   if (m_internalcontents){
     free(m_internalcontents);
-    m_internalcontents = NULL;
+    m_internalcontents = nullptr;
     m_internallength = 0;
   }
 }
 
 void ByteArray::InitInternalMem(){
-  m_internalcontents = NULL;
+  m_internalcontents = nullptr;
   m_internallength = 0;
 }
 

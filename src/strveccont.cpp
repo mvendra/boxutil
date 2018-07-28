@@ -2,10 +2,12 @@
 #include "strveccont.h"
 #include "exceptionbase.h"
 
-StrVecCont::StrVecCont(){
+StrVecCont::StrVecCont():m_vecstrings{}
+{
 }
 
-StrVecCont::StrVecCont(const StrVecCont &other){
+StrVecCont::StrVecCont(const StrVecCont &other):m_vecstrings{}
+{
   CopyOther(other);
 }
 

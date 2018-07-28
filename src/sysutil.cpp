@@ -14,16 +14,16 @@
 #include <windows.h>
 #endif
 
-SysTime::SysTime(){
-    this->m_seconds = 0;
-    this->m_minutes = 0;
-    this->m_hours = 0;
-    this->m_monthday = 0;
-    this->m_month = 0;
-    this->m_year = 0;
+SysTime::SysTime():
+m_seconds{0}, m_minutes{0}, m_hours{0},
+m_monthday{0}, m_month{0}, m_year{0}
+{
 }
 
-SysTime::SysTime(const SysTime &other){
+SysTime::SysTime(const SysTime &other):
+m_seconds{0}, m_minutes{0}, m_hours{0},
+m_monthday{0}, m_month{0}, m_year{0}
+{
     Copy(other);
 }
 

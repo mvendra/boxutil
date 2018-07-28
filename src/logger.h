@@ -18,11 +18,13 @@ public:
 
     virtual ~Logger();
 
+    Logger(const Logger &other) = delete;
+    void operator= (const Logger &other) = delete;
+
 private:
 
-    Logger(const Logger &other);
-    void operator= (const Logger &other);
-    char *m_pszFilename;
+    void Log(pcchar8 pszMessage, uint32 pszMsgLen);
+    pchar8 m_pszFilename;
     
 };
 

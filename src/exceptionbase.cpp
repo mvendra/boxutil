@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-ExceptionBase::ExceptionBase(const ExceptionBase &other):m_message(NULL), m_function(NULL), m_line(0)
+ExceptionBase::ExceptionBase(const ExceptionBase &other):m_message(NULL), m_function(nullptr), m_line(0)
 {
 
   SetMsg(other.GetMessage());
@@ -14,7 +14,7 @@ ExceptionBase::ExceptionBase(const ExceptionBase &other):m_message(NULL), m_func
 
 }
 
-ExceptionBase::ExceptionBase(const char8 *msg, const char8 *func, uint32 line):m_message(NULL), m_function(NULL), m_line(0)
+ExceptionBase::ExceptionBase(const char8 *msg, const char8 *func, uint32 line):m_message(nullptr), m_function(nullptr), m_line(0)
 {
 
   SetMsg(msg);
@@ -25,10 +25,10 @@ ExceptionBase::ExceptionBase(const char8 *msg, const char8 *func, uint32 line):m
 
 ExceptionBase::~ExceptionBase(){
 
-  if (m_message != NULL){
+  if (m_message != nullptr){
     free(m_message);
   }
-  if (m_function != NULL){
+  if (m_function != nullptr){
     free(m_function);
   }
 

@@ -15,4 +15,3 @@
 #define pchar8 char *
 
 #endif // __types_h__
-
