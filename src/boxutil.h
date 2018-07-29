@@ -4,7 +4,6 @@
 
 #include "types.h"
 #include "stringmanip.h"
-#include "stringvalid.h"
 #include "bytearray.h"
 #include "logger.h"
 #include "sysutil.h"

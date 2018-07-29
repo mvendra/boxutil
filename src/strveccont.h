@@ -26,4 +26,3 @@ private:
 };
 
 #endif // __strveccont_h__
-

@@ -3,6 +3,7 @@
 #define __sysutil_h__
 
 #include "types.h"
+#include "strveccont.h"
 
 #include <string>
 #include <ostream>
@@ -28,6 +29,13 @@ public:
     sint32 m_year;
 
 };
+
+bool FileExists(const std::string &strFileName);
+bool BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFilelist);
+
+bool DirExists(const std::string &strDirName, bool &answer);
+bool HasWritePermission(const std::string &strDirName);
+bool HasReadPermission(const std::string &strDirName);
 
 SysTime GetSystemTime();
 void GetTimeStampString(pchar8 *pstrBuf);

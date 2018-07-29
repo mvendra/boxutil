@@ -41,4 +41,3 @@ private:
 };
 
 #endif // __bytearray_h__
-

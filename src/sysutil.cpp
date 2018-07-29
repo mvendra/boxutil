@@ -1,5 +1,6 @@
 
 #include "sysutil.h"
+#include "stringmanip.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -8,6 +9,8 @@
 #ifdef __linux__
 #include <time.h>
 #include <sys/time.h>
+#include <dirent.h>
+#include <sys/stat.h>
 #elif _WIN32
 #include <windows.h>
 #endif
@@ -101,6 +104,170 @@ SysTime GetSystemTime(){
     return sysTime;
 
 }
+
+bool FileExists(const std::string &strFileName){
+
+    bool bRet = false;
+    FILE * fp = fopen(strFileName.c_str(), "r+");
+    if (fp){
+        bRet = true;
+        fclose(fp);
+    }
+    return bRet;
+
+}
+
+#if defined(__linux__) || defined(_AIX)
+bool BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFileList) {
+
+    svcFileList.Clear();
+    DIR *dp;
+    struct dirent *dirp;
+    std::string filepath;
+
+    if((dp = opendir(strPath.c_str())) == nullptr) {
+        return false;
+    }
+
+    while ((dirp = readdir(dp)) != nullptr) {
+#ifdef __linux__
+        if (dirp->d_type == DT_DIR) continue; // ignore folders
+#else
+        struct stat s;
+        filepath = strPath + "/" + dirp->d_name;
+
+        // If the file is a directory (or is in some way invalid) we'll skip it 
+        if (stat( filepath.c_str(), &s )) continue;
+        if (S_ISDIR( s.st_mode )) continue;
+#endif
+        std::string strCurr = dirp->d_name;
+        if (GetExtension(strCurr) == strInputExt){
+            svcFileList.PushBack(strCurr);
+        }
+    }
+
+    closedir(dp);
+    return true;
+
+}
+#endif
+
+#ifdef _WIN32
+bool BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFilelist){
+
+    svcFilelist.Clear();
+
+    HANDLE hFind = INVALID_HANDLE_VALUE;
+    WIN32_FIND_DATA ffd;
+    DWORD dwError=0;
+
+    std::string strPathWildcard = strPath + "\\*";
+
+    hFind = FindFirstFile(strPathWildcard.c_str(), &ffd);
+
+    if (INVALID_HANDLE_VALUE == hFind){
+        return false;
+    }
+
+    while (FindNextFile(hFind, &ffd) != 0){
+        if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)){
+            std::string strCurr = ffd.cFileName;
+            if (GetExtension(strCurr) == strInputExt){
+                svcFilelist.PushBack(strCurr);
+            }
+        }
+    }
+
+    dwError = GetLastError();
+    if (dwError != ERROR_NO_MORE_FILES) {
+        return false;
+    }
+
+    FindClose(hFind);
+    return true;
+
+}
+#endif
+
+#if defined(__linux__) || defined(_AIX)
+bool DirExists(const std::string &strDirName){
+
+    struct stat sb;
+    if (stat(strDirName.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode)){
+        return true;
+    }
+    return false;
+
+}
+#endif
+
+#ifdef _WIN32
+bool DirExists(const std::string &strDirName, bool &answer){
+
+    DWORD ftyp = GetFileAttributesA(strDirName.c_str());
+    if (ftyp == INVALID_FILE_ATTRIBUTES){
+        return false; // invalid path - operation failed
+    }
+
+    if (ftyp & FILE_ATTRIBUTE_DIRECTORY){
+        answer = true;   // this is a directory!
+    } else {
+        answer = false;    // this is not a directory!
+    }
+
+    return true; // operation succeeded
+
+}
+#endif
+
+
+#if defined(__linux__) || defined(_AIX)
+bool HasWritePermission(const std::string &strDirName){
+
+    struct stat sb;
+
+    if (stat(strDirName.c_str(), &sb) != 0){
+        return false;
+    }
+    if (sb.st_mode & S_IWUSR){
+        return true;
+    }
+
+    return false;
+
+}
+#endif
+
+#ifdef _WIN32
+bool HasWritePermission(const std::string &strDirName){
+    #error "This function is unimplemented for Windows";
+    return false; // nag me not
+}
+#endif
+
+
+#if defined(__linux__) || defined(_AIX)
+bool HasReadPermission(const std::string &strDirName){
+
+    struct stat sb;
+    if (stat(strDirName.c_str(), &sb) != 0){
+        return false;
+    }
+
+    if (sb.st_mode & S_IRUSR){
+        return true;
+    }
+
+    return false;
+
+}
+#endif
+
+#ifdef _WIN32
+bool HasReadPermission(const std::string &strDirName){
+    return true; // more or less safe to make such assumption for the time being.
+}
+#endif
 
 void GetTimeStampString(pchar8 *pstrBuf){
     SysTime sysTime = GetSystemTime();

@@ -47,13 +47,13 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="../../src/conversions.h"/>
+    <File Name="../../src/conversions.cpp"/>
     <File Name="../../src/types.h"/>
     <File Name="../../src/sysutil.h"/>
     <File Name="../../src/sysutil.cpp"/>
     <File Name="../../src/strveccont.h"/>
     <File Name="../../src/strveccont.cpp"/>
-    <File Name="../../src/stringvalid.h"/>
-    <File Name="../../src/stringvalid.cpp"/>
     <File Name="../../src/stringmanip.h"/>
     <File Name="../../src/stringmanip.cpp"/>
     <File Name="../../src/logger.h"/>
