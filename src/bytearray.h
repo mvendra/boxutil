@@ -11,7 +11,9 @@ class ByteArray  {
 public:
     ByteArray();
     ByteArray(const ByteArray &other);
+    ByteArray(const ByteArray &&other);
     ByteArray& operator= (const ByteArray &other);
+    ByteArray& operator= (const ByteArray &&other);
     ByteArray(pcbyte buff, uint32 buffsize);
     virtual ~ByteArray();
 

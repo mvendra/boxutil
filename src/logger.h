@@ -19,7 +19,9 @@ public:
     virtual ~Logger();
 
     Logger(const Logger &other) = delete;
+    Logger(const Logger &&other) = delete;
     void operator= (const Logger &other) = delete;
+    void operator= (const Logger &&other) = delete;
 
 private:
 

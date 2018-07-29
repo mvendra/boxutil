@@ -14,6 +14,7 @@ class ExceptionBase {
 public:
 
     ExceptionBase(const ExceptionBase &other);
+    ExceptionBase(const ExceptionBase &&other) = delete;
     ExceptionBase(const char8 *msg, const char8 *func, uint32 line);
     const char *GetMessage() const;
     const char *GetFunction() const;
@@ -21,6 +22,7 @@ public:
     virtual ~ExceptionBase();
 
     void operator=(const ExceptionBase &other) = delete;
+    void operator=(const ExceptionBase &&other) = delete;
     ExceptionBase() = delete;
     void *operator new(size_t size) = delete;
 

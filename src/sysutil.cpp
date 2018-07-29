@@ -32,6 +32,13 @@ SysTime::~SysTime(){
 
 }
 
+SysTime::SysTime(const SysTime &&other):
+m_seconds{0}, m_minutes{0}, m_hours{0},
+m_monthday{0}, m_month{0}, m_year{0}
+{
+    Copy(other);
+}
+
 SysTime &SysTime::operator= (const SysTime &other){
     if (this == &other) return *this;
     Copy(other);

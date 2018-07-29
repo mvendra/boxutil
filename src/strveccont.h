@@ -10,7 +10,9 @@ class StrVecCont {
 public:
     StrVecCont();
     StrVecCont(const StrVecCont &other);
+    StrVecCont(const StrVecCont &&other) = delete;
     StrVecCont& operator= (const StrVecCont &other);
+    StrVecCont& operator= (const StrVecCont &&other) = delete;
     virtual ~StrVecCont();
     void PushBack(const std::string &element);
     bool Get(const uint32 index, std::string &output) const;

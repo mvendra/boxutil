@@ -13,9 +13,11 @@ public:
 
     SysTime();
     SysTime(const SysTime &other);
+    SysTime(const SysTime &&other);
     virtual ~SysTime();
     
     SysTime& operator= (const SysTime &other);
+    SysTime& operator= (const SysTime &&other) = delete;
     bool operator== (const SysTime &other);
     std::string ToString();
 

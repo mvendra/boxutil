@@ -18,6 +18,10 @@ m_internalcontents{nullptr}, m_internallength{0}{
     CopyOther(other);
 }
 
+ByteArray::ByteArray(const ByteArray &&other):
+m_internalcontents{std::move(other.m_internalcontents)}, m_internallength{other.m_internallength}{
+}
+
 ByteArray::ByteArray(pcbyte buff, uint32 buffsize):
 m_internalcontents{nullptr}, m_internallength{0}{
     InitInternalMem();
@@ -27,6 +31,12 @@ m_internalcontents{nullptr}, m_internallength{0}{
 ByteArray& ByteArray::operator= (const ByteArray &other){
     if (this == &other) return *this;
     CopyOther(other);
+    return *this;
+}
+
+ByteArray& ByteArray::operator= (const ByteArray &&other){
+    m_internallength = other.m_internallength;
+    m_internalcontents = std::move(other.m_internalcontents);
     return *this;
 }
 
