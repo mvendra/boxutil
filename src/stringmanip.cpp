@@ -15,52 +15,51 @@
 #endif
 
 uint32 CountCharsInString(const std::string &strTarget, uchar8 chChar){
-  uint32 uiCount = 0;
-  for (uint32 i=0; i<strTarget.size(); i++){
-    if (strTarget[i] == chChar){
-      uiCount++;
+    uint32 uiCount = 0;
+    for (uint32 i=0; i<strTarget.size(); i++){
+        if (strTarget[i] == chChar){
+            uiCount++;
+        }
     }
-  }
-  return uiCount;
+    return uiCount;
 }
 
 bool GetStringMidByBoundingChars(const std::string &strTarget, uchar8 chBound, std::string &strOutput){
 
-  if (CountCharsInString(strTarget, chBound) != 2){
-    return false;
-  }
+    if (CountCharsInString(strTarget, chBound) != 2){
+        return false;
+    }
 
-  size_t pos1 = strTarget.find(chBound);
-  size_t pos2 = strTarget.find(chBound, pos1+1);
+    size_t pos1 = strTarget.find(chBound);
+    size_t pos2 = strTarget.find(chBound, pos1+1);
 
-  if (pos1 == std::string::npos || pos2 == std::string::npos){
-    return false;
-  }
+    if (pos1 == std::string::npos || pos2 == std::string::npos){
+        return false;
+    }
 
-  strOutput = strTarget.substr(pos1+1, pos2-pos1-1);
-  return true;
+    strOutput = strTarget.substr(pos1+1, pos2-pos1-1);
+    return true;
 
 }
 
 std::string TxtStrFromBuffer(pcbyte pcbBuffer, const uint32 iBuffSize){
-  std::string strRet = std::string(reinterpret_cast<const char *>(pcbBuffer), iBuffSize);
-  return strRet;
+    std::string strRet = std::string(reinterpret_cast<const char *>(pcbBuffer), iBuffSize);
+    return strRet;
 }
 
 std::string HexStrFromBuffer(pcbyte pcbBuffer, const uint32 iBuffSize){
 
-  std::string strRet;
-  char chAux[3] = {0};
-  for (uint32 i = 0; i < iBuffSize; i++){
-    sprintf(chAux, "%02X", pcbBuffer[i]);
-    strRet += chAux;
-  }
-  return strRet;
+    std::string strRet;
+    char chAux[3] = {0};
+    for (uint32 i = 0; i < iBuffSize; i++){
+        sprintf(chAux, "%02X", pcbBuffer[i]);
+        strRet += chAux;
+    }
+    return strRet;
 
 }
 
-std::string PopExtension(const std::string &strFilename)
-{
+std::string PopExtension(const std::string &strFilename){
 
     size_t dotpos = strFilename.rfind(".");
     std::string strExt;
@@ -71,8 +70,7 @@ std::string PopExtension(const std::string &strFilename)
 
 }
 
-std::string GetExtension(const std::string &strFilename)
-{
+std::string GetExtension(const std::string &strFilename){
 
     size_t dotpos = strFilename.rfind(".");
     std::string strExt;
@@ -92,40 +90,40 @@ bool FileExists(const std::string &strFileName){
         fclose(fp);
     }
     return bRet;
+
 }
 
 #if defined(__linux__) || defined(_AIX)
 bool BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFileList) {
 
-  svcFileList.Clear();
-  DIR *dp;
-  struct dirent *dirp;
-  std::string filepath;
+    svcFileList.Clear();
+    DIR *dp;
+    struct dirent *dirp;
+    std::string filepath;
 
-  if((dp = opendir(strPath.c_str())) == nullptr) {
-    return false;
-  }
-
-  while ((dirp = readdir(dp)) != nullptr) {
-#ifdef __linux__
-    if (dirp->d_type == DT_DIR)
-      continue; // ignore folders
-#else
-    struct stat s;
-    filepath = strPath + "/" + dirp->d_name;
-
-    // If the file is a directory (or is in some way invalid) we'll skip it 
-    if (stat( filepath.c_str(), &s )) continue;
-    if (S_ISDIR( s.st_mode ))         continue;
-#endif
-    std::string strCurr = dirp->d_name;
-    if (GetExtension(strCurr) == strInputExt){
-      svcFileList.PushBack(strCurr);
+    if((dp = opendir(strPath.c_str())) == nullptr) {
+        return false;
     }
-  }
 
-  closedir(dp);
-  return true;
+    while ((dirp = readdir(dp)) != nullptr) {
+#ifdef __linux__
+        if (dirp->d_type == DT_DIR) continue; // ignore folders
+#else
+        struct stat s;
+        filepath = strPath + "/" + dirp->d_name;
+
+        // If the file is a directory (or is in some way invalid) we'll skip it 
+        if (stat( filepath.c_str(), &s )) continue;
+        if (S_ISDIR( s.st_mode )) continue;
+#endif
+        std::string strCurr = dirp->d_name;
+        if (GetExtension(strCurr) == strInputExt){
+            svcFileList.PushBack(strCurr);
+        }
+    }
+
+    closedir(dp);
+    return true;
 
 }
 #endif
@@ -133,36 +131,36 @@ bool BuildFileList(const std::string &strPath, const std::string &strInputExt, S
 #ifdef _WIN32
 bool BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFilelist){
 
-  svcFilelist.Clear();
+    svcFilelist.Clear();
 
-  HANDLE hFind = INVALID_HANDLE_VALUE;
-  WIN32_FIND_DATA ffd;
-  DWORD dwError=0;
+    HANDLE hFind = INVALID_HANDLE_VALUE;
+    WIN32_FIND_DATA ffd;
+    DWORD dwError=0;
 
-  std::string strPathWildcard = strPath + "\\*";
+    std::string strPathWildcard = strPath + "\\*";
 
-  hFind = FindFirstFile(strPathWildcard.c_str(), &ffd);
+    hFind = FindFirstFile(strPathWildcard.c_str(), &ffd);
 
-  if (INVALID_HANDLE_VALUE == hFind){
-    return false;
-  }
-
-  while (FindNextFile(hFind, &ffd) != 0){
-    if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)){
-      std::string strCurr = ffd.cFileName;
-      if (GetExtension(strCurr) == strInputExt){
-        svcFilelist.PushBack(strCurr);
-      }
+    if (INVALID_HANDLE_VALUE == hFind){
+        return false;
     }
-  }
 
-  dwError = GetLastError();
-  if (dwError != ERROR_NO_MORE_FILES) {
-    return false;
-  }
+    while (FindNextFile(hFind, &ffd) != 0){
+        if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)){
+            std::string strCurr = ffd.cFileName;
+            if (GetExtension(strCurr) == strInputExt){
+                svcFilelist.PushBack(strCurr);
+            }
+        }
+    }
 
-  FindClose(hFind);
-  return true;
+    dwError = GetLastError();
+    if (dwError != ERROR_NO_MORE_FILES) {
+        return false;
+    }
+
+    FindClose(hFind);
+    return true;
 
 }
 #endif
@@ -174,15 +172,13 @@ bool DirExists(const std::string &strDirName){
     if (stat(strDirName.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode)){
         return true;
     }
-
     return false;
 
 }
 #endif
 
 #ifdef _WIN32
-bool DirExists(const std::string &strDirName, bool &answer)
-{
+bool DirExists(const std::string &strDirName, bool &answer){
 
     DWORD ftyp = GetFileAttributesA(strDirName.c_str());
     if (ftyp == INVALID_FILE_ATTRIBUTES){
@@ -209,7 +205,6 @@ bool HasWritePermission(const std::string &strDirName){
     if (stat(strDirName.c_str(), &sb) != 0){
         return false;
     }
-
     if (sb.st_mode & S_IWUSR){
         return true;
     }
@@ -221,8 +216,8 @@ bool HasWritePermission(const std::string &strDirName){
 
 #ifdef _WIN32
 bool HasWritePermission(const std::string &strDirName){
-  #error "This function is unimplemented for Windows";
-  return false; // nag me not
+    #error "This function is unimplemented for Windows";
+    return false; // nag me not
 }
 #endif
 
@@ -245,15 +240,13 @@ bool HasReadPermission(const std::string &strDirName){
 #endif
 
 #ifdef _WIN32
-bool HasReadPermission(const std::string &strDirName)
-{
+bool HasReadPermission(const std::string &strDirName){
     return true; // more or less safe to make such assumption for the time being.
 }
 #endif
 
 template< typename T >
-std::string NumberToHexStr( T i, bool bAutoFill )
-{
+std::string NumberToHexStr( T i, bool bAutoFill ){
     std::stringstream stream;
     if (bAutoFill)
         stream << std::setfill('0') << std::setw((i > 0xFF ? 4 : 2)) << std::hex << i;
@@ -271,8 +264,7 @@ sint32 DecStrToInteger(const std::string &strSource){
     return ret;
 }
 
-std::string IntegerToDecStr( sint32 i )
-{
+std::string IntegerToDecStr( sint32 i ){
     std::stringstream stream;
     stream << std::dec << i;
     std::string tmp = stream.str();
@@ -325,13 +317,11 @@ bool ContainsNoCase(const std::string &strTarget, const std::string &strContent)
 
 
 bool IsNumericString(const std::string &strElement) {
-
     std::istringstream ss(strElement);
     sint32 num = 0;
     if(ss >> num) {
         return true;
     }
     return false;
-
 }
 
