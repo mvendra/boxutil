@@ -3,13 +3,12 @@
 #define __stringmanip_h__
 
 #include "strveccont.h"
-#include "exceptionbase.h"
 
 #include <string>
 #include <vector>
 
 uint32 CountCharsInString(const std::string &strTarget, uchar8 chChar);
-std::string GetStringMidByBoundingChars(const std::string &strTarget, uchar8 chBound);
+bool GetStringMidByBoundingChars(const std::string &strTarget, uchar8 chBound, std::string &strOutput);
 std::string TxtStrFromBuffer(pcbyte pcbBuffer, const uint32 iBuffSize);
 std::string HexStrFromBuffer(pcbyte pcbBuffer, const uint32 iBuffSize);
 
@@ -17,9 +16,9 @@ std::string PopExtension(const std::string &strFilename);
 std::string GetExtension(const std::string &strFilename);
 bool FileExists(const std::string &strFileName);
 
-void BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFilelist);
+bool BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFilelist);
 
-bool DirExists(const std::string &strDirName);
+bool DirExists(const std::string &strDirName, bool &answer);
 bool HasWritePermission(const std::string &strDirName);
 bool HasReadPermission(const std::string &strDirName);
 

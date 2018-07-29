@@ -17,10 +17,11 @@ public:
 
     pcbyte GetBuffer() const;
     ByteArray GetCopy() const;
-    ByteArray GetSection(const uint32 offset, const uint32 length);
+    bool GetSection(const uint32 offset, const uint32 length, ByteArray &output);
+    bool GetByte(const uint32 offset, byte &output);
     void Append(const ByteArray &other);
     void Append(pcbyte buff, uint32 buffsize);
-    void EraseSection(const uint32 offset, const uint32 length);
+    bool EraseSection(const uint32 offset, const uint32 length);
     uint32 GetLength() const;
     std::string GetHexString() const;
     void Clear();

@@ -1,8 +1,6 @@
 
 #include "sysutil.h"
 
-#include "exceptionbase.h"
-
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -97,7 +95,7 @@ SysTime GetSystemTime(){
     sysTime.m_year = stSysTime.wYear%100;
 
 #else
-    RAISE_EXCEPT(ExceptionBase, "Not implemented for this platform.")
+    #error "Not implemented for this platform."
 #endif
 
     return sysTime;

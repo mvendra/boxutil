@@ -8,8 +8,6 @@
 #include "bytearray.h"
 #include "logger.h"
 #include "sysutil.h"
-
 #include "exceptionbase.h"
-#include "stringmanipexception.h"
 
 #endif // __boxutil_h__

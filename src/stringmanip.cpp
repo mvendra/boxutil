@@ -1,8 +1,8 @@
 
-#include "stringmanipexception.h"
 #include "stringmanip.h"
-#include <cstdio>
 #include "types.h"
+
+#include <cstdio>
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
@@ -24,21 +24,21 @@ uint32 CountCharsInString(const std::string &strTarget, uchar8 chChar){
   return uiCount;
 }
 
-std::string GetStringMidByBoundingChars(const std::string &strTarget, uchar8 chBound){
+bool GetStringMidByBoundingChars(const std::string &strTarget, uchar8 chBound, std::string &strOutput){
 
   if (CountCharsInString(strTarget, chBound) != 2){
-    RAISE_EXCEPT(StringManipException, "Unable to crop string");
+    return false;
   }
 
   size_t pos1 = strTarget.find(chBound);
   size_t pos2 = strTarget.find(chBound, pos1+1);
 
-  if (pos1 == std::string::npos || pos2 == std::string::npos){ // not found. raise hell
-    RAISE_EXCEPT(StringManipException, "Unable to crop string");
+  if (pos1 == std::string::npos || pos2 == std::string::npos){
+    return false;
   }
 
-  std::string strRet = strTarget.substr(pos1+1, pos2-pos1-1);
-  return strRet;
+  strOutput = strTarget.substr(pos1+1, pos2-pos1-1);
+  return true;
 
 }
 
@@ -95,7 +95,7 @@ bool FileExists(const std::string &strFileName){
 }
 
 #if defined(__linux__) || defined(_AIX)
-void BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFileList) {
+bool BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFileList) {
 
   svcFileList.Clear();
   DIR *dp;
@@ -103,7 +103,7 @@ void BuildFileList(const std::string &strPath, const std::string &strInputExt, S
   std::string filepath;
 
   if((dp = opendir(strPath.c_str())) == nullptr) {
-    RAISE_EXCEPT(StringManipException, "Unable to open dir for listing");
+    return false;
   }
 
   while ((dirp = readdir(dp)) != nullptr) {
@@ -125,12 +125,13 @@ void BuildFileList(const std::string &strPath, const std::string &strInputExt, S
   }
 
   closedir(dp);
+  return true;
 
 }
 #endif
 
 #ifdef _WIN32
-void BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFilelist){
+bool BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFilelist){
 
   svcFilelist.Clear();
 
@@ -143,7 +144,7 @@ void BuildFileList(const std::string &strPath, const std::string &strInputExt, S
   hFind = FindFirstFile(strPathWildcard.c_str(), &ffd);
 
   if (INVALID_HANDLE_VALUE == hFind){
-    RAISE_EXCEPT(StringManipException, "Unable to open dir for listing");
+    return false;
   }
 
   while (FindNextFile(hFind, &ffd) != 0){
@@ -157,10 +158,11 @@ void BuildFileList(const std::string &strPath, const std::string &strInputExt, S
 
   dwError = GetLastError();
   if (dwError != ERROR_NO_MORE_FILES) {
-    RAISE_EXCEPT(StringManipException, "Unknown error while listing dir");
+    return false;
   }
 
   FindClose(hFind);
+  return true;
 
 }
 #endif
@@ -179,18 +181,21 @@ bool DirExists(const std::string &strDirName){
 #endif
 
 #ifdef _WIN32
-bool DirExists(const std::string &strDirName)
+bool DirExists(const std::string &strDirName, bool &answer)
 {
 
     DWORD ftyp = GetFileAttributesA(strDirName.c_str());
     if (ftyp == INVALID_FILE_ATTRIBUTES){
-  RAISE_EXCEPT(StringManipException, "Invalid path");
+        return false; // invalid path - operation failed
     }
 
-    if (ftyp & FILE_ATTRIBUTE_DIRECTORY)
-        return true;   // this is a directory!
+    if (ftyp & FILE_ATTRIBUTE_DIRECTORY){
+        answer = true;   // this is a directory!
+    } else {
+        answer = false;    // this is not a directory!
+    }
 
-    return false;    // this is not a directory!
+    return true; // operation succeeded
 
 }
 #endif
@@ -216,7 +221,7 @@ bool HasWritePermission(const std::string &strDirName){
 
 #ifdef _WIN32
 bool HasWritePermission(const std::string &strDirName){
-  RAISE_EXCEPT("This function is unimplemented for Windows");
+  #error "This function is unimplemented for Windows";
   return false; // nag me not
 }
 #endif

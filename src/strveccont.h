@@ -13,11 +13,13 @@ public:
     StrVecCont& operator= (const StrVecCont &other);
     virtual ~StrVecCont();
     void PushBack(const std::string &element);
-    std::string Get(const uint32 index) const;
+    bool Get(const uint32 index, std::string &output) const;
     void PopBack();
     void Pop(uint32 index);
     uint32 Size() const;
     void Clear();
+    bool HasElement(const std::string &element) const;
+    bool operator==(const StrVecCont &other);
 private:
     std::vector<std::string> m_vecstrings;
     void CopyOther(const StrVecCont &other);

@@ -54,8 +54,6 @@
     <File Name="../../src/strveccont.cpp"/>
     <File Name="../../src/stringvalid.h"/>
     <File Name="../../src/stringvalid.cpp"/>
-    <File Name="../../src/stringmanipexception.h"/>
-    <File Name="../../src/stringmanipexception.cpp"/>
     <File Name="../../src/stringmanip.h"/>
     <File Name="../../src/stringmanip.cpp"/>
     <File Name="../../src/logger.h"/>
