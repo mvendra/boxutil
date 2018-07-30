@@ -33,11 +33,17 @@ public:
 };
 
 bool FileExists(const std::string &strFileName);
-bool BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFilelist);
+bool FileDelete(const std::string &);
+bool GetFileContents(const std::string &, std::string&);
 
 bool DirExists(const std::string &strDirName, bool &answer);
 bool HasWritePermission(const std::string &strDirName);
 bool HasReadPermission(const std::string &strDirName);
+
+bool GetAppWorkingDir(std::string &output);
+std::string GetSysTmpDir();
+
+bool BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFilelist);
 
 SysTime GetSystemTime();
 void GetTimeStampString(pchar8 *pstrBuf);

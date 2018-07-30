@@ -11,6 +11,12 @@ ExceptionBase::ExceptionBase(const ExceptionBase &other):m_message(nullptr), m_f
     SetLine(other.GetLine());
 }
 
+ExceptionBase::ExceptionBase(const ExceptionBase &&other):m_message(nullptr), m_function(nullptr), m_line(0){
+    SetMsg(other.GetMessage());
+    SetFunc(other.GetFunction());
+    SetLine(other.GetLine());
+}
+
 ExceptionBase::ExceptionBase(const char8 *msg, const char8 *func, uint32 line):m_message(nullptr), m_function(nullptr), m_line(0){
     SetMsg(msg);
     SetFunc(func);

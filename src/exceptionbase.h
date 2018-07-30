@@ -2,7 +2,13 @@
 #ifndef __exceptionbase_h__
 #define __exceptionbase_h__ 
 
-#define RAISE_EXCEPT(CLASS,MSG) throw CLASS(MSG, __FUNCTION__, __LINE__);
+#ifdef _WIN32
+#define EX_RAISE(CLASS, MSG) throw CLASS(MSG, __FUNCSIG__, __LINE__);
+#else
+#define EX_RAISE(CLASS, MSG) throw CLASS(MSG, __PRETTY_FUNCTION__, __LINE__);
+#endif
+
+#define NOTREACHED EX_RAISE(ExceptionBase, "Should not get here")
 
 #include <stddef.h>
 
@@ -14,7 +20,7 @@ class ExceptionBase {
 public:
 
     ExceptionBase(const ExceptionBase &other);
-    ExceptionBase(const ExceptionBase &&other) = delete;
+    ExceptionBase(const ExceptionBase &&other);
     ExceptionBase(const char8 *msg, const char8 *func, uint32 line);
     const char *GetMessage() const;
     const char *GetFunction() const;

@@ -47,6 +47,9 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="../../src/datehelper.h"/>
+    <File Name="../../src/datehelper.cpp"/>
+    <File Name="../../src/managedbuffer.h"/>
     <File Name="../../src/conversions.h"/>
     <File Name="../../src/conversions.cpp"/>
     <File Name="../../src/types.h"/>

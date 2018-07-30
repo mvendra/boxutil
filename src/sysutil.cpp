@@ -1,16 +1,20 @@
 
 #include "sysutil.h"
 #include "stringmanip.h"
+#include "managedbuffer.h"
+#include "exceptionbase.h"
 
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
 
 #ifdef __linux__
 #include <time.h>
 #include <sys/time.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #elif _WIN32
 #include <windows.h>
 #endif
@@ -122,6 +126,38 @@ bool FileExists(const std::string &strFileName){
     }
     return bRet;
 
+}
+
+bool FileDelete(const std::string &fn){
+#ifdef _WIN32
+    std::wstring stemp = std::wstring(fn.begin(), fn.end());
+    BOOL r = DeleteFile(stemp.c_str());
+    if (r == 0) {
+        int v = GetLastError();
+    }
+    return r;
+#else
+    return !(std::remove(fn.c_str()));
+#endif
+}
+
+bool GetFileContents(const std::string &fn, std::string &contents){
+
+    std::ifstream file;
+    file.open(fn.c_str());
+    if (!file.is_open()){
+        return false;
+    }
+
+    file.seekg (0, file.end);
+    unsigned int length = file.tellg();
+    file.seekg (0, file.beg);
+
+    ManagedBuffer<char> mb { length+1 };
+    file.read(mb.buffer, mb.length);
+    contents = mb.buffer;
+
+    return true;
 }
 
 #if defined(__linux__) || defined(_AIX)
@@ -275,6 +311,41 @@ bool HasReadPermission(const std::string &strDirName){
     return true; // more or less safe to make such assumption for the time being.
 }
 #endif
+
+bool GetAppWorkingDir(std::string &output){
+
+#ifdef __linux__
+    char cwd[1024];
+    if (getcwd(cwd, sizeof(cwd)) != NULL){
+        output = cwd;
+        return true;
+    } else {
+        return false;
+    }
+#elif _WIN32
+    ManagedBuffer<WCHAR> mb{2048};
+    memset(mb.buffer, 0x00, 2048);
+    if (GetCurrentDirectory(2048, mb.buffer) > 0) {
+        output = CW2A(mb.buffer);
+        return true;
+    } else {
+        return false;
+    }
+#else
+    #error "Working directory detection not implemented on this platform"
+#endif
+
+    NOTREACHED
+
+}
+
+std::string GetSysTmpDir() {
+#ifdef _WIN32
+    return "C:\\tmp\\";
+#else
+    return "/tmp/";
+#endif
+}
 
 void GetTimeStampString(pchar8 *pstrBuf){
     SysTime sysTime = GetSystemTime();
