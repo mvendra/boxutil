@@ -194,8 +194,6 @@ bool SaveFileContents(const std::string &strFileName, const std::string &strCont
     if (!file.is_open()){
         return false;
     }
-
-    //file.write(strContents.c_str(), strContents.size());
     file << strContents;
 
     return true;

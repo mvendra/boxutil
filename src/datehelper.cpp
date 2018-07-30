@@ -2,6 +2,8 @@
 #include "datehelper.h"
 #include "conversions.h"
 
+#include <cstring>
+
 #ifdef __linux__
 #include <time.h>
 #include <sys/time.h>
@@ -143,8 +145,9 @@ std::string DateHelper::convertFromNumbers(const unsigned short _day,
                                            const unsigned short _year)
 {
 
-    char chdate[11]{0};
-    sprintf(chdate, "%02d/%02d/%04d", _day, _month, _year);
+    char chdate[32];
+    std::memset(chdate, 0x00, 32);
+    std::sprintf(chdate, "%02d/%02d/%04d", _day, _month, _year);
     std::string ret {chdate};
     return ret;
 

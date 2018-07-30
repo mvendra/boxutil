@@ -57,8 +57,7 @@ unsigned int test_bfl(){
     unsigned int r {0};
     
     StrVecCont svcTest;
-    BuildFileList("../../testprops/folder", "txt", svcTest);
-
+    testforecho::test_true(r, "BuldFileList: Should be able to make file list", BuildFileList("../../testprops/folder", "txt", svcTest));
     testforecho::test_eq(r, "BuildFileList: Size should be 3", svcTest.Size(), 3);
 
     testforecho::test_true(r, "BuildFileList: Should have element", (svcTest.HasElement("one.txt")));

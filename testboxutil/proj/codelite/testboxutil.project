@@ -49,10 +49,6 @@
   <VirtualDirectory Name="src">
     <File Name="../../src/main.cpp"/>
   </VirtualDirectory>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Debug (LLVM)"/>
-  <Dependencies Name="Release"/>
-  <Dependencies Name="Release (LLVM)"/>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="" Assembler="">
@@ -244,4 +240,8 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Debug (LLVM)"/>
+  <Dependencies Name="Release"/>
+  <Dependencies Name="Release (LLVM)"/>
 </CodeLite_Project>

@@ -68,6 +68,10 @@
     <File Name="../../src/bytearray.cpp"/>
     <File Name="../../src/boxutil.h"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Debug (LLVM)"/>
+  <Dependencies Name="Release"/>
+  <Dependencies Name="Release (LLVM)"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="" C_Options="" Assembler="">
@@ -174,9 +178,7 @@
         <StartupCommands/>
       </Debugger>
       <PreBuild/>
-      <PostBuild>
-        <Command Enabled="yes">strip ../../run/linux_x64_release/$(ProjectName)</Command>
-      </PostBuild>
+      <PostBuild/>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>
@@ -239,8 +241,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Debug (LLVM)"/>
-  <Dependencies Name="Release"/>
-  <Dependencies Name="Release (LLVM)"/>
 </CodeLite_Project>
