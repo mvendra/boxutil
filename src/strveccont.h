@@ -6,14 +6,14 @@
 #include <string>
 #include <vector>
 
-class StrVecCont {
+class StrVecCont final {
 public:
     StrVecCont();
     StrVecCont(const StrVecCont &other);
     StrVecCont(const StrVecCont &&other) = delete;
     StrVecCont& operator= (const StrVecCont &other);
     StrVecCont& operator= (const StrVecCont &&other) = delete;
-    virtual ~StrVecCont();
+    ~StrVecCont();
     void PushBack(const std::string &element);
     bool Get(const uint32 index, std::string &output) const;
     void PopBack();

@@ -6,7 +6,7 @@
 
 #include <string>
 
-class DateHelper {
+class DateHelper final {
 
 // textdate, whereever it is present, is in the
 // form of "ddmmyyyy", no slash, no space, just 8 ascii numbers

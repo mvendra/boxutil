@@ -12,13 +12,13 @@ enum class Platform {Linux, Win32, Win64};
 
 Platform GetPlatform();
 
-class SysTime {
+class SysTime final {
 public:
 
     SysTime();
     SysTime(const SysTime &other);
     SysTime(const SysTime &&other);
-    virtual ~SysTime();
+    ~SysTime();
     
     SysTime& operator= (const SysTime &other);
     SysTime& operator= (const SysTime &&other) = delete;

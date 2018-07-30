@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-class ByteArray  {
+class ByteArray final {
 
 public:
     ByteArray();
@@ -15,7 +15,7 @@ public:
     ByteArray& operator= (const ByteArray &other);
     ByteArray& operator= (const ByteArray &&other);
     ByteArray(pcbyte buff, uint32 buffsize);
-    virtual ~ByteArray();
+    ~ByteArray();
 
     pcbyte GetBuffer() const;
     ByteArray GetCopy() const;
