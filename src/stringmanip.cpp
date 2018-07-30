@@ -2,8 +2,29 @@
 #include "stringmanip.h"
 #include "types.h"
 
+#include <iostream>
 #include <iomanip>
 #include <algorithm>
+#include <cstring>
+
+std::string GetNext(std::string &source, const std::string &delim) {
+
+    if (source == "") {
+        return "";
+    }
+
+    size_t n = source.find(delim);
+    if (n == std::string::npos) {
+        std::string ret = source;
+        source = "";
+        return ret;
+    } else {
+        std::string ret = source.substr(0, n);
+        source = source.substr(n+1);
+        return ret;
+    }
+
+}
 
 uint32 CountCharsInString(const std::string &strTarget, uchar8 chChar){
     uint32 uiCount = 0;
@@ -72,19 +93,21 @@ std::string GetExtension(const std::string &strFilename){
 
 }
 
-void MakeUppercase(std::string &strTarget){
-    std::transform(strTarget.begin(), strTarget.end(), strTarget.begin(), ::toupper);
+std::string MakeUppercase(const std::string &strTarget){
+    std::string local = strTarget;
+    std::transform(local.begin(), local.end(), local.begin(), ::toupper);
+    return local;
 }
 
-void MakeLowercase(std::string &strTarget){
-    std::transform(strTarget.begin(), strTarget.end(), strTarget.begin(), ::tolower);
+std::string MakeLowercase(const std::string &strTarget){
+    std::string local = strTarget;
+    std::transform(local.begin(), local.end(), local.begin(), ::tolower);
+    return local;
 }
 
 sint32 CompareNoCase(const std::string &strLeft, const std::string &strRight){
-    std::string left = strLeft;
-    std::string right = strRight;
-    MakeLowercase(left);
-    MakeLowercase(right);
+    std::string left = MakeLowercase(strLeft);
+    std::string right = MakeLowercase(strRight);
     sint32 ret = left.compare(right);
     return ret;
 }
@@ -97,10 +120,8 @@ bool EqualsNoCase(const std::string &strLeft, const std::string &strRight){
 }
 
 bool ContainsNoCase(const std::string &strTarget, const std::string &strContent){
-    std::string target = strTarget;
-    std::string content = strContent;
-    MakeLowercase(target);
-    MakeLowercase(content);
+    std::string target = MakeLowercase(strTarget);
+    std::string content = MakeLowercase(strContent);
     size_t ret = target.find(content);
     if (ret == std::string::npos)
         return false;
@@ -150,4 +171,85 @@ bool IsWithinBounds(const std::string &strValue, const uint32 min, const uint32 
         return false;
     }
     return true;
+}
+
+void HexDump(const std::vector<unsigned char> &_buffer){
+
+    std::cout << std::endl;
+
+    size_t c = 0;
+    unsigned int offs = 0;
+    printf("%04X   ", offs);
+
+    for (size_t i = 0; i < _buffer.size(); i++){
+
+        if (c == 16){
+            std::cout << std::endl;
+            offs += 16;
+            printf("%04X   ", offs);
+            c = 0;
+        }
+
+        printf("%02X ", _buffer[i]);
+        c++;
+    }
+    std::cout << std::endl << std::endl;
+
+}
+
+int custom_strncpy_s(char *dest, size_t dest_s, const char *src, size_t src_s){
+
+#if defined(_WIN64) || defined(_WIN32)
+    int r = strncpy_s(dest, dest_s, src, src_s);
+    return r;
+#else
+    char *r = std::strncpy(dest, src, src_s);
+    (void)r;
+    (void)dest_s;
+    return 0;
+#endif
+
+}
+
+std::string RemoveComment(const std::string &_cmd, const std::string _cc){
+
+    std::string localcmd = _cmd;
+    size_t p = localcmd.find(_cc);
+    if (p != std::string::npos){
+        localcmd = localcmd.substr(0, p);
+    }
+    return localcmd;
+
+}
+
+std::string LTrim(const std::string &source){
+    size_t n = source.find_first_not_of(' ');
+    if (n == std::string::npos){
+        return source;
+    }
+    return source.substr(n);
+}
+
+std::string RTrim(const std::string &source){
+    if (source == ""){
+        return "";
+    }
+    if (source[source.size()-1] != ' '){
+        return source;
+    }
+    int n = -1;
+    for (int i = source.size()-1; i!=-1; i--){
+        if (source[i] != ' '){
+            n = i;
+            break;
+        }
+    }
+    if (n == -1){
+        return source;
+    }
+    return source.substr(0, n+1);
+}
+
+std::string Trim(const std::string &source){
+    return LTrim(RTrim(source));
 }

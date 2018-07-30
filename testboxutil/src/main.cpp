@@ -91,75 +91,60 @@ unsigned int test_strveccont(){
 
 }
 
-unsigned int test_managedbuffer(){
-
-    unsigned int r {0};
-
-    ManagedBuffer <char>mb {16};
-
-    return r;
-
-}
-
 unsigned int test_logger(){
 
-    // mvtodo: requires file caps (read and autodelete) for tests
-
     unsigned int r {0};
-    Logger logger("./debug.txt");
-    logger.LogInfo("test for echo");
-    return r;
 
-}
-
-unsigned int test_crop_goodinput(){
-
-    unsigned int r {0};
-    
-    std::string strTeste = "jajaja*mvresult*jejeje";
-
-    /*try {
-        std::string strResult = GetStringMidByBoundingChars(strTeste, '*');
-        printresult(strResult);
-    } catch (const ExceptionBase &sme){
-        std::cout << "bugged..." << std::endl;
-    }*/
+    std::string logfn = "./debug.txt";
+    ManagedFile mf {logfn};
+    Logger logger(logfn.c_str());
+    logger.LogInfo("day of the dog");
+    std::string contents;
+    GetFileContents(logfn, contents);
+    testforecho::test_true(r, "Logger: Should be able to log and retrieve", ContainsNoCase(contents, "dog"));
 
     return r;
 
 }
 
-unsigned int test_crop_badinput(){
+unsigned int test_stringmanip(){
 
     unsigned int r {0};
-    
-    std::string strTeste = "idontcare";
 
-    /*try {
-        std::string strResult = GetStringMidByBoundingChars(strTeste, '!');
-        printresult(strResult);
-    } catch (const StringManipException &sme){
-        std::cout << "bugged, derived" << std::endl;
-    } catch (const ExceptionBase &eb){
-        std::cout << "bugged, base" << std::endl;
-    }*/
+    std::string strTeste = "aaa*uuu*bbb";
+    std::string strOut;
+    testforecho::test_true(r, "StringManip: extremes trim, should be able to extract mid", GetStringMidByBoundingChars(strTeste, '*', strOut));
+    testforecho::test_eq(r, "StringManip: extremes trim", strOut, "uuu");
 
-    return r;
+    testforecho::test_eq(r, "StringManip: Should count chars in string", CountCharsInString("aaaaazaaaaaaza", 'z'), 2);
 
-}
+    strTeste = "a b c";
+    testforecho::test_eq(r, "StringManip: Should get next", GetNext(strTeste), "a");
+    testforecho::test_eq(r, "StringManip: Should get next", GetNext(strTeste), "b");
+    testforecho::test_eq(r, "StringManip: Should get next", GetNext(strTeste), "c");
+    testforecho::test_eq(r, "StringManip: Should get next", GetNext(strTeste), "");
 
-unsigned int test_crop_badinput2(){
+    byte p[1]; p[0] = 112;
+    testforecho::test_eq(r, "StringManip: Should convert from byte buffer to string", TxtStrFromBuffer(p, 1), "p");
 
-    unsigned int r {0};
-    
-    std::string strTeste = "three@arrobas@see@now";
+    p[0] = 0xaa;
+    testforecho::test_eq(r, "StringManip: Should convert from byte buffer to hexstring", HexStrFromBuffer(p, 1), "AA");
 
-    /*try {
-        std::string strResult = GetStringMidByBoundingChars(strTeste, '@');
-        printresult(strResult);
-    } catch (const ExceptionBase &sme){
-        std::cout << "bugged..." << std::endl;
-    }*/
+    testforecho::test_eq(r, "StringManip: Should be able to pop file extension", PopExtension("file.txt"), "file");
+    testforecho::test_eq(r, "StringManip: Should be able to get file extension", GetExtension("file.txt"), "txt");
+
+    testforecho::test_eq(r, "StringManip: Should be able to make uppercase", MakeUppercase("abc"), "ABC");
+    testforecho::test_eq(r, "StringManip: Should be able to make lowercase", MakeLowercase("ABC"), "abc");
+
+    testforecho::test_eq(r, "StringManip: Should be able to compare with no case", CompareNoCase("border", "BOrder"), 0);
+    testforecho::test_true(r, "StringManip: Should be able to check for containment", ContainsNoCase("border", "or"));
+
+    testforecho::test_true(r, "StringManip: Should be able to check numeric string", IsNumericString("123"));
+    testforecho::test_true(r, "StringManip: Should be able to check alphanumeric string", IsAlpha("abc"));
+    testforecho::test_true(r, "StringManip: Should be able to check alphanumeric(ext) string", IsAlphaExt("abc..."));
+    testforecho::test_true(r, "StringManip: Should be able to check bcd string", IsBCD("1230"));
+    testforecho::test_true(r, "StringManip: Should be able to check hex string", IsHexStr("aabbcc"));
+    testforecho::test_true(r, "StringManip: Should be able to check string boundaries string", IsWithinBounds("bigstring", 2, 15));
 
     return r;
 
@@ -271,6 +256,26 @@ unsigned int test_conversions(){
 
 }
 
+unsigned int test_managedfile(){
+
+    unsigned int r {0};
+
+    std::string strFilename = "./testfile.txt";
+    testforecho::test_false(r, "ManagedFile: File should not pre-exist", FileExists(strFilename));
+    SaveFileContents(strFilename, "one");
+    std::string s;
+    testforecho::test_true(r, "ManagedFile: File should be readable", GetFileContents(strFilename, s));
+    testforecho::test_eq(r, "ManagedFile: File content should match", s, "one");
+    testforecho::test_true(r, "ManagedFile: File should have been created", FileExists(strFilename));
+    {
+        ManagedFile mf {strFilename};
+    }
+    testforecho::test_false(r, "ManagedFile: File should have been deleted", FileExists(strFilename));
+
+    return r;
+
+}
+
 int main(int argc, char *argv[]){
 
     (void)argc; (void)argv;
@@ -281,13 +286,11 @@ int main(int argc, char *argv[]){
     r += test_bytearray();
     r += test_bfl();
     r += test_strveccont();
-    r += test_managedbuffer();
     r += test_datehelper();
     r += test_conversions();
-    //r += test_logger();
-    r += test_crop_goodinput();
-    r += test_crop_badinput();
-    r += test_crop_badinput2();
+    r += test_stringmanip();
+    r += test_managedfile();
+    r += test_logger();
 
     if (r > 0){
         std::cout << r << " tests failed." << std::endl;

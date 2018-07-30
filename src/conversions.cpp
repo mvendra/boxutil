@@ -20,7 +20,7 @@ std::string NumberToHexStr( T i, bool bAutoFill){
     else
         stream << std::hex << i;
     std::string tmp = stream.str();
-    MakeUppercase(tmp);
+    tmp = MakeUppercase(tmp);
     if (flipsign){
         tmp = "-" + tmp;
     }
@@ -144,4 +144,23 @@ std::string FloatToHexStr(fp32 i, bool bAutoFill){
 
 std::string DoubleToHexStr(fp64 i, bool bAutoFill){
     return NumberToHexStr<fp64>(i, bAutoFill);
+}
+
+int BytearrayFromHexString(const std::string &hs, unsigned char *buf, size_t max_buf_size){
+
+    if (hs.size() % 2 != 0){
+        return -1;
+    }
+    if (max_buf_size < hs.size()/2){
+        return -1;
+    }
+
+    int u = 0;
+    char c[3]; c[0] = 0; c[1] = 0; c[2] = 0;
+    for (size_t i=0; i<hs.size(); i += 2){
+        c[0] = hs[i]; c[1] = hs[i+1];
+        buf[u++] = HexStrToInt(c);
+    }
+    return (hs.size()/2);
+
 }

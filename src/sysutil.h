@@ -33,8 +33,10 @@ public:
 };
 
 bool FileExists(const std::string &strFileName);
-bool FileDelete(const std::string &);
-bool GetFileContents(const std::string &, std::string&);
+bool FileDelete(const std::string &strFileName);
+bool FileSize(const std::string &strFileName, uint32 &filesize);
+bool GetFileContents(const std::string &strFileName, std::string &strContents);
+bool SaveFileContents(const std::string &strFileName, const std::string &strContents);
 
 bool DirExists(const std::string &strDirName, bool &answer);
 bool HasWritePermission(const std::string &strDirName);
@@ -42,6 +44,7 @@ bool HasReadPermission(const std::string &strDirName);
 
 bool GetAppWorkingDir(std::string &output);
 std::string GetSysTmpDir();
+std::string GetUserHomeFolder();
 
 bool BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFilelist);
 

@@ -15,6 +15,7 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <pwd.h>
 #elif _WIN32
 #include <windows.h>
 #endif
@@ -141,21 +142,49 @@ bool FileDelete(const std::string &fn){
 #endif
 }
 
-bool GetFileContents(const std::string &fn, std::string &contents){
+bool FileSize(const std::string &strFileName, uint32 &filesize){
 
     std::ifstream file;
-    file.open(fn.c_str());
+    file.open(strFileName.c_str());
     if (!file.is_open()){
         return false;
     }
 
     file.seekg (0, file.end);
-    unsigned int length = file.tellg();
+    filesize = file.tellg();
     file.seekg (0, file.beg);
 
-    ManagedBuffer<char> mb { length+1 };
+    return true;
+}
+
+bool GetFileContents(const std::string &strFileName, std::string &contents){
+
+    std::ifstream file;
+    file.open(strFileName.c_str());
+    if (!file.is_open()){
+        return false;
+    }
+
+    uint32 fs;
+    if (!FileSize(strFileName, fs)) return false;
+    ManagedBuffer<char> mb { fs+1 };
+    std::memset(mb.buffer, 0x00, mb.length);
     file.read(mb.buffer, mb.length);
     contents = mb.buffer;
+
+    return true;
+}
+
+bool SaveFileContents(const std::string &strFileName, const std::string &strContents){
+
+    std::ofstream file;
+    file.open(strFileName.c_str(), std::ios_base::out);
+    if (!file.is_open()){
+        return false;
+    }
+
+    //file.write(strContents.c_str(), strContents.size());
+    file << strContents;
 
     return true;
 }
@@ -345,6 +374,27 @@ std::string GetSysTmpDir() {
 #else
     return "/tmp/";
 #endif
+}
+
+std::string GetUserHomeFolder(){
+
+    const char *homedir;
+
+#if defined(_WIN64) || defined(_WIN32)
+    if ((homedir = getenv("USERPROFILE")) == NULL){
+        return "";
+    } else {
+        return homedir;
+    }
+#else 
+    if ((homedir = getenv("HOME")) == NULL) {
+        homedir = getpwuid(getuid())->pw_dir;
+    }
+    return homedir;
+#endif
+
+    return "";
+
 }
 
 void GetTimeStampString(pchar8 *pstrBuf){

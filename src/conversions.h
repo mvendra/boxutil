@@ -49,4 +49,6 @@ fp64 HexStrToDouble(const std::string &strSource);
 std::string FloatToHexStr(fp32 i, bool bAutoFill = true);
 std::string DoubleToHexStr(fp64 i, bool bAutoFill = true);
 
+int BytearrayFromHexString(const std::string &hs, unsigned char *buf, size_t max_buf_size);
+
 #endif // __conversions_h__
