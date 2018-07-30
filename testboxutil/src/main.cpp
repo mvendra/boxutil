@@ -145,6 +145,10 @@ uint32 test_stringmanip(){
     testforecho::test_true(r, "StringManip: Should be able to check hex string", IsHexStr("aabbcc"));
     testforecho::test_true(r, "StringManip: Should be able to check string boundaries string", IsWithinBounds("bigstring", 2, 15));
 
+    testforecho::test_eq(r, "StringManip: Should right-trim", RTrim("abc   "), "abc");
+    testforecho::test_eq(r, "StringManip: Should left-trim", LTrim("   abc"), "abc");
+    testforecho::test_eq(r, "StringManip: Should trim", Trim("   abc   "), "abc");
+
     return r;
 
 }
@@ -153,16 +157,16 @@ uint32 test_datehelper(){
 
     uint32 r {0};
 
-    testforecho::test_true(r, "Datehelper: Date should be valid", DateHelper::isValidDate(22, 6, 1997));
-    testforecho::test_true(r, "Datehelper: Date should be valid", DateHelper::isValidDate(22, 6, 1997));
-    testforecho::test_false(r, "Datehelper: Date should be invalid", DateHelper::isValidDate(32, 6, 1997));
-    testforecho::test_true(r, "Datehelper: Date should be valid", DateHelper::isValidDate("05/08/2001"));
-    testforecho::test_false(r, "Datehelper: Date should be invalid", DateHelper::isValidDate("05/13/1985"));
-    testforecho::test_eq(r, "Datehelper: Conversion should succeed", "06/03/2002", DateHelper::convertFromNumbers(6, 3, 2002));
+    testforecho::test_true(r, "Datehelper: Date should be valid", DateHelper::IsValidDate(22, 6, 1997));
+    testforecho::test_true(r, "Datehelper: Date should be valid", DateHelper::IsValidDate(22, 6, 1997));
+    testforecho::test_false(r, "Datehelper: Date should be invalid", DateHelper::IsValidDate(32, 6, 1997));
+    testforecho::test_true(r, "Datehelper: Date should be valid", DateHelper::IsValidDate("05/08/2001"));
+    testforecho::test_false(r, "Datehelper: Date should be invalid", DateHelper::IsValidDate("05/13/1985"));
+    testforecho::test_eq(r, "Datehelper: Conversion should succeed", "06/03/2002", DateHelper::ConvertFromNumbers(6, 3, 2002));
 
     {
         unsigned short d{0}, m{0}, y{0};
-        DateHelper::convertFromText("07/02/2003", d, m, y);
+        DateHelper::ConvertFromText("07/02/2003", d, m, y);
         testforecho::test_eq(r, "Datehelper: Conversion should succeed", 7, d);
         testforecho::test_eq(r, "Datehelper: Conversion should succeed", 2, m);
         testforecho::test_eq(r, "Datehelper: Conversion should succeed", 2003, y);
@@ -170,7 +174,7 @@ uint32 test_datehelper(){
 
     {
         unsigned short d{3}, m{4}, y{2005};
-        DateHelper::convertFromText("nope", d, m, y);
+        DateHelper::ConvertFromText("nope", d, m, y);
         testforecho::test_neq(r, "Datehelper: Conversion should fail", 3, d);
         testforecho::test_neq(r, "Datehelper: Conversion should fail", 4, m);
         testforecho::test_neq(r, "Datehelper: Conversion should fail", 2005, y);
@@ -178,41 +182,41 @@ uint32 test_datehelper(){
 
     {
         DateHelper dh{7, 80, 1978};
-        testforecho::test_eq(r, "Datehelper: Should be in an invalid state", dh.getDateString(), "00/00/0000");
+        testforecho::test_eq(r, "Datehelper: Should be in an invalid state", dh.GetDateString(), "00/00/0000");
     }
 
     {
         DateHelper dh{7, 5, 1985}; 
-        testforecho::test_false(r, "Datehelper: Should fail to set bad date", dh.setDate("35/20/2000"));
+        testforecho::test_false(r, "Datehelper: Should fail to set bad date", dh.SetDate("35/20/2000"));
     }
 
     {
         const std::string templ {"03/03/1993"};
         DateHelper dh{templ};
-        testforecho::test_eq(r, "Datehelper: Init date and later fetched date should match", templ, dh.getDateString());
+        testforecho::test_eq(r, "Datehelper: Init date and later fetched date should match", templ, dh.GetDateString());
     }
 
     {
-        DateHelper dh{7, 5, 1985}; dh.setDate("35/20/2000");
-        testforecho::test_eq(r, "Datehelper: Should be in an invalid state", dh.getDateString(), "00/00/0000");
+        DateHelper dh{7, 5, 1985}; dh.SetDate("35/20/2000");
+        testforecho::test_eq(r, "Datehelper: Should be in an invalid state", dh.GetDateString(), "00/00/0000");
     }
 
     {
         DateHelper dh{7, 5, 1985};
-        testforecho::test_eq(r, "Datehelper: Should be in a valid state", dh.getDateString(), "07/05/1985");
+        testforecho::test_eq(r, "Datehelper: Should be in a valid state", dh.GetDateString(), "07/05/1985");
     }
 
     {
         DateHelper dh{};
-        testforecho::test_true(r, "Datehelper: Auto-built date should be valid", DateHelper::isValidDate(dh.getDateString()));
+        testforecho::test_true(r, "Datehelper: Auto-built date should be valid", DateHelper::IsValidDate(dh.GetDateString()));
     }
 
     {
         DateHelper dh1{"01/01/2004"};
         DateHelper dh2 = dh1;
-        testforecho::test_eq(r, "Datehelper: Should match by the attribute copy", dh1.getDateString(), dh2.getDateString());
+        testforecho::test_eq(r, "Datehelper: Should match by the attribute copy", dh1.GetDateString(), dh2.GetDateString());
         DateHelper dh3{dh2};
-        testforecho::test_eq(r, "Datehelper: Should match by the copy constructor", dh2.getDateString(), dh3.getDateString());
+        testforecho::test_eq(r, "Datehelper: Should match by the copy constructor", dh2.GetDateString(), dh3.GetDateString());
     }
 
     return r;

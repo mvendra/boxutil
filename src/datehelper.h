@@ -29,30 +29,30 @@ public:
     DateHelper& operator=(const DateHelper&);
     DateHelper& operator=(DateHelper&&) = delete;
 
-    static bool isValidDate(const std::string &textdate);
-    static bool isValidDate(const uint16 _day,
+    static bool IsValidDate(const std::string &textdate);
+    static bool IsValidDate(const uint16 _day,
                      const uint16 _month,
                      const uint16 _year);
 
-    static void convertFromText(const std::string &textdate,
+    static void ConvertFromText(const std::string &textdate,
                                 uint16 &_day,
                                 uint16 &_month,
                                 uint16 &_year);
-    static std::string convertFromNumbers(const uint16 _day,
+    static std::string ConvertFromNumbers(const uint16 _day,
                                           const uint16 _month,
                                           const uint16 _year);
 
-    bool setDate(const std::string &textdate);
-    bool setDate(const uint16 _day,
+    bool SetDate(const std::string &textdate);
+    bool SetDate(const uint16 _day,
                  const uint16 _month,
                  const uint16 _year);
 
-    std::string getDateString() const;
-    void getDateNumbers(uint16 &_day,
+    std::string GetDateString() const;
+    void GetDateNumbers(uint16 &_day,
                         uint16 &_month,
                         uint16 &_year) const;
 
-    void clearDate();
+    void ClearDate();
 
 private:
 

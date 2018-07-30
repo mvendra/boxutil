@@ -53,7 +53,7 @@ DateHelper::DateHelper(const uint16 _day,
                        const uint16 _year):
 day{0}, month{0}, year{0}
 {
-    setDate(_day, _month, _year);
+    SetDate(_day, _month, _year);
 }
 
 DateHelper::DateHelper(DateHelper &&other):
@@ -61,13 +61,13 @@ day{ std::move(other.day) },
 month{ std::move(other.month) },
 year{ std::move(other.year) }
 {
-    setDate(day, month, year);
+    SetDate(day, month, year);
 }
 
 DateHelper::DateHelper(const std::string &textdate):
 day{0}, month{0}, year{0}
 {
-    setDate(textdate);
+    SetDate(textdate);
 }
 
 DateHelper::DateHelper(const DateHelper &other):
@@ -82,13 +82,13 @@ DateHelper& DateHelper::operator=(const DateHelper &other){
     return (*this);
 }
 
-bool DateHelper::isValidDate(const std::string &textdate) {
+bool DateHelper::IsValidDate(const std::string &textdate) {
 
 #ifdef _WIN32
     uint16 _day;
     uint16 _month;
     uint16 _year;
-    convertFromText(textdate, _day, _month, _year);
+    ConvertFromText(textdate, _day, _month, _year);
     if (_day >= 1 && _day <= 30 && _month >= 1 && _month <= 12 && _year >= 1970 && _year <= 2080) { return true; }
     else { return false; }
 #else
@@ -98,7 +98,7 @@ bool DateHelper::isValidDate(const std::string &textdate) {
 
 }
 
-bool DateHelper::isValidDate(const uint16 _day,
+bool DateHelper::IsValidDate(const uint16 _day,
                  const uint16 _month,
                  const uint16 _year) {
 
@@ -106,14 +106,14 @@ bool DateHelper::isValidDate(const uint16 _day,
     if (_day >= 1 && _day <= 30 && _month >= 1 && _month <= 12 && _year >= 1970 && _year <= 2080) { return true; }
     else { return false; }
 #else
-    std::string txtdate = convertFromNumbers(_day, _month, _year);
+    std::string txtdate = ConvertFromNumbers(_day, _month, _year);
     tm aux;
     return strptime(txtdate.c_str(), "%d/%m/%Y", &aux);
 #endif
 
 }
 
-void DateHelper::convertFromText(const std::string &textdate,
+void DateHelper::ConvertFromText(const std::string &textdate,
                                  uint16 &_day,
                                  uint16 &_month,
                                  uint16 &_year)
@@ -140,7 +140,7 @@ void DateHelper::convertFromText(const std::string &textdate,
 
 }
 
-std::string DateHelper::convertFromNumbers(const uint16 _day,
+std::string DateHelper::ConvertFromNumbers(const uint16 _day,
                                            const uint16 _month,
                                            const uint16 _year)
 {
@@ -153,15 +153,15 @@ std::string DateHelper::convertFromNumbers(const uint16 _day,
 
 }
 
-bool DateHelper::setDate(const std::string &textdate){
+bool DateHelper::SetDate(const std::string &textdate){
 
-    if (!isValidDate(textdate)){
-        clearDate();
+    if (!IsValidDate(textdate)){
+        ClearDate();
         return false;
     }
 
     uint16 _d{0}, _m{0}, _y{0};
-    convertFromText(textdate, _d, _m, _y);
+    ConvertFromText(textdate, _d, _m, _y);
 
     this->day = _d;
     this->month = _m;
@@ -171,12 +171,12 @@ bool DateHelper::setDate(const std::string &textdate){
 
 }
 
-bool DateHelper::setDate(const uint16 _day,
+bool DateHelper::SetDate(const uint16 _day,
              const uint16 _month,
              const uint16 _year) {
 
-    if (!isValidDate(_day, _month, _year)){
-        clearDate();
+    if (!IsValidDate(_day, _month, _year)){
+        ClearDate();
         return false;
     }
 
@@ -188,11 +188,11 @@ bool DateHelper::setDate(const uint16 _day,
 
 }
 
-std::string DateHelper::getDateString() const {
-    return convertFromNumbers(day, month, year);
+std::string DateHelper::GetDateString() const {
+    return ConvertFromNumbers(day, month, year);
 }
 
-void DateHelper::getDateNumbers(uint16 &_day,
+void DateHelper::GetDateNumbers(uint16 &_day,
                     uint16 &_month,
                     uint16 &_year) const {
     _day = day;
@@ -200,7 +200,7 @@ void DateHelper::getDateNumbers(uint16 &_day,
     _year = year;
 }
 
-void DateHelper::clearDate(){
+void DateHelper::ClearDate(){
     day = 0;
     month = 0;
     year = 0;
