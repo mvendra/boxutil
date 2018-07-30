@@ -83,7 +83,7 @@ compile:
 
 link:
 	$(POSTBUILD) $(ALL_OBJS)
-	ar rc $(FULL_APP_NAME) $(ALL_OBJS)
+	ar -rcs $(FULL_APP_NAME) $(ALL_OBJS)
 
 clean:
 	$(foreach objs,$(ALL_OBJS),rm -rf $(objs);)

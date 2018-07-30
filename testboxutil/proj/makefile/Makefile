@@ -3,6 +3,7 @@
 APPNAME=testboxutil
 
 BASE=../..
+LIB=$(BASE)/lib
 BASE_SRC=$(BASE)/src
 BASE_OBJ=$(BASE)/build
 RUN=$(BASE)/run
@@ -64,8 +65,10 @@ endif
 
 PLAT_ARCH_MODE=$(PLAT)_x$(ARCH)_$(MODE)
 
-INCLUDES=-I$(BASE_SRC)
-LDFLAGS=
+TESTFORECHO=$(LIB)/testforecho/include
+
+INCLUDES=-I$(BASE_SRC) -I../$(BASE_SRC) -I$(TESTFORECHO)
+LDFLAGS=-L../$(RUN_FULL) -lboxutil
 
 BASE_OBJ_FULL=$(BASE_OBJ)/$(PLAT_ARCH_MODE)
 RUN_FULL=$(RUN)/$(PLAT_ARCH_MODE)
@@ -83,7 +86,6 @@ compile:
 
 link:
 	$(COMPILER) -o $(FULL_APP_NAME) $(ALL_OBJS) $(LDFLAGS)
-	$(POSTBUILD)
 
 clean:
 	$(foreach objs,$(ALL_OBJS),rm -rf $(objs);)
