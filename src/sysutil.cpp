@@ -20,6 +20,18 @@
 #include <windows.h>
 #endif
 
+Platform GetPlatform(){
+    #ifdef __linux__
+        return Platform::Linux;
+    #elif _WIN32
+        return Platform::Win32;
+    #elif _WIN64
+        return Platform::Win64;
+    #else
+        #error "Unsupported Platform"
+    #endif
+}
+
 SysTime::SysTime():
 m_seconds{0}, m_minutes{0}, m_hours{0},
 m_monthday{0}, m_month{0}, m_year{0}

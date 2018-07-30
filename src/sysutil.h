@@ -8,6 +8,10 @@
 #include <string>
 #include <ostream>
 
+enum class Platform {Linux, Win32, Win64};
+
+Platform GetPlatform();
+
 class SysTime {
 public:
 
