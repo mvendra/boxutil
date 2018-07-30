@@ -5,9 +5,9 @@
 #include "boxutil.h"
 #include "testforecho.h"
 
-unsigned int test_timestamp(){
+uint32 test_timestamp(){
 
-    unsigned int r {0};
+    uint32 r {0};
 
     std::string strts;
     GetTimeStampString(strts);
@@ -21,9 +21,9 @@ unsigned int test_timestamp(){
 
 }
 
-unsigned int test_bytearray(){
+uint32 test_bytearray(){
 
-    unsigned int r {0};
+    uint32 r {0};
 
     byte testinput[9] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99};
     ByteArray bar(testinput, sizeof(testinput));
@@ -52,9 +52,9 @@ unsigned int test_bytearray(){
 
 }
 
-unsigned int test_bfl(){
+uint32 test_bfl(){
     
-    unsigned int r {0};
+    uint32 r {0};
     
     StrVecCont svcTest;
     testforecho::test_true(r, "BuldFileList: Should be able to make file list", BuildFileList("../../testprops/folder", "txt", svcTest));
@@ -68,9 +68,9 @@ unsigned int test_bfl(){
     
 }
 
-unsigned int test_strveccont(){
+uint32 test_strveccont(){
 
-    unsigned int r {0};
+    uint32 r {0};
     
     StrVecCont v1, v2;
     v1.PushBack("first");
@@ -90,9 +90,9 @@ unsigned int test_strveccont(){
 
 }
 
-unsigned int test_logger(){
+uint32 test_logger(){
 
-    unsigned int r {0};
+    uint32 r {0};
 
     std::string logfn = "./debug.txt";
     ManagedFile mf {logfn};
@@ -106,9 +106,9 @@ unsigned int test_logger(){
 
 }
 
-unsigned int test_stringmanip(){
+uint32 test_stringmanip(){
 
-    unsigned int r {0};
+    uint32 r {0};
 
     std::string strTeste = "aaa*uuu*bbb";
     std::string strOut;
@@ -149,9 +149,9 @@ unsigned int test_stringmanip(){
 
 }
 
-unsigned int test_datehelper(){
+uint32 test_datehelper(){
 
-    unsigned int r {0};
+    uint32 r {0};
 
     testforecho::test_true(r, "Date should be valid", DateHelper::isValidDate(22, 6, 1997));
     testforecho::test_true(r, "Date should be valid", DateHelper::isValidDate(22, 6, 1997));
@@ -219,9 +219,9 @@ unsigned int test_datehelper(){
 
 }
 
-unsigned int test_conversions(){
+uint32 test_conversions(){
 
-    unsigned int r {0};
+    uint32 r {0};
 
     testforecho::test_eq(r, "Conversion from decstr to int should work", DecStrToInt("-21"), -21);
     testforecho::test_eq(r, "Conversion from decstr to uint should work", DecStrToUint("4294967200"), 4294967200);
@@ -255,9 +255,9 @@ unsigned int test_conversions(){
 
 }
 
-unsigned int test_managedfile(){
+uint32 test_managedfile(){
 
-    unsigned int r {0};
+    uint32 r {0};
 
     std::string strFilename = "./testfile.txt";
     testforecho::test_false(r, "ManagedFile: File should not pre-exist", FileExists(strFilename));
@@ -279,7 +279,7 @@ int main(int argc, char *argv[]){
 
     (void)argc; (void)argv;
 
-    unsigned int r {0};
+    uint32 r {0};
 
     r += test_timestamp();
     r += test_bytearray();

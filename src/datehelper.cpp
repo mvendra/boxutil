@@ -48,9 +48,9 @@ DateHelper::DateHelper():day{0}, month{0}, year{0}{
 
 }
 
-DateHelper::DateHelper(const unsigned short _day,
-                       const unsigned short _month,
-                       const unsigned short _year):
+DateHelper::DateHelper(const uint16 _day,
+                       const uint16 _month,
+                       const uint16 _year):
 day{0}, month{0}, year{0}
 {
     setDate(_day, _month, _year);
@@ -85,9 +85,9 @@ DateHelper& DateHelper::operator=(const DateHelper &other){
 bool DateHelper::isValidDate(const std::string &textdate) {
 
 #ifdef _WIN32
-    unsigned short _day;
-    unsigned short _month;
-    unsigned short _year;
+    uint16 _day;
+    uint16 _month;
+    uint16 _year;
     convertFromText(textdate, _day, _month, _year);
     if (_day >= 1 && _day <= 30 && _month >= 1 && _month <= 12 && _year >= 1970 && _year <= 2080) { return true; }
     else { return false; }
@@ -98,9 +98,9 @@ bool DateHelper::isValidDate(const std::string &textdate) {
 
 }
 
-bool DateHelper::isValidDate(const unsigned short _day,
-                 const unsigned short _month,
-                 const unsigned short _year) {
+bool DateHelper::isValidDate(const uint16 _day,
+                 const uint16 _month,
+                 const uint16 _year) {
 
 #ifdef _WIN32
     if (_day >= 1 && _day <= 30 && _month >= 1 && _month <= 12 && _year >= 1970 && _year <= 2080) { return true; }
@@ -114,9 +114,9 @@ bool DateHelper::isValidDate(const unsigned short _day,
 }
 
 void DateHelper::convertFromText(const std::string &textdate,
-                                 unsigned short &_day,
-                                 unsigned short &_month,
-                                 unsigned short &_year)
+                                 uint16 &_day,
+                                 uint16 &_month,
+                                 uint16 &_year)
 {
 
     if (textdate.size() < 10){
@@ -140,9 +140,9 @@ void DateHelper::convertFromText(const std::string &textdate,
 
 }
 
-std::string DateHelper::convertFromNumbers(const unsigned short _day,
-                                           const unsigned short _month,
-                                           const unsigned short _year)
+std::string DateHelper::convertFromNumbers(const uint16 _day,
+                                           const uint16 _month,
+                                           const uint16 _year)
 {
 
     char chdate[32];
@@ -160,7 +160,7 @@ bool DateHelper::setDate(const std::string &textdate){
         return false;
     }
 
-    unsigned short _d{0}, _m{0}, _y{0};
+    uint16 _d{0}, _m{0}, _y{0};
     convertFromText(textdate, _d, _m, _y);
 
     this->day = _d;
@@ -171,9 +171,9 @@ bool DateHelper::setDate(const std::string &textdate){
 
 }
 
-bool DateHelper::setDate(const unsigned short _day,
-             const unsigned short _month,
-             const unsigned short _year) {
+bool DateHelper::setDate(const uint16 _day,
+             const uint16 _month,
+             const uint16 _year) {
 
     if (!isValidDate(_day, _month, _year)){
         clearDate();
@@ -192,9 +192,9 @@ std::string DateHelper::getDateString() const {
     return convertFromNumbers(day, month, year);
 }
 
-void DateHelper::getDateNumbers(unsigned short &_day,
-                    unsigned short &_month,
-                    unsigned short &_year) const {
+void DateHelper::getDateNumbers(uint16 &_day,
+                    uint16 &_month,
+                    uint16 &_year) const {
     _day = day;
     _month = month;
     _year = year;

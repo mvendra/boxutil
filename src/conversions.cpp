@@ -146,7 +146,7 @@ std::string DoubleToHexStr(fp64 i, bool bAutoFill){
     return NumberToHexStr<fp64>(i, bAutoFill);
 }
 
-int BytearrayFromHexString(const std::string &hs, unsigned char *buf, size_t max_buf_size){
+sint32 BytearrayFromHexString(const std::string &hs, pbyte buf, size_t max_buf_size){
 
     if (hs.size() % 2 != 0){
         return -1;
@@ -155,7 +155,7 @@ int BytearrayFromHexString(const std::string &hs, unsigned char *buf, size_t max
         return -1;
     }
 
-    int u = 0;
+    uint16 u = 0;
     char c[3]; c[0] = 0; c[1] = 0; c[2] = 0;
     for (size_t i=0; i<hs.size(); i += 2){
         c[0] = hs[i]; c[1] = hs[i+1];

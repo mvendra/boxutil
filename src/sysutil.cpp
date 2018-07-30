@@ -179,7 +179,7 @@ bool GetFileContents(const std::string &strFileName, std::string &contents){
 
     uint32 fs;
     if (!FileSize(strFileName, fs)) return false;
-    ManagedBuffer<char> mb { fs+1 };
+    ManagedBuffer<char8> mb { fs+1 };
     std::memset(mb.buffer, 0x00, mb.length);
     file.read(mb.buffer, mb.length);
     contents = mb.buffer;
@@ -388,7 +388,7 @@ std::string GetSysTmpDir() {
 
 std::string GetUserHomeFolder(){
 
-    const char *homedir;
+    pchar8 homedir;
 
 #if defined(_WIN64) || defined(_WIN32)
     if ((homedir = getenv("USERPROFILE")) == NULL){

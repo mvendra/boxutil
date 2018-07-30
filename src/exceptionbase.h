@@ -22,8 +22,8 @@ public:
     ExceptionBase(const ExceptionBase &other);
     ExceptionBase(const ExceptionBase &&other);
     ExceptionBase(const char8 *msg, const char8 *func, uint32 line);
-    const char *GetMessage() const;
-    const char *GetFunction() const;
+    pcchar8 GetMessage() const;
+    pcchar8 GetFunction() const;
     uint32 GetLine() const;
     virtual ~ExceptionBase();
 
@@ -34,8 +34,8 @@ public:
 
 protected:
 
-    char *m_message;
-    char *m_function;
+    pchar8 m_message;
+    pchar8 m_function;
     uint32 m_line;
 
 private:

@@ -2,6 +2,8 @@
 #ifndef __datehelper_h__
 #define __datehelper_h__
 
+#include "types.h"
+
 #include <string>
 
 class DateHelper {
@@ -15,9 +17,9 @@ public:
 
     DateHelper(const std::string &textdate);
 
-    DateHelper(const unsigned short _day,
-               const unsigned short _month,
-               const unsigned short _year);
+    DateHelper(const uint16 _day,
+               const uint16 _month,
+               const uint16 _year);
 
     DateHelper(DateHelper&&);
 
@@ -28,35 +30,35 @@ public:
     DateHelper& operator=(DateHelper&&) = delete;
 
     static bool isValidDate(const std::string &textdate);
-    static bool isValidDate(const unsigned short _day,
-                     const unsigned short _month,
-                     const unsigned short _year);
+    static bool isValidDate(const uint16 _day,
+                     const uint16 _month,
+                     const uint16 _year);
 
     static void convertFromText(const std::string &textdate,
-                                unsigned short &_day,
-                                unsigned short &_month,
-                                unsigned short &_year);
-    static std::string convertFromNumbers(const unsigned short _day,
-                                          const unsigned short _month,
-                                          const unsigned short _year);
+                                uint16 &_day,
+                                uint16 &_month,
+                                uint16 &_year);
+    static std::string convertFromNumbers(const uint16 _day,
+                                          const uint16 _month,
+                                          const uint16 _year);
 
     bool setDate(const std::string &textdate);
-    bool setDate(const unsigned short _day,
-                 const unsigned short _month,
-                 const unsigned short _year);
+    bool setDate(const uint16 _day,
+                 const uint16 _month,
+                 const uint16 _year);
 
     std::string getDateString() const;
-    void getDateNumbers(unsigned short &_day,
-                        unsigned short &_month,
-                        unsigned short &_year) const;
+    void getDateNumbers(uint16 &_day,
+                        uint16 &_month,
+                        uint16 &_year) const;
 
     void clearDate();
 
 private:
 
-    unsigned short day;
-    unsigned short month;
-    unsigned short year;
+    uint16 day;
+    uint16 month;
+    uint16 year;
 
 };
 

@@ -55,14 +55,14 @@ bool GetStringMidByBoundingChars(const std::string &strTarget, uchar8 chBound, s
 }
 
 std::string TxtStrFromBuffer(pcbyte pcbBuffer, const uint32 iBuffSize){
-    std::string strRet = std::string(reinterpret_cast<const char *>(pcbBuffer), iBuffSize);
+    std::string strRet = std::string(reinterpret_cast<pcchar8>(pcbBuffer), iBuffSize);
     return strRet;
 }
 
 std::string HexStrFromBuffer(pcbyte pcbBuffer, const uint32 iBuffSize){
 
     std::string strRet;
-    char chAux[3] = {0};
+    char8 chAux[3] = {0};
     for (uint32 i = 0; i < iBuffSize; i++){
         sprintf(chAux, "%02X", pcbBuffer[i]);
         strRet += chAux;
@@ -173,12 +173,12 @@ bool IsWithinBounds(const std::string &strValue, const uint32 min, const uint32 
     return true;
 }
 
-void HexDump(const std::vector<unsigned char> &_buffer){
+void HexDump(const std::vector<byte> &_buffer){
 
     std::cout << std::endl;
 
     size_t c = 0;
-    unsigned int offs = 0;
+    uint32 offs = 0;
     printf("%04X   ", offs);
 
     for (size_t i = 0; i < _buffer.size(); i++){
@@ -197,13 +197,13 @@ void HexDump(const std::vector<unsigned char> &_buffer){
 
 }
 
-int custom_strncpy_s(char *dest, size_t dest_s, const char *src, size_t src_s){
+sint32 custom_strncpy_s(pchar8 dest, size_t dest_s, pcchar8 src, size_t src_s){
 
 #if defined(_WIN64) || defined(_WIN32)
-    int r = strncpy_s(dest, dest_s, src, src_s);
+    sint32 r = strncpy_s(dest, dest_s, src, src_s);
     return r;
 #else
-    char *r = std::strncpy(dest, src, src_s);
+    pchar8 r = std::strncpy(dest, src, src_s);
     (void)r;
     (void)dest_s;
     return 0;
@@ -237,8 +237,8 @@ std::string RTrim(const std::string &source){
     if (source[source.size()-1] != ' '){
         return source;
     }
-    int n = -1;
-    for (int i = source.size()-1; i!=-1; i--){
+    sint32 n = -1;
+    for (sint32 i = source.size()-1; i!=-1; i--){
         if (source[i] != ' '){
             n = i;
             break;

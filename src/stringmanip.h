@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-int custom_strncpy_s(char *dest, size_t dest_s, const char *src, size_t src_s);
+sint32 custom_strncpy_s(pchar8 dest, size_t dest_s, pcchar8 src, size_t src_s);
 
 std::string GetNext(std::string &source, const std::string &delim = " ");
 uint32 CountCharsInString(const std::string &strTarget, uchar8 chChar);

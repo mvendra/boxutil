@@ -17,7 +17,7 @@ ExceptionBase::ExceptionBase(const ExceptionBase &&other):m_message(nullptr), m_
     SetLine(other.GetLine());
 }
 
-ExceptionBase::ExceptionBase(const char8 *msg, const char8 *func, uint32 line):m_message(nullptr), m_function(nullptr), m_line(0){
+ExceptionBase::ExceptionBase(pcchar8 msg, pcchar8 func, uint32 line):m_message(nullptr), m_function(nullptr), m_line(0){
     SetMsg(msg);
     SetFunc(func);
     SetLine(line);
@@ -28,11 +28,11 @@ ExceptionBase::~ExceptionBase(){
     free(m_function);
 }
 
-const char8 *ExceptionBase::GetMessage() const {
+pcchar8 ExceptionBase::GetMessage() const {
     return this->m_message;
 }
 
-const char8 *ExceptionBase::GetFunction() const {
+pcchar8 ExceptionBase::GetFunction() const {
     return this->m_function;
 }
 
@@ -40,19 +40,19 @@ uint32 ExceptionBase::GetLine() const {
     return this->m_line;
 }
 
-void ExceptionBase::SetMsg(const char8 *newmsg){
+void ExceptionBase::SetMsg(pcchar8 newmsg){
     free(m_message);
     m_message = nullptr;
     uint32 msglen = strlen(newmsg);
-    m_message = static_cast<char8*>(calloc(msglen+1, sizeof(char8)));
+    m_message = static_cast<pchar8>(calloc(msglen+1, sizeof(char8)));
     strncpy(m_message, newmsg, msglen);
 }
 
-void ExceptionBase::SetFunc(const char8 *newfunc){
+void ExceptionBase::SetFunc(pcchar8 newfunc){
     free(m_function);
     m_function = nullptr;
     uint32 funclen = strlen(newfunc);
-    m_function = static_cast<char8*>(calloc(funclen+1, sizeof(char8)));
+    m_function = static_cast<pchar8>(calloc(funclen+1, sizeof(char8)));
     strncpy(m_function, newfunc, funclen);
 }
 
