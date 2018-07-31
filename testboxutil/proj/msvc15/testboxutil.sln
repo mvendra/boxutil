@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testboxutil", "testboxutil.vcxproj", "{7C79831C-A822-47F3-B80A-66BEB3F427A1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "boxutil", "..\..\..\proj\msvc15\boxutil.vcxproj", "{731C19D1-DEE8-438D-9FB5-FC40CB3455A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -15,6 +17,10 @@ Global
 		{7C79831C-A822-47F3-B80A-66BEB3F427A1}.Debug|x64.Build.0 = Debug|x64
 		{7C79831C-A822-47F3-B80A-66BEB3F427A1}.Release|x64.ActiveCfg = Release|x64
 		{7C79831C-A822-47F3-B80A-66BEB3F427A1}.Release|x64.Build.0 = Release|x64
+		{731C19D1-DEE8-438D-9FB5-FC40CB3455A7}.Debug|x64.ActiveCfg = Debug|x64
+		{731C19D1-DEE8-438D-9FB5-FC40CB3455A7}.Debug|x64.Build.0 = Debug|x64
+		{731C19D1-DEE8-438D-9FB5-FC40CB3455A7}.Release|x64.ActiveCfg = Release|x64
+		{731C19D1-DEE8-438D-9FB5-FC40CB3455A7}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -79,7 +79,7 @@ bool SysTime::operator== (const SysTime &other){
 
 std::string SysTime::ToString(){
     char chAux[32] = {0}; // sample: "19:48:31 - 01/12/2013"
-	custom_sprintf_s(chAux, 32, "%02d:%02d:%02d - %02d/%02d/%04d", m_box_hours, m_box_minutes, m_box_seconds, m_box_monthday, m_box_month, m_box_year);
+	box_snprintf(chAux, 32, "%02d:%02d:%02d - %02d/%02d/%04d", m_box_hours, m_box_minutes, m_box_seconds, m_box_monthday, m_box_month, m_box_year);
     return chAux;
 }
 

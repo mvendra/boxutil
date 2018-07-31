@@ -143,7 +143,7 @@ std::string DateHelper::ConvertFromNumbers(const unsigned short param_day,
 
     char chdate[32];
     std::memset(chdate, 0x00, 32);
-	custom_sprintf_s(chdate, 32, "%02d/%02d/%04d", param_day, param_month, param_year);
+	box_snprintf(chdate, 32, "%02d/%02d/%04d", param_day, param_month, param_year);
     std::string ret {chdate};
     return ret;
 

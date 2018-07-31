@@ -57,6 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../../src;../../lib/testforecho/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>COMPILER_NO_CONCEPTS_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\run\windows_$(PlatformTarget)_$(Configuration)\</AdditionalLibraryDirectories>
@@ -72,6 +73,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../../src;../../lib/testforecho/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>COMPILER_NO_CONCEPTS_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

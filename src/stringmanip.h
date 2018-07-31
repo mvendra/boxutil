@@ -7,8 +7,13 @@
 
 namespace boxutil {
 
+#ifdef _WIN32
+#define box_snprintf _snprintf_s
+#else
+#define box_snprintf std::snprintf
+#endif
+
 int custom_strncpy_s(char *dest, size_t dest_s, const char *src, size_t src_s);
-int custom_sprintf_s(char *dest, unsigned int destsize, const char *format, ...);
 
 std::string GetNext(std::string &source, const std::string &delim = " ");
 unsigned int CountCharsInString(const std::string &strTarget, char chChar);

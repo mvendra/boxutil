@@ -35,7 +35,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{7C79831C-A822-47F3-B80A-66BEB3F427A1}</ProjectGuid>
+    <ProjectGuid>{731C19D1-DEE8-438D-9FB5-FC40CB3455A7}</ProjectGuid>
     <RootNamespace>boxutil</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -66,18 +66,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)..\..\run\windows_$(PlatformTarget)_$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)..\..\build\windows_$(PlatformTarget)_$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)..\..\run\windows_$(PlatformTarget)_$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)..\..\build\windows_$(PlatformTarget)_$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)..\..\run\windows_$(PlatformTarget)_$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)..\..\build\windows_$(PlatformTarget)_$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)..\..\run\windows_$(PlatformTarget)_$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)..\..\build\windows_$(PlatformTarget)_$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -87,6 +88,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

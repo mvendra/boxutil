@@ -67,7 +67,7 @@ std::string HexStrFromBuffer(const unsigned char * pcbBuffer, const unsigned int
     std::string strRet;
     char chAux[3] = {0};
     for (unsigned int i = 0; i < iBuffSize; i++){
-		custom_sprintf_s(chAux, 3, "%02X", pcbBuffer[i]);
+		box_snprintf(chAux, 3, "%02X", pcbBuffer[i]);
         strRet += chAux;
     }
     return strRet;
@@ -210,22 +210,6 @@ int custom_strncpy_s(char *dest, size_t dest_s, const char * src, size_t src_s){
     (void)r;
     (void)dest_s;
     return 0;
-#endif
-
-}
-
-int custom_sprintf_s(char *dest, unsigned int destsize, const char * format, ...) {
-
-	va_list args;
-	va_start(args, format);
-	va_list args_copy;
-	va_copy(args_copy, args);
-
-#ifdef _WIN32
-	return sprintf_s(dest, destsize, format, args_copy);
-#else
-	(void)destsize;
-	return std::sprintf(dest, format, args_copy);
 #endif
 
 }
