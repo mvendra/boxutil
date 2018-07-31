@@ -5,10 +5,8 @@
 * Make boxutil thread safe
 * wrapper around variadics (format of sorts)
 * Timer funcs (time() / GetLocalTime() )
-* Put it in a namespace
 * get rid of all warnings
 * Boxutil::console with polymorphic-frontend (either stdin and out or a ingame rendered console)
-* Boxutil: get system id(enum)
 * remove the custom types (char8 and etc)
 * time prettyprinting (given 90 seconds, return "1 minute 30 secs" and etc; including days, hours etc)
 
