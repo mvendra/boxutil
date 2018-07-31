@@ -20,6 +20,8 @@
 #include <windows.h>
 #endif
 
+namespace boxutil {
+
 Platform GetPlatform(){
     #ifdef __linux__
         return Platform::Linux;
@@ -418,3 +420,5 @@ void GetTimeStampString(std::string &strTimestamp){
     SysTime sysTime = GetSystemTime();
     strTimestamp = sysTime.ToString();
 }
+
+} // ns: boxutil

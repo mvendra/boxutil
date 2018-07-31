@@ -1,9 +1,11 @@
 
-#ifndef __managedfile_h__
-#define __managedfile_h__
+#ifndef __BOXUTIL_MANAGEDFILE_H__
+#define __BOXUTIL_MANAGEDFILE_H__
 
 #include "sysutil.h"
 #include <string>
+
+namespace boxutil {
 
 class ManagedFile final {
 
@@ -24,4 +26,6 @@ private:
 
 };
 
-#endif // __managedfile_h__
+} // ns: boxutil
+
+#endif // __BOXUTIL_MANAGEDFILE_H__

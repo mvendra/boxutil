@@ -1,6 +1,8 @@
 
 #include "strveccont.h"
 
+namespace boxutil {
+
 StrVecCont::StrVecCont():m_vecstrings{}
 {
 }
@@ -87,3 +89,5 @@ bool StrVecCont::operator==(const StrVecCont &other){
     }
     return true;
 }
+
+} // ns: boxutil

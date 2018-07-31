@@ -10,11 +10,11 @@ uint32 test_timestamp(){
     uint32 r {0};
 
     std::string strts;
-    GetTimeStampString(strts);
+    boxutil::GetTimeStampString(strts);
     testforecho::test_neq(r, "SysTime: Should be able to get timestamp", strts, "");
 
-    SysTime st1 = GetSystemTime();
-    SysTime st2 = st1;
+    boxutil::SysTime st1 = boxutil::GetSystemTime();
+    boxutil::SysTime st2 = st1;
     testforecho::test_eq(r, "SysTime: Timestamps should match", st1.ToString(), st2.ToString());
 
     return r;
@@ -26,9 +26,9 @@ uint32 test_bytearray(){
     uint32 r {0};
 
     byte testinput[9] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99};
-    ByteArray bar(testinput, sizeof(testinput));
+    boxutil::ByteArray bar(testinput, sizeof(testinput));
 
-    ByteArray bar2;
+    boxutil::ByteArray bar2;
     bar2 = bar;
 
     testforecho::test_eq(r, "ByteArray: Should match", bar.GetHexString(), bar2.GetHexString());
@@ -44,7 +44,7 @@ uint32 test_bytearray(){
     testforecho::test_false(r, "ByeArray: Should not be able to get last byte", bar.GetByte(9, p1));
     testforecho::test_true(r, "ByeArray: Should be able to get last byte", bar2.GetByte(8, p1));
     testforecho::test_eq(r, "ByeArray: Last byte should be 112", p1, 112);
-    ByteArray bar3;
+    boxutil::ByteArray bar3;
     testforecho::test_true(r, "ByeArray: Should be able to get section", bar2.GetSection(0, 3, bar3));
     testforecho::test_eq(r, "ByeArray: Hex strings should match", bar3.GetHexString(), "223344");
 
@@ -56,8 +56,8 @@ uint32 test_bfl(){
     
     uint32 r {0};
     
-    StrVecCont svcTest;
-    testforecho::test_true(r, "BuldFileList: Should be able to make file list", BuildFileList("../../testprops/folder", "txt", svcTest));
+    boxutil::StrVecCont svcTest;
+    testforecho::test_true(r, "BuldFileList: Should be able to make file list", boxutil::BuildFileList("../../testprops/folder", "txt", svcTest));
     testforecho::test_eq(r, "BuildFileList: Size should be 3", svcTest.Size(), 3);
 
     testforecho::test_true(r, "BuildFileList: Should have element", (svcTest.HasElement("one.txt")));
@@ -72,7 +72,7 @@ uint32 test_strveccont(){
 
     uint32 r {0};
     
-    StrVecCont v1, v2;
+    boxutil::StrVecCont v1, v2;
     v1.PushBack("first");
     v1.PushBack("second");
 
@@ -95,12 +95,12 @@ uint32 test_logger(){
     uint32 r {0};
 
     std::string logfn = "./debug.txt";
-    ManagedFile mf {logfn};
-    Logger logger(logfn.c_str());
+    boxutil::ManagedFile mf {logfn};
+    boxutil::Logger logger(logfn.c_str());
     logger.LogInfo("day of the dog");
     std::string contents;
-    GetFileContents(logfn, contents);
-    testforecho::test_true(r, "Logger: Should be able to log and retrieve", ContainsNoCase(contents, "dog"));
+    boxutil::GetFileContents(logfn, contents);
+    testforecho::test_true(r, "Logger: Should be able to log and retrieve", boxutil::ContainsNoCase(contents, "dog"));
 
     return r;
 
@@ -112,42 +112,42 @@ uint32 test_stringmanip(){
 
     std::string strTeste = "aaa*uuu*bbb";
     std::string strOut;
-    testforecho::test_true(r, "StringManip: extremes trim, should be able to extract mid", GetStringMidByBoundingChars(strTeste, '*', strOut));
+    testforecho::test_true(r, "StringManip: extremes trim, should be able to extract mid", boxutil::GetStringMidByBoundingChars(strTeste, '*', strOut));
     testforecho::test_eq(r, "StringManip: extremes trim", strOut, "uuu");
 
-    testforecho::test_eq(r, "StringManip: Should count chars in string", CountCharsInString("aaaaazaaaaaaza", 'z'), 2);
+    testforecho::test_eq(r, "StringManip: Should count chars in string", boxutil::CountCharsInString("aaaaazaaaaaaza", 'z'), 2);
 
     strTeste = "a b c";
-    testforecho::test_eq(r, "StringManip: Should get next", GetNext(strTeste), "a");
-    testforecho::test_eq(r, "StringManip: Should get next", GetNext(strTeste), "b");
-    testforecho::test_eq(r, "StringManip: Should get next", GetNext(strTeste), "c");
-    testforecho::test_eq(r, "StringManip: Should get next", GetNext(strTeste), "");
+    testforecho::test_eq(r, "StringManip: Should get next", boxutil::GetNext(strTeste), "a");
+    testforecho::test_eq(r, "StringManip: Should get next", boxutil::GetNext(strTeste), "b");
+    testforecho::test_eq(r, "StringManip: Should get next", boxutil::GetNext(strTeste), "c");
+    testforecho::test_eq(r, "StringManip: Should get next", boxutil::GetNext(strTeste), "");
 
     byte p[1]; p[0] = 112;
-    testforecho::test_eq(r, "StringManip: Should convert from byte buffer to string", TxtStrFromBuffer(p, 1), "p");
+    testforecho::test_eq(r, "StringManip: Should convert from byte buffer to string", boxutil::TxtStrFromBuffer(p, 1), "p");
 
     p[0] = 0xaa;
-    testforecho::test_eq(r, "StringManip: Should convert from byte buffer to hexstring", HexStrFromBuffer(p, 1), "AA");
+    testforecho::test_eq(r, "StringManip: Should convert from byte buffer to hexstring", boxutil::HexStrFromBuffer(p, 1), "AA");
 
-    testforecho::test_eq(r, "StringManip: Should be able to pop file extension", PopExtension("file.txt"), "file");
-    testforecho::test_eq(r, "StringManip: Should be able to get file extension", GetExtension("file.txt"), "txt");
+    testforecho::test_eq(r, "StringManip: Should be able to pop file extension", boxutil::PopExtension("file.txt"), "file");
+    testforecho::test_eq(r, "StringManip: Should be able to get file extension", boxutil::GetExtension("file.txt"), "txt");
 
-    testforecho::test_eq(r, "StringManip: Should be able to make uppercase", MakeUppercase("abc"), "ABC");
-    testforecho::test_eq(r, "StringManip: Should be able to make lowercase", MakeLowercase("ABC"), "abc");
+    testforecho::test_eq(r, "StringManip: Should be able to make uppercase", boxutil::MakeUppercase("abc"), "ABC");
+    testforecho::test_eq(r, "StringManip: Should be able to make lowercase", boxutil::MakeLowercase("ABC"), "abc");
 
-    testforecho::test_eq(r, "StringManip: Should be able to compare with no case", CompareNoCase("border", "BOrder"), 0);
-    testforecho::test_true(r, "StringManip: Should be able to check for containment", ContainsNoCase("border", "or"));
+    testforecho::test_eq(r, "StringManip: Should be able to compare with no case", boxutil::CompareNoCase("border", "BOrder"), 0);
+    testforecho::test_true(r, "StringManip: Should be able to check for containment", boxutil::ContainsNoCase("border", "or"));
 
-    testforecho::test_true(r, "StringManip: Should be able to check numeric string", IsNumericString("123"));
-    testforecho::test_true(r, "StringManip: Should be able to check alphanumeric string", IsAlpha("abc"));
-    testforecho::test_true(r, "StringManip: Should be able to check alphanumeric(ext) string", IsAlphaExt("abc..."));
-    testforecho::test_true(r, "StringManip: Should be able to check bcd string", IsBCD("1230"));
-    testforecho::test_true(r, "StringManip: Should be able to check hex string", IsHexStr("aabbcc"));
-    testforecho::test_true(r, "StringManip: Should be able to check string boundaries string", IsWithinBounds("bigstring", 2, 15));
+    testforecho::test_true(r, "StringManip: Should be able to check numeric string", boxutil::IsNumericString("123"));
+    testforecho::test_true(r, "StringManip: Should be able to check alphanumeric string", boxutil::IsAlpha("abc"));
+    testforecho::test_true(r, "StringManip: Should be able to check alphanumeric(ext) string", boxutil::IsAlphaExt("abc..."));
+    testforecho::test_true(r, "StringManip: Should be able to check bcd string", boxutil::IsBCD("1230"));
+    testforecho::test_true(r, "StringManip: Should be able to check hex string", boxutil::IsHexStr("aabbcc"));
+    testforecho::test_true(r, "StringManip: Should be able to check string boundaries string", boxutil::IsWithinBounds("bigstring", 2, 15));
 
-    testforecho::test_eq(r, "StringManip: Should right-trim", RTrim("abc   "), "abc");
-    testforecho::test_eq(r, "StringManip: Should left-trim", LTrim("   abc"), "abc");
-    testforecho::test_eq(r, "StringManip: Should trim", Trim("   abc   "), "abc");
+    testforecho::test_eq(r, "StringManip: Should right-trim", boxutil::RTrim("abc   "), "abc");
+    testforecho::test_eq(r, "StringManip: Should left-trim", boxutil::LTrim("   abc"), "abc");
+    testforecho::test_eq(r, "StringManip: Should trim", boxutil::Trim("   abc   "), "abc");
 
     return r;
 
@@ -157,16 +157,16 @@ uint32 test_datehelper(){
 
     uint32 r {0};
 
-    testforecho::test_true(r, "Datehelper: Date should be valid", DateHelper::IsValidDate(22, 6, 1997));
-    testforecho::test_true(r, "Datehelper: Date should be valid", DateHelper::IsValidDate(22, 6, 1997));
-    testforecho::test_false(r, "Datehelper: Date should be invalid", DateHelper::IsValidDate(32, 6, 1997));
-    testforecho::test_true(r, "Datehelper: Date should be valid", DateHelper::IsValidDate("05/08/2001"));
-    testforecho::test_false(r, "Datehelper: Date should be invalid", DateHelper::IsValidDate("05/13/1985"));
-    testforecho::test_eq(r, "Datehelper: Conversion should succeed", "06/03/2002", DateHelper::ConvertFromNumbers(6, 3, 2002));
+    testforecho::test_true(r, "Datehelper: Date should be valid", boxutil::DateHelper::IsValidDate(22, 6, 1997));
+    testforecho::test_true(r, "Datehelper: Date should be valid", boxutil::DateHelper::IsValidDate(22, 6, 1997));
+    testforecho::test_false(r, "Datehelper: Date should be invalid", boxutil::DateHelper::IsValidDate(32, 6, 1997));
+    testforecho::test_true(r, "Datehelper: Date should be valid", boxutil::DateHelper::IsValidDate("05/08/2001"));
+    testforecho::test_false(r, "Datehelper: Date should be invalid", boxutil::DateHelper::IsValidDate("05/13/1985"));
+    testforecho::test_eq(r, "Datehelper: Conversion should succeed", "06/03/2002", boxutil::DateHelper::ConvertFromNumbers(6, 3, 2002));
 
     {
         unsigned short d{0}, m{0}, y{0};
-        DateHelper::ConvertFromText("07/02/2003", d, m, y);
+        boxutil::DateHelper::ConvertFromText("07/02/2003", d, m, y);
         testforecho::test_eq(r, "Datehelper: Conversion should succeed", 7, d);
         testforecho::test_eq(r, "Datehelper: Conversion should succeed", 2, m);
         testforecho::test_eq(r, "Datehelper: Conversion should succeed", 2003, y);
@@ -174,48 +174,48 @@ uint32 test_datehelper(){
 
     {
         unsigned short d{3}, m{4}, y{2005};
-        DateHelper::ConvertFromText("nope", d, m, y);
+        boxutil::DateHelper::ConvertFromText("nope", d, m, y);
         testforecho::test_neq(r, "Datehelper: Conversion should fail", 3, d);
         testforecho::test_neq(r, "Datehelper: Conversion should fail", 4, m);
         testforecho::test_neq(r, "Datehelper: Conversion should fail", 2005, y);
     }
 
     {
-        DateHelper dh{7, 80, 1978};
+        boxutil::DateHelper dh{7, 80, 1978};
         testforecho::test_eq(r, "Datehelper: Should be in an invalid state", dh.GetDateString(), "00/00/0000");
     }
 
     {
-        DateHelper dh{7, 5, 1985}; 
+        boxutil::DateHelper dh{7, 5, 1985}; 
         testforecho::test_false(r, "Datehelper: Should fail to set bad date", dh.SetDate("35/20/2000"));
     }
 
     {
         const std::string templ {"03/03/1993"};
-        DateHelper dh{templ};
+        boxutil::DateHelper dh{templ};
         testforecho::test_eq(r, "Datehelper: Init date and later fetched date should match", templ, dh.GetDateString());
     }
 
     {
-        DateHelper dh{7, 5, 1985}; dh.SetDate("35/20/2000");
+        boxutil::DateHelper dh{7, 5, 1985}; dh.SetDate("35/20/2000");
         testforecho::test_eq(r, "Datehelper: Should be in an invalid state", dh.GetDateString(), "00/00/0000");
     }
 
     {
-        DateHelper dh{7, 5, 1985};
+        boxutil::DateHelper dh{7, 5, 1985};
         testforecho::test_eq(r, "Datehelper: Should be in a valid state", dh.GetDateString(), "07/05/1985");
     }
 
     {
-        DateHelper dh{};
-        testforecho::test_true(r, "Datehelper: Auto-built date should be valid", DateHelper::IsValidDate(dh.GetDateString()));
+        boxutil::DateHelper dh{};
+        testforecho::test_true(r, "Datehelper: Auto-built date should be valid", boxutil::DateHelper::IsValidDate(dh.GetDateString()));
     }
 
     {
-        DateHelper dh1{"01/01/2004"};
-        DateHelper dh2 = dh1;
+        boxutil::DateHelper dh1{"01/01/2004"};
+        boxutil::DateHelper dh2 = dh1;
         testforecho::test_eq(r, "Datehelper: Should match by the attribute copy", dh1.GetDateString(), dh2.GetDateString());
-        DateHelper dh3{dh2};
+        boxutil::DateHelper dh3{dh2};
         testforecho::test_eq(r, "Datehelper: Should match by the copy constructor", dh2.GetDateString(), dh3.GetDateString());
     }
 
@@ -227,33 +227,33 @@ uint32 test_conversions(){
 
     uint32 r {0};
 
-    testforecho::test_eq(r, "Conversions: Conversion from decstr to int should work", DecStrToInt("-21"), -21);
-    testforecho::test_eq(r, "Conversions: Conversion from decstr to uint should work", DecStrToUint("4294967200"), 4294967200);
-    testforecho::test_eq(r, "Conversions: Conversion from decstr to short should work", DecStrToShort("-250"), -250);
-    testforecho::test_eq(r, "Conversions: Conversion from decstr to ushort should work", DecStrToUshort("220"), 220);
-    testforecho::test_true(r, "Conversions: Conversion from decstr to float should work", (DecStrToFloat("32.1") > 32.09 && DecStrToFloat("32.1") < 32.11) );
-    testforecho::test_true(r, "Conversions: Conversion from decstr to double should work", (DecStrToDouble("500.32") > 500.31 && DecStrToDouble("500.32") < 500.33 ));
+    testforecho::test_eq(r, "Conversions: Conversion from decstr to int should work", boxutil::DecStrToInt("-21"), -21);
+    testforecho::test_eq(r, "Conversions: Conversion from decstr to uint should work", boxutil::DecStrToUint("4294967200"), 4294967200);
+    testforecho::test_eq(r, "Conversions: Conversion from decstr to short should work", boxutil::DecStrToShort("-250"), -250);
+    testforecho::test_eq(r, "Conversions: Conversion from decstr to ushort should work", boxutil::DecStrToUshort("220"), 220);
+    testforecho::test_true(r, "Conversions: Conversion from decstr to float should work", (boxutil::DecStrToFloat("32.1") > 32.09 && boxutil::DecStrToFloat("32.1") < 32.11) );
+    testforecho::test_true(r, "Conversions: Conversion from decstr to double should work", (boxutil::DecStrToDouble("500.32") > 500.31 && boxutil::DecStrToDouble("500.32") < 500.33 ));
 
-    testforecho::test_eq(r, "Conversions: Conversion from int to decstr should work", IntToDecStr(-21), "-21");
-    testforecho::test_eq(r, "Conversions: Conversion from uint to decstr should work", UintToDecStr(4294967200), "4294967200");
-    testforecho::test_eq(r, "Conversions: Conversion from short to decstr should work", ShortToDecStr(-250), "-250");
-    testforecho::test_eq(r, "Conversions: Conversion from ushort to decstr should work", UshortToDecStr(220), "220");
-    testforecho::test_eq(r, "Conversions: Conversion from float to decstr should work", FloatToDecStr(32.1), "32.1");
-    testforecho::test_eq(r, "Conversions: Conversion from double to decstr should work", DoubleToDecStr(500.32), "500.32");
+    testforecho::test_eq(r, "Conversions: Conversion from int to decstr should work", boxutil::IntToDecStr(-21), "-21");
+    testforecho::test_eq(r, "Conversions: Conversion from uint to decstr should work", boxutil::UintToDecStr(4294967200), "4294967200");
+    testforecho::test_eq(r, "Conversions: Conversion from short to decstr should work", boxutil::ShortToDecStr(-250), "-250");
+    testforecho::test_eq(r, "Conversions: Conversion from ushort to decstr should work", boxutil::UshortToDecStr(220), "220");
+    testforecho::test_eq(r, "Conversions: Conversion from float to decstr should work", boxutil::FloatToDecStr(32.1), "32.1");
+    testforecho::test_eq(r, "Conversions: Conversion from double to decstr should work", boxutil::DoubleToDecStr(500.32), "500.32");
 
-    testforecho::test_eq(r, "Conversions: Conversion from hexstr to int should work", HexStrToInt("-28"), -40);
-    testforecho::test_eq(r, "Conversions: Conversion from hexstr to uint should work", HexStrToUint("15"), 21);
-    testforecho::test_eq(r, "Conversions: Conversion from hexstr to short should work", HexStrToShort("-FA"), -250);
-    testforecho::test_eq(r, "Conversions: Conversion from hexstr to ushort should work", HexStrToUshort("DC"), 220);
-    testforecho::test_eq(r, "Conversions: Conversion from hexstr to float should work", HexStrToFloat("A"), 10);
-    testforecho::test_eq(r, "Conversions: Conversion from hexstr to double should work", HexStrToDouble("B"), 11);
+    testforecho::test_eq(r, "Conversions: Conversion from hexstr to int should work", boxutil::HexStrToInt("-28"), -40);
+    testforecho::test_eq(r, "Conversions: Conversion from hexstr to uint should work", boxutil::HexStrToUint("15"), 21);
+    testforecho::test_eq(r, "Conversions: Conversion from hexstr to short should work", boxutil::HexStrToShort("-FA"), -250);
+    testforecho::test_eq(r, "Conversions: Conversion from hexstr to ushort should work", boxutil::HexStrToUshort("DC"), 220);
+    testforecho::test_eq(r, "Conversions: Conversion from hexstr to float should work", boxutil::HexStrToFloat("A"), 10);
+    testforecho::test_eq(r, "Conversions: Conversion from hexstr to double should work", boxutil::HexStrToDouble("B"), 11);
 
-    testforecho::test_eq(r, "Conversions: Conversion from int to hexstr should work", IntToHexStr(-2), "-02");
-    testforecho::test_eq(r, "Conversions: Conversion from uint to hexstr should work", UintToHexStr(10), "0A");
-    testforecho::test_eq(r, "Conversions: Conversion from short to hexstr should work", ShortToHexStr(-1), "-01");
-    testforecho::test_eq(r, "Conversions: Conversion from ushort to hexstr should work", UshortToHexStr(0xDC), "DC");
-    testforecho::test_eq(r, "Conversions: Conversion from float to hexstr should work", FloatToHexStr(32.1), "32.1");
-    testforecho::test_eq(r, "Conversions: Conversion from double to hexstr should work", DoubleToHexStr(500.32), "500.32");
+    testforecho::test_eq(r, "Conversions: Conversion from int to hexstr should work", boxutil::IntToHexStr(-2), "-02");
+    testforecho::test_eq(r, "Conversions: Conversion from uint to hexstr should work", boxutil::UintToHexStr(10), "0A");
+    testforecho::test_eq(r, "Conversions: Conversion from short to hexstr should work", boxutil::ShortToHexStr(-1), "-01");
+    testforecho::test_eq(r, "Conversions: Conversion from ushort to hexstr should work", boxutil::UshortToHexStr(0xDC), "DC");
+    testforecho::test_eq(r, "Conversions: Conversion from float to hexstr should work", boxutil::FloatToHexStr(32.1), "32.1");
+    testforecho::test_eq(r, "Conversions: Conversion from double to hexstr should work", boxutil::DoubleToHexStr(500.32), "500.32");
 
     return r;
 
@@ -264,16 +264,16 @@ uint32 test_managedfile(){
     uint32 r {0};
 
     std::string strFilename = "./testfile.txt";
-    testforecho::test_false(r, "ManagedFile: File should not pre-exist", FileExists(strFilename));
-    SaveFileContents(strFilename, "one");
+    testforecho::test_false(r, "ManagedFile: File should not pre-exist", boxutil::FileExists(strFilename));
+    boxutil::SaveFileContents(strFilename, "one");
     std::string s;
-    testforecho::test_true(r, "ManagedFile: File should be readable", GetFileContents(strFilename, s));
+    testforecho::test_true(r, "ManagedFile: File should be readable", boxutil::GetFileContents(strFilename, s));
     testforecho::test_eq(r, "ManagedFile: File content should match", s, "one");
-    testforecho::test_true(r, "ManagedFile: File should have been created", FileExists(strFilename));
+    testforecho::test_true(r, "ManagedFile: File should have been created", boxutil::FileExists(strFilename));
     {
-        ManagedFile mf {strFilename};
+        boxutil::ManagedFile mf {strFilename};
     }
-    testforecho::test_false(r, "ManagedFile: File should have been deleted", FileExists(strFilename));
+    testforecho::test_false(r, "ManagedFile: File should have been deleted", boxutil::FileExists(strFilename));
 
     return r;
 

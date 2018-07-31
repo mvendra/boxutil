@@ -1,6 +1,6 @@
 
-#ifndef __boxutil_h__
-#define __boxutil_h__
+#ifndef __BOXUTIL_H__
+#define __BOXUTIL_H__
 
 #include "bytearray.h"
 #include "conversions.h"
@@ -14,4 +14,4 @@
 #include "sysutil.h"
 #include "types.h"
 
-#endif // __boxutil_h__
+#endif // __BOXUTIL_H__

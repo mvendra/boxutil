@@ -1,10 +1,12 @@
 
-#ifndef __bytearray_h__
-#define __bytearray_h__
+#ifndef __BOXUTIL_BYTEARRAY_H__
+#define __BOXUTIL_BYTEARRAY_H__
 
 #include <string>
 
 #include "types.h"
+
+namespace boxutil {
 
 class ByteArray final {
 
@@ -42,4 +44,6 @@ private:
 
 };
 
-#endif // __bytearray_h__
+} // ns: boxutil
+
+#endif // __BOXUTIL_BYTEARRAY_H__

@@ -7,6 +7,8 @@
 #include <sstream>
 #include <iomanip>
 
+namespace boxutil {
+
 template< typename T >
 std::string NumberToHexStr( T i, bool bAutoFill){
     std::stringstream stream;
@@ -164,3 +166,5 @@ sint32 BytearrayFromHexString(const std::string &hs, pbyte buf, size_t max_buf_s
     return (hs.size()/2);
 
 }
+
+} // ns: boxutil

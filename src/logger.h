@@ -1,8 +1,10 @@
 
-#ifndef __logger_h__
-#define __logger_h__
+#ifndef __BOXUTIL_LOGGER_H__
+#define __BOXUTIL_LOGGER_H__
 
 #include "types.h"
+
+namespace boxutil {
 
 class Logger {
 
@@ -30,4 +32,6 @@ private:
     
 };
 
-#endif // __logger_h__
+} // ns: boxutil
+
+#endif // __BOXUTIL_LOGGER_H__

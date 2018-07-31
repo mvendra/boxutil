@@ -7,6 +7,8 @@
 #include <cstring>
 #include <cstdlib>
 
+namespace boxutil {
+
 ByteArray::ByteArray():
 m_internalcontents{nullptr}, m_internallength{0}{
     InitInternalMem();
@@ -164,3 +166,4 @@ std::string ByteArray::GetHexString() const {
     return strRet;
 }
 
+} // ns: boxutil

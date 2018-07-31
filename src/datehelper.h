@@ -1,10 +1,12 @@
 
-#ifndef __datehelper_h__
-#define __datehelper_h__
+#ifndef __BOXUTIL_DATEHELPER_H__
+#define __BOXUTIL_DATEHELPER_H__
 
 #include "types.h"
 
 #include <string>
+
+namespace boxutil {
 
 class DateHelper final {
 
@@ -62,4 +64,6 @@ private:
 
 };
 
-#endif // __datehelper_h__
+} // ns: boxutil
+
+#endif // __BOXUTIL_DATEHELPER_H__

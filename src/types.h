@@ -1,6 +1,6 @@
 
-#ifndef __types_h__
-#define __types_h__
+#ifndef __BOXUTIL_TYPES_H__
+#define __BOXUTIL_TYPES_H__
 
 #define byte unsigned char
 #define pbyte unsigned char *
@@ -23,4 +23,4 @@
 #define pcchar8 const char *
 #define pchar8 char *
 
-#endif // __types_h__
+#endif // __BOXUTIL_TYPES_H__

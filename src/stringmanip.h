@@ -1,11 +1,13 @@
 
-#ifndef __stringmanip_h__
-#define __stringmanip_h__
+#ifndef __BOXUTIL_STRINGMANIP_H__
+#define __BOXUTIL_STRINGMANIP_H__
 
 #include "types.h"
 
 #include <string>
 #include <vector>
+
+namespace boxutil {
 
 sint32 custom_strncpy_s(pchar8 dest, size_t dest_s, pcchar8 src, size_t src_s);
 
@@ -38,4 +40,6 @@ std::string LTrim(const std::string &source);
 std::string RTrim(const std::string &source);
 std::string Trim(const std::string &source);
 
-#endif // __stringmanip_h__
+} // ns: boxutil
+
+#endif // __BOXUTIL_STRINGMANIP_H__

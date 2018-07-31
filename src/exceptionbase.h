@@ -1,6 +1,6 @@
 
-#ifndef __exceptionbase_h__
-#define __exceptionbase_h__ 
+#ifndef __BOXUTIL_EXCEPTIONBASE_H__
+#define __BOXUTIL_EXCEPTIONBASE_H__ 
 
 #ifdef _WIN32
 #define EX_RAISE(CLASS, MSG) throw CLASS(MSG, __FUNCSIG__, __LINE__);
@@ -14,6 +14,8 @@
 
 #include "exceptionbase.h"
 #include "types.h"
+
+namespace boxutil {
 
 class ExceptionBase { 
 
@@ -46,4 +48,6 @@ private:
 
 };
 
-#endif // __exceptionbase_h__
+} // ns: boxutil
+
+#endif // __BOXUTIL_EXCEPTIONBASE_H__

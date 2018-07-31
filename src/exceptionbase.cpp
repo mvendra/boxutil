@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 
+namespace boxutil {
+
 ExceptionBase::ExceptionBase(const ExceptionBase &other):m_message(nullptr), m_function(nullptr), m_line(0){
     SetMsg(other.GetMessage());
     SetFunc(other.GetFunction());
@@ -59,3 +61,5 @@ void ExceptionBase::SetFunc(pcchar8 newfunc){
 void ExceptionBase::SetLine(uint32 line){
     this->m_line = line;
 }
+
+} // ns: boxutil

@@ -11,6 +11,8 @@
 #include <windows.h>
 #endif
 
+namespace boxutil {
+
 DateHelper::DateHelper():day{0}, month{0}, year{0}{
 
 #ifdef __linux__
@@ -205,3 +207,5 @@ void DateHelper::ClearDate(){
     month = 0;
     year = 0;
 }
+
+} // ns: boxutil

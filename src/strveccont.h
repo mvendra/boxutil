@@ -1,10 +1,12 @@
 
-#ifndef __strveccont_h__
-#define __strveccont_h__
+#ifndef __BOXUTIL_STRVECCONT_H__
+#define __BOXUTIL_STRVECCONT_H__
 
 #include "types.h"
 #include <string>
 #include <vector>
+
+namespace boxutil {
 
 class StrVecCont final {
 public:
@@ -27,4 +29,6 @@ private:
     void CopyOther(const StrVecCont &other);
 };
 
-#endif // __strveccont_h__
+} // ns: boxutil
+
+#endif // __BOXUTIL_STRVECCONT_H__

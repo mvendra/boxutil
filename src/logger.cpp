@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <cstring>
 
+namespace boxutil {
+
 Logger::Logger(pcchar8 pszFilename):m_pszFilename(nullptr){
     size_t thesize = strlen(pszFilename);
     this->m_pszFilename = static_cast<pchar8>(calloc(thesize+1, sizeof(char8)));
@@ -77,3 +79,5 @@ void Logger::Log(pcchar8 pszMessage, uint32 pszMsgLen){
     } 
 
 }
+
+} // ns: boxutil

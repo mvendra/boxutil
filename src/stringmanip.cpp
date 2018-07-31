@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <cstring>
 
+namespace boxutil {
+
 std::string GetNext(std::string &source, const std::string &delim) {
 
     if (source == "") {
@@ -253,3 +255,5 @@ std::string RTrim(const std::string &source){
 std::string Trim(const std::string &source){
     return LTrim(RTrim(source));
 }
+
+} // ns: boxutil

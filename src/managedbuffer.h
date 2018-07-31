@@ -1,8 +1,10 @@
 
-#ifndef __managedbuffer_h__
-#define __managedbuffer_h__
+#ifndef __BOXUTIL_MANAGEDBUFFER_H__
+#define __BOXUTIL_MANAGEDBUFFER_H__
 
 #include "types.h"
+
+namespace boxutil {
 
 template <typename T>
 class ManagedBuffer final {
@@ -25,4 +27,6 @@ private:
 
 };
 
-#endif // __managedbuffer_h__
+} // ns: boxutil
+
+#endif // __BOXUTIL_MANAGEDBUFFER_H__

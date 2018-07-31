@@ -1,12 +1,14 @@
 
-#ifndef __sysutil_h__
-#define __sysutil_h__
+#ifndef __BOXUTIL_SYSUTIL_H__
+#define __BOXUTIL_SYSUTIL_H__
 
 #include "types.h"
 #include "strveccont.h"
 
 #include <string>
 #include <ostream>
+
+namespace boxutil {
 
 enum class Platform {Linux, Win32, Win64};
 
@@ -56,4 +58,6 @@ SysTime GetSystemTime();
 void GetTimeStampString(pchar8 *pstrBuf);
 void GetTimeStampString(std::string &strTimestamp);
 
-#endif // __sysutil_h__
+} // ns: boxutil
+
+#endif // __BOXUTIL_SYSUTIL_H__

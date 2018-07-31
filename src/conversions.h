@@ -1,11 +1,13 @@
 
-#ifndef __conversions_h__
-#define __conversions_h__
+#ifndef __BOXUTIL_CONVERSIONS_H__
+#define __BOXUTIL_CONVERSIONS_H__
 
 #include "types.h"
 
 #include <string>
 #include <vector>
+
+namespace boxutil {
 
 template< typename T >
 std::string NumberToHexStr( T i, bool bAutoFill = true );
@@ -51,4 +53,6 @@ std::string DoubleToHexStr(fp64 i, bool bAutoFill = true);
 
 sint32 BytearrayFromHexString(const std::string &hs, pbyte buf, size_t max_buf_size);
 
-#endif // __conversions_h__
+} // ns: boxutil
+
+#endif // __BOXUTIL_CONVERSIONS_H__
