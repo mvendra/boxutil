@@ -5,9 +5,9 @@
 #include "boxutil.h"
 #include "testforecho.h"
 
-uint32 test_timestamp(){
+unsigned int test_timestamp(){
 
-    uint32 r {0};
+    unsigned int r {0};
 
     std::string strts;
     boxutil::GetTimeStampString(strts);
@@ -21,11 +21,11 @@ uint32 test_timestamp(){
 
 }
 
-uint32 test_bytearray(){
+unsigned int test_bytearray(){
 
-    uint32 r {0};
+    unsigned int r {0};
 
-    byte testinput[9] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99};
+    unsigned char testinput[9] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99};
     boxutil::ByteArray bar(testinput, sizeof(testinput));
 
     boxutil::ByteArray bar2;
@@ -38,8 +38,8 @@ uint32 test_bytearray(){
     testforecho::test_true(r, "ByteArray: Must have changed", bar2.EraseSection(0, 1));
     testforecho::test_eq(r, "ByteArray: Size must be 8", bar2.GetLength(), 8);
 
-    byte p0 = 112;
-    byte p1;
+	unsigned char p0 = 112;
+	unsigned char p1;
     bar2.Append(&p0, 1);
     testforecho::test_false(r, "ByeArray: Should not be able to get last byte", bar.GetByte(9, p1));
     testforecho::test_true(r, "ByeArray: Should be able to get last byte", bar2.GetByte(8, p1));
@@ -52,9 +52,9 @@ uint32 test_bytearray(){
 
 }
 
-uint32 test_bfl(){
+unsigned int test_bfl(){
     
-    uint32 r {0};
+    unsigned int r {0};
     
     boxutil::StrVecCont svcTest;
     testforecho::test_true(r, "BuldFileList: Should be able to make file list", boxutil::BuildFileList("../../testprops/folder", "txt", svcTest));
@@ -68,9 +68,9 @@ uint32 test_bfl(){
     
 }
 
-uint32 test_strveccont(){
+unsigned int test_strveccont(){
 
-    uint32 r {0};
+    unsigned int r {0};
     
     boxutil::StrVecCont v1, v2;
     v1.PushBack("first");
@@ -90,9 +90,9 @@ uint32 test_strveccont(){
 
 }
 
-uint32 test_logger(){
+unsigned int test_logger(){
 
-    uint32 r {0};
+    unsigned int r {0};
 
     std::string logfn = "./debug.txt";
     boxutil::ManagedFile mf {logfn};
@@ -106,9 +106,9 @@ uint32 test_logger(){
 
 }
 
-uint32 test_stringmanip(){
+unsigned int test_stringmanip(){
 
-    uint32 r {0};
+    unsigned int r {0};
 
     std::string strTeste = "aaa*uuu*bbb";
     std::string strOut;
@@ -123,7 +123,7 @@ uint32 test_stringmanip(){
     testforecho::test_eq(r, "StringManip: Should get next", boxutil::GetNext(strTeste), "c");
     testforecho::test_eq(r, "StringManip: Should get next", boxutil::GetNext(strTeste), "");
 
-    byte p[1]; p[0] = 112;
+	unsigned char p[1]; p[0] = 112;
     testforecho::test_eq(r, "StringManip: Should convert from byte buffer to string", boxutil::TxtStrFromBuffer(p, 1), "p");
 
     p[0] = 0xaa;
@@ -153,9 +153,9 @@ uint32 test_stringmanip(){
 
 }
 
-uint32 test_datehelper(){
+unsigned int test_datehelper(){
 
-    uint32 r {0};
+    unsigned int r {0};
 
     testforecho::test_true(r, "Datehelper: Date should be valid", boxutil::DateHelper::IsValidDate(22, 6, 1997));
     testforecho::test_true(r, "Datehelper: Date should be valid", boxutil::DateHelper::IsValidDate(22, 6, 1997));
@@ -223,9 +223,9 @@ uint32 test_datehelper(){
 
 }
 
-uint32 test_conversions(){
+unsigned int test_conversions(){
 
-    uint32 r {0};
+    unsigned int r {0};
 
     testforecho::test_eq(r, "Conversions: Conversion from decstr to int should work", boxutil::DecStrToInt("-21"), -21);
     testforecho::test_eq(r, "Conversions: Conversion from decstr to uint should work", boxutil::DecStrToUint("4294967200"), 4294967200);
@@ -259,9 +259,9 @@ uint32 test_conversions(){
 
 }
 
-uint32 test_managedfile(){
+unsigned int test_managedfile(){
 
-    uint32 r {0};
+    unsigned int r {0};
 
     std::string strFilename = "./testfile.txt";
     testforecho::test_false(r, "ManagedFile: File should not pre-exist", boxutil::FileExists(strFilename));
@@ -283,7 +283,7 @@ int main(int argc, char *argv[]){
 
     (void)argc; (void)argv;
 
-    uint32 r {0};
+    unsigned int r {0};
 
     r += test_timestamp();
     r += test_bytearray();

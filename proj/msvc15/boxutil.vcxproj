@@ -10,6 +10,29 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\boxutil.h" />
+    <ClInclude Include="..\..\src\bytearray.h" />
+    <ClInclude Include="..\..\src\conversions.h" />
+    <ClInclude Include="..\..\src\datehelper.h" />
+    <ClInclude Include="..\..\src\exceptionbase.h" />
+    <ClInclude Include="..\..\src\logger.h" />
+    <ClInclude Include="..\..\src\managedbuffer.h" />
+    <ClInclude Include="..\..\src\managedfile.h" />
+    <ClInclude Include="..\..\src\stringmanip.h" />
+    <ClInclude Include="..\..\src\strveccont.h" />
+    <ClInclude Include="..\..\src\sysutil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\bytearray.cpp" />
+    <ClCompile Include="..\..\src\conversions.cpp" />
+    <ClCompile Include="..\..\src\datehelper.cpp" />
+    <ClCompile Include="..\..\src\exceptionbase.cpp" />
+    <ClCompile Include="..\..\src\logger.cpp" />
+    <ClCompile Include="..\..\src\stringmanip.cpp" />
+    <ClCompile Include="..\..\src\strveccont.cpp" />
+    <ClCompile Include="..\..\src\sysutil.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{7C79831C-A822-47F3-B80A-66BEB3F427A1}</ProjectGuid>
@@ -18,13 +41,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -70,9 +93,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\main.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
