@@ -203,8 +203,13 @@ void HexDump(const std::vector<unsigned char> &_buffer){
 int custom_strncpy_s(char *dest, size_t dest_s, const char * src, size_t src_s){
 
 #if defined(_WIN64) || defined(_WIN32)
-    int r = strncpy_s(dest, dest_s, src, src_s);
-    return r;
+	for (unsigned int i = 0; i < src_s; i++) {
+		if (i >= dest_s) {
+			return -1;
+		}
+		dest[i] = src[i];
+	}
+    return 0;
 #else
     pchar8 r = std::strncpy(dest, src, src_s);
     (void)r;

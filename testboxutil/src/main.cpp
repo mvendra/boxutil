@@ -266,6 +266,7 @@ unsigned int test_managedfile(){
     std::string strFilename = "./testfile.txt";
     testforecho::test_false(r, "ManagedFile: File should not pre-exist", boxutil::FileExists(strFilename));
     boxutil::SaveFileContents(strFilename, "one");
+	testforecho::test_true(r, "ManagedFile: File should exist now", boxutil::FileExists(strFilename));
     std::string s;
     testforecho::test_true(r, "ManagedFile: File should be readable", boxutil::GetFileContents(strFilename, s));
     testforecho::test_eq(r, "ManagedFile: File content should match", s, "one");

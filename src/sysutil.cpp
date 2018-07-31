@@ -121,7 +121,7 @@ SysTime GetSystemTime(){
     sysTime.m_box_hours = stSysTime.wHour;
     sysTime.m_box_monthday = stSysTime.wDay;
     sysTime.m_box_month = stSysTime.wMonth;
-    sysTime.m_box_year = stSysTime.wYear%100;
+    sysTime.m_box_year = stSysTime.wYear;
 
 #else
     #error "Not implemented for this platform."
@@ -139,8 +139,8 @@ bool FileExists(const std::string &strFileName) {
 	errno_t r = fopen_s(&fp, strFileName.c_str(), "r+");
 	if (r == 0) {
 		bRet = true;
+		fclose(fp);
 	}
-	fclose(fp);
 	return bRet;
 
 }

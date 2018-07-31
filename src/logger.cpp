@@ -56,8 +56,8 @@ void Logger::LogCustom(const char * pszId, const char * pszMessage){
 
 	char * msgbuffer = static_cast<char *>(calloc(total_len+1,sizeof(char)));
 
-	custom_strncpy_s(msgbuffer, total_len + 1, "[", 1);
-	custom_strncpy_s(msgbuffer+1, total_len + 1, pszId, idlen);
+	msgbuffer[0] = '[';
+	custom_strncpy_s(msgbuffer + 1, total_len + 1, pszId, idlen);
 	custom_strncpy_s(msgbuffer + (1 + idlen), total_len + 1, "] ", 2);
 	custom_strncpy_s(msgbuffer + (idlen + 3), total_len + 1, pszTSBuff, tslen);
 	custom_strncpy_s(msgbuffer + (3 + idlen + tslen), total_len + 1, ": ", 2);
@@ -66,8 +66,8 @@ void Logger::LogCustom(const char * pszId, const char * pszMessage){
 
     Log(msgbuffer, total_len);
 
-    free(msgbuffer);
-    free(pszTSBuff);
+	free(msgbuffer);
+	free(pszTSBuff);
 
 }
 

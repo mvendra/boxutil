@@ -85,7 +85,7 @@ bool DateHelper::IsValidDate(const std::string &textdate) {
     unsigned short param_month;
     unsigned short param_year;
     ConvertFromText(textdate, param_day, param_month, param_year);
-    if (param_day >= 1 && param_day <= 30 && param_month >= 1 && param_month <= 12 && param_year >= 1970 && param_year <= 2080) { return true; }
+    if (param_day >= 1 && param_day <= 31 && param_month >= 1 && param_month <= 12 && param_year >= 1970 && param_year <= 2080) { return true; }
     else { return false; }
 #else
     tm aux;
