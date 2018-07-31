@@ -2,7 +2,6 @@
 #ifndef __BOXUTIL_SYSUTIL_H__
 #define __BOXUTIL_SYSUTIL_H__
 
-#include "types.h"
 #include "strveccont.h"
 
 #include <string>
@@ -29,18 +28,18 @@ public:
 
     void Copy(const SysTime &other);
     
-    sint32 m_seconds;
-    sint32 m_minutes;
-    sint32 m_hours;
-    sint32 m_monthday;
-    sint32 m_month;
-    sint32 m_year;
+    int m_box_seconds;
+    int m_box_minutes;
+    int m_box_hours;
+    int m_box_monthday;
+    int m_box_month;
+    int m_box_year;
 
 };
 
 bool FileExists(const std::string &strFileName);
 bool FileDelete(const std::string &strFileName);
-bool FileSize(const std::string &strFileName, uint32 &filesize);
+bool FileSize(const std::string &strFileName, unsigned int &filesize);
 bool GetFileContents(const std::string &strFileName, std::string &strContents);
 bool SaveFileContents(const std::string &strFileName, const std::string &strContents);
 
@@ -55,7 +54,7 @@ std::string GetUserHomeFolder();
 bool BuildFileList(const std::string &strPath, const std::string &strInputExt, StrVecCont &svcFilelist);
 
 SysTime GetSystemTime();
-void GetTimeStampString(pchar8 *pstrBuf);
+void GetTimeStampString(char **pstrBuf);
 void GetTimeStampString(std::string &strTimestamp);
 
 } // ns: boxutil

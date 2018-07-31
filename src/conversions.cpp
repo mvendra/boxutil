@@ -1,11 +1,11 @@
 
 #include "conversions.h"
-#include "types.h"
 
 #include "stringmanip.h"
 
 #include <sstream>
 #include <iomanip>
+#include <cmath>
 
 namespace boxutil {
 
@@ -15,10 +15,10 @@ std::string NumberToHexStr( T i, bool bAutoFill){
     bool flipsign = false;
     if (i < 0){
         flipsign = true;
-        i = abs(i);
+		i = std::fabs(i);
     }
     if (bAutoFill)
-        stream << std::setfill('0') << std::setw(abs(i) > 0xFF ? 4 : 2) << std::hex << i;
+        stream << std::setfill('0') << std::setw(std::fabs(i) > 0xFF ? 4 : 2) << std::hex << i;
     else
         stream << std::hex << i;
     std::string tmp = stream.str();
@@ -31,7 +31,7 @@ std::string NumberToHexStr( T i, bool bAutoFill){
 
 template< typename T >
 T HexStrToNumber(const std::string &strSource){
-    sint32 ret;
+    int ret;
     std::stringstream(strSource) >> std::hex >> ret;
     return ret;
 }
@@ -51,104 +51,104 @@ T DecStrToNumber(const std::string &strSource){
     return ret;
 }
 
-sint32 DecStrToInt(const std::string &strSource){
-    return DecStrToNumber<sint32>(strSource);
+int DecStrToInt(const std::string &strSource){
+    return DecStrToNumber<int>(strSource);
 }
 
-uint32 DecStrToUint(const std::string &strSource){
-    return DecStrToNumber<uint32>(strSource);
+unsigned int DecStrToUint(const std::string &strSource){
+    return DecStrToNumber<unsigned int>(strSource);
 }
 
-std::string IntToDecStr( sint32 i ){
-    return NumberToDecStr<sint32>(i);
+std::string IntToDecStr( int i ){
+    return NumberToDecStr<int>(i);
 }
 
-std::string UintToDecStr( uint32 i ){
-    return NumberToDecStr<uint32>(i);
+std::string UintToDecStr( unsigned int i ){
+    return NumberToDecStr<unsigned int>(i);
 }
 
-sint16 DecStrToShort(const std::string &strSource){
-    return DecStrToNumber<sint16>(strSource);
+short DecStrToShort(const std::string &strSource){
+    return DecStrToNumber<short>(strSource);
 }
 
-uint16 DecStrToUshort(const std::string &strSource){
-    return DecStrToNumber<uint16>(strSource);
+unsigned short DecStrToUshort(const std::string &strSource){
+    return DecStrToNumber<unsigned short>(strSource);
 }
 
-std::string ShortToDecStr(sint16 i){
-    return NumberToDecStr<sint16>(i);
+std::string ShortToDecStr(short i){
+    return NumberToDecStr<short>(i);
 }
 
-std::string UshortToDecStr(uint16 i){
-    return NumberToDecStr<uint16>(i);
+std::string UshortToDecStr(unsigned short i){
+    return NumberToDecStr<unsigned short>(i);
 }
 
-fp32 DecStrToFloat(const std::string &strSource){
-    return DecStrToNumber<fp32>(strSource);
+float DecStrToFloat(const std::string &strSource){
+    return DecStrToNumber<float>(strSource);
 }
 
-std::string FloatToDecStr(fp32 i){
-    return NumberToDecStr<fp32>(i);
+std::string FloatToDecStr(float i){
+    return NumberToDecStr<float>(i);
 }
 
-fp64 DecStrToDouble(const std::string &strSource){
-    return DecStrToNumber<fp64>(strSource);
+double DecStrToDouble(const std::string &strSource){
+    return DecStrToNumber<double>(strSource);
 }
 
-std::string DoubleToDecStr(fp64 i){
-    return NumberToDecStr<fp64>(i);
+std::string DoubleToDecStr(double i){
+    return NumberToDecStr<double>(i);
 }
 
-sint32 HexStrToInt(const std::string &strSource){
-    return HexStrToNumber<sint32>(strSource);
+int HexStrToInt(const std::string &strSource){
+    return HexStrToNumber<int>(strSource);
 }
 
-uint32 HexStrToUint(const std::string &strSource){
-    return HexStrToNumber<uint32>(strSource);
+unsigned int HexStrToUint(const std::string &strSource){
+    return HexStrToNumber<unsigned int>(strSource);
     
 }
 
-std::string IntToHexStr( sint32 i, bool bAutoFill){
-    return NumberToHexStr<sint32>(i, bAutoFill);
+std::string IntToHexStr( int i, bool bAutoFill){
+    return NumberToHexStr<int>(i, bAutoFill);
 }
 
-std::string UintToHexStr( uint32 i, bool bAutoFill){
-    return NumberToHexStr<uint32>(i, bAutoFill);
+std::string UintToHexStr( unsigned int i, bool bAutoFill){
+    return NumberToHexStr<unsigned int>(i, bAutoFill);
 }
 
-sint16 HexStrToShort(const std::string &strSource){
-    return HexStrToNumber<sint16>(strSource);
+short HexStrToShort(const std::string &strSource){
+    return HexStrToNumber<short>(strSource);
 }
 
-uint16 HexStrToUshort(const std::string &strSource){
-    return HexStrToNumber<uint16>(strSource);
+unsigned short HexStrToUshort(const std::string &strSource){
+    return HexStrToNumber<unsigned short>(strSource);
 }
 
-std::string ShortToHexStr(sint16 i, bool bAutoFill){
-    return NumberToHexStr<sint16>(i, bAutoFill);
+std::string ShortToHexStr(short i, bool bAutoFill){
+    return NumberToHexStr<short>(i, bAutoFill);
 }
 
-std::string UshortToHexStr(uint16 i, bool bAutoFill){
-    return NumberToHexStr<uint16>(i, bAutoFill);
+std::string UshortToHexStr(unsigned short i, bool bAutoFill){
+    return NumberToHexStr<unsigned short>(i, bAutoFill);
 }
 
-fp32 HexStrToFloat(const std::string &strSource){
-    return HexStrToNumber<fp32>(strSource);
+float HexStrToFloat(const std::string &strSource){
+    return HexStrToNumber<float>(strSource);
 }
 
-fp64 HexStrToDouble(const std::string &strSource){
-    return HexStrToNumber<sint64>(strSource);
+double HexStrToDouble(const std::string &strSource){
+    return HexStrToNumber<double>(strSource);
 }
 
-std::string FloatToHexStr(fp32 i, bool bAutoFill){
-    return NumberToHexStr<fp32>(i, bAutoFill);
+std::string FloatToHexStr(float i, bool bAutoFill){
+    return NumberToHexStr<float>(i, bAutoFill);
 }
 
-std::string DoubleToHexStr(fp64 i, bool bAutoFill){
-    return NumberToHexStr<fp64>(i, bAutoFill);
+std::string DoubleToHexStr(double i, bool bAutoFill){
+    return NumberToHexStr<double>(i, bAutoFill);
 }
 
-sint32 BytearrayFromHexString(const std::string &hs, pbyte buf, size_t max_buf_size){
+int BytearrayFromHexString(const std::string &hs, unsigned char *buf, size_t max_buf_size){
 
     if (hs.size() % 2 != 0){
         return -1;
@@ -157,7 +157,7 @@ sint32 BytearrayFromHexString(const std::string &hs, pbyte buf, size_t max_buf_s
         return -1;
     }
 
-    uint16 u = 0;
+    unsigned short u = 0;
     char c[3]; c[0] = 0; c[1] = 0; c[2] = 0;
     for (size_t i=0; i<hs.size(); i += 2){
         c[0] = hs[i]; c[1] = hs[i+1];

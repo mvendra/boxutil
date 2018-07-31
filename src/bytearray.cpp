@@ -1,5 +1,4 @@
 
-#include "types.h"
 #include "bytearray.h"
 #include "stringmanip.h"
 
@@ -24,7 +23,7 @@ ByteArray::ByteArray(const ByteArray &&other):
 m_internalcontents{std::move(other.m_internalcontents)}, m_internallength{other.m_internallength}{
 }
 
-ByteArray::ByteArray(pcbyte buff, uint32 buffsize):
+ByteArray::ByteArray(const unsigned char *buff, unsigned int buffsize):
 m_internalcontents{nullptr}, m_internallength{0}{
     InitInternalMem();
     CopyOther(buff, buffsize);
@@ -46,7 +45,7 @@ ByteArray::~ByteArray(){
     FlushInternalMem();
 }
 
-pcbyte ByteArray::GetBuffer() const {
+const unsigned char * ByteArray::GetBuffer() const {
     return m_internalcontents;
 }
 
@@ -54,11 +53,11 @@ ByteArray ByteArray::GetCopy() const {
     return ByteArray(m_internalcontents, m_internallength);
 }
 
-uint32 ByteArray::GetLength() const {
+unsigned int ByteArray::GetLength() const {
     return m_internallength;
 }
 
-bool ByteArray::GetSection(const uint32 offset, const uint32 length, ByteArray &output){
+bool ByteArray::GetSection(const unsigned int offset, const unsigned int length, ByteArray &output){
 
     if (offset > m_internallength || length > m_internallength || (offset+length) > m_internallength){
         return false;
@@ -69,7 +68,7 @@ bool ByteArray::GetSection(const uint32 offset, const uint32 length, ByteArray &
     return true;
 }
 
-bool ByteArray::GetByte(const uint32 offset, byte &output){
+bool ByteArray::GetByte(const unsigned int offset, unsigned char &output){
     if (offset >= m_internallength){
         return false;
     }
@@ -78,26 +77,26 @@ bool ByteArray::GetByte(const uint32 offset, byte &output){
 }
 
 void ByteArray::Append(const ByteArray &other){
-    uint32 offset_free = ExpandBy(other.GetLength());
+    unsigned int offset_free = ExpandBy(other.GetLength());
     memcpy(m_internalcontents+offset_free, other.GetBuffer(), other.GetLength());
 }
 
-void ByteArray::Append(pcbyte buff, uint32 buffsize){
-    uint32 offset_free = ExpandBy(buffsize);
+void ByteArray::Append(const unsigned char * buff, unsigned int buffsize){
+    unsigned int offset_free = ExpandBy(buffsize);
     memcpy(m_internalcontents+offset_free, buff, buffsize);
 }
 
-bool ByteArray::EraseSection(const uint32 offset, const uint32 length){
+bool ByteArray::EraseSection(const unsigned int offset, const unsigned int length){
 
     if (offset > m_internallength || length > m_internallength || (offset+length) > m_internallength){
         return false;
     }
 
-    uint32 len_low = offset;
-    uint32 len_high = m_internallength-offset-length;
+    unsigned int len_low = offset;
+    unsigned int len_high = m_internallength-offset-length;
 
-    pbyte backup_low = static_cast<pbyte>(calloc(len_low, sizeof(byte)));
-    pbyte backup_high = static_cast<pbyte>(calloc(len_high, sizeof(byte)));
+	unsigned char *backup_low = static_cast<unsigned char*>(calloc(len_low, sizeof(unsigned char)));
+	unsigned char *backup_high = static_cast<unsigned char*>(calloc(len_high, sizeof(unsigned char)));
 
     memcpy(backup_low, m_internalcontents, len_low);
     memcpy(backup_high, m_internalcontents+m_internallength-len_high, len_high);
@@ -117,22 +116,22 @@ bool ByteArray::EraseSection(const uint32 offset, const uint32 length){
 
 void ByteArray::CopyOther(const ByteArray  &other){
     FlushInternalMem();
-    uint32 newlen = other.GetLength();
-    pcbyte newbuf = other.GetBuffer();
+    unsigned int newlen = other.GetLength();
+    const unsigned char * newbuf = other.GetBuffer();
     Alloc(newlen);
     memcpy(m_internalcontents, newbuf, newlen);
 }
 
-void ByteArray::CopyOther(pcbyte otherbuff, uint32 otherbufflen){
+void ByteArray::CopyOther(const unsigned char * otherbuff, unsigned int otherbufflen){
     FlushInternalMem();
     Alloc(otherbufflen);
     memcpy(m_internalcontents, otherbuff, otherbufflen);
 }
 
-uint32 ByteArray::ExpandBy(uint32 amount){
-    pbyte backupbuff = static_cast<pbyte>(calloc(m_internallength, sizeof(byte)));
+unsigned int ByteArray::ExpandBy(unsigned int amount){
+	unsigned char *backupbuff = static_cast<unsigned char*>(calloc(m_internallength, sizeof(unsigned char)));
     memcpy(backupbuff, m_internalcontents, m_internallength);
-    uint32 backuplen = m_internallength;
+    unsigned int backuplen = m_internallength;
     FlushInternalMem();
     Alloc(backuplen+amount);
     memcpy(m_internalcontents, backupbuff, backuplen);
@@ -156,8 +155,8 @@ void ByteArray::Clear(){
     InitInternalMem();
 }
 
-void ByteArray::Alloc(uint32 amount){
-    m_internalcontents = static_cast<pbyte>(calloc(amount, sizeof(byte)));
+void ByteArray::Alloc(unsigned int amount){
+    m_internalcontents = static_cast<unsigned char*>(calloc(amount, sizeof(unsigned char)));
     m_internallength = amount;
 }
 

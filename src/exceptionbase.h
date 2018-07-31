@@ -13,7 +13,6 @@
 #include <stddef.h>
 
 #include "exceptionbase.h"
-#include "types.h"
 
 namespace boxutil {
 
@@ -23,10 +22,10 @@ public:
 
     ExceptionBase(const ExceptionBase &other);
     ExceptionBase(const ExceptionBase &&other);
-    ExceptionBase(const char8 *msg, const char8 *func, uint32 line);
-    pcchar8 GetMessage() const;
-    pcchar8 GetFunction() const;
-    uint32 GetLine() const;
+    ExceptionBase(const char *msg, const char *func, unsigned int line);
+    const char *GetMessage() const;
+    const char *GetFunction() const;
+    unsigned int GetLine() const;
     virtual ~ExceptionBase();
 
     void operator=(const ExceptionBase &other) = delete;
@@ -36,15 +35,15 @@ public:
 
 protected:
 
-    pchar8 m_message;
-    pchar8 m_function;
-    uint32 m_line;
+    char *m_message;
+    char *m_function;
+    unsigned int m_line;
 
 private:
 
-    void SetMsg(const char8 *newmsg);
-    void SetFunc(const char8 *newfunc);
-    void SetLine(uint32 line);
+    void SetMsg(const char *newmsg);
+    void SetFunc(const char *newfunc);
+    void SetLine(unsigned int line);
 
 };
 

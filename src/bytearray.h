@@ -4,8 +4,6 @@
 
 #include <string>
 
-#include "types.h"
-
 namespace boxutil {
 
 class ByteArray final {
@@ -16,17 +14,17 @@ public:
     ByteArray(const ByteArray &&other);
     ByteArray& operator= (const ByteArray &other);
     ByteArray& operator= (const ByteArray &&other);
-    ByteArray(pcbyte buff, uint32 buffsize);
+    ByteArray(const unsigned char *buff, unsigned int buffsize);
     ~ByteArray();
 
-    pcbyte GetBuffer() const;
+    const unsigned char * GetBuffer() const;
     ByteArray GetCopy() const;
-    bool GetSection(const uint32 offset, const uint32 length, ByteArray &output);
-    bool GetByte(const uint32 offset, byte &output);
+    bool GetSection(const unsigned int offset, const unsigned int length, ByteArray &output);
+    bool GetByte(const unsigned int offset, unsigned char &output);
     void Append(const ByteArray &other);
-    void Append(pcbyte buff, uint32 buffsize);
-    bool EraseSection(const uint32 offset, const uint32 length);
-    uint32 GetLength() const;
+    void Append(const unsigned char * buff, unsigned int buffsize);
+    bool EraseSection(const unsigned int offset, const unsigned int length);
+    unsigned int GetLength() const;
     std::string GetHexString() const;
     void Clear();
 
@@ -35,12 +33,12 @@ private:
     void FlushInternalMem();
     void InitInternalMem();
     void CopyOther(const ByteArray  &other);
-    void CopyOther(pcbyte otherbuff, uint32 otherbufflen);
-    uint32 ExpandBy(uint32 amount);
-    void Alloc(uint32 amount);
+    void CopyOther(const unsigned char * otherbuff, unsigned int otherbufflen);
+    unsigned int ExpandBy(unsigned int amount);
+    void Alloc(unsigned int amount);
 
-    pbyte m_internalcontents;
-    uint32 m_internallength;
+    unsigned char *m_internalcontents;
+    unsigned int m_internallength;
 
 };
 

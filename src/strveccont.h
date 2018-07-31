@@ -2,7 +2,6 @@
 #ifndef __BOXUTIL_STRVECCONT_H__
 #define __BOXUTIL_STRVECCONT_H__
 
-#include "types.h"
 #include <string>
 #include <vector>
 
@@ -17,10 +16,10 @@ public:
     StrVecCont& operator= (const StrVecCont &&other) = delete;
     ~StrVecCont();
     void PushBack(const std::string &element);
-    bool Get(const uint32 index, std::string &output) const;
+    bool Get(const unsigned int index, std::string &output) const;
     void PopBack();
-    void Pop(uint32 index);
-    uint32 Size() const;
+    void Pop(unsigned int index);
+	unsigned int Size() const;
     void Clear();
     bool HasElement(const std::string &element) const;
     bool operator==(const StrVecCont &other);

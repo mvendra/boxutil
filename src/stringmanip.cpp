@@ -1,11 +1,12 @@
 
 #include "stringmanip.h"
-#include "types.h"
 
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
 #include <cstring>
+#include <sstream>
+#include <cstdarg>
 
 namespace boxutil {
 
@@ -28,9 +29,9 @@ std::string GetNext(std::string &source, const std::string &delim) {
 
 }
 
-uint32 CountCharsInString(const std::string &strTarget, uchar8 chChar){
-    uint32 uiCount = 0;
-    for (uint32 i=0; i<strTarget.size(); i++){
+unsigned int CountCharsInString(const std::string &strTarget, char chChar){
+    unsigned int uiCount = 0;
+    for (unsigned int i=0; i<strTarget.size(); i++){
         if (strTarget[i] == chChar){
             uiCount++;
         }
@@ -38,7 +39,7 @@ uint32 CountCharsInString(const std::string &strTarget, uchar8 chChar){
     return uiCount;
 }
 
-bool GetStringMidByBoundingChars(const std::string &strTarget, uchar8 chBound, std::string &strOutput){
+bool GetStringMidByBoundingChars(const std::string &strTarget, char chBound, std::string &strOutput){
 
     if (CountCharsInString(strTarget, chBound) != 2){
         return false;
@@ -56,17 +57,17 @@ bool GetStringMidByBoundingChars(const std::string &strTarget, uchar8 chBound, s
 
 }
 
-std::string TxtStrFromBuffer(pcbyte pcbBuffer, const uint32 iBuffSize){
-    std::string strRet = std::string(reinterpret_cast<pcchar8>(pcbBuffer), iBuffSize);
+std::string TxtStrFromBuffer(const unsigned char * pcbBuffer, const unsigned int iBuffSize){
+    std::string strRet = std::string(reinterpret_cast<const char *>(pcbBuffer), iBuffSize);
     return strRet;
 }
 
-std::string HexStrFromBuffer(pcbyte pcbBuffer, const uint32 iBuffSize){
+std::string HexStrFromBuffer(const unsigned char * pcbBuffer, const unsigned int iBuffSize){
 
     std::string strRet;
-    char8 chAux[3] = {0};
-    for (uint32 i = 0; i < iBuffSize; i++){
-        sprintf(chAux, "%02X", pcbBuffer[i]);
+    char chAux[3] = {0};
+    for (unsigned int i = 0; i < iBuffSize; i++){
+		custom_sprintf_s(chAux, 3, "%02X", pcbBuffer[i]);
         strRet += chAux;
     }
     return strRet;
@@ -107,10 +108,10 @@ std::string MakeLowercase(const std::string &strTarget){
     return local;
 }
 
-sint32 CompareNoCase(const std::string &strLeft, const std::string &strRight){
+int CompareNoCase(const std::string &strLeft, const std::string &strRight){
     std::string left = MakeLowercase(strLeft);
     std::string right = MakeLowercase(strRight);
-    sint32 ret = left.compare(right);
+    int ret = left.compare(right);
     return ret;
 }
 
@@ -133,7 +134,7 @@ bool ContainsNoCase(const std::string &strTarget, const std::string &strContent)
 
 bool IsNumericString(const std::string &strElement) {
     std::istringstream ss(strElement);
-    sint32 num = 0;
+    int num = 0;
     if(ss >> num) {
         return true;
     }
@@ -168,19 +169,19 @@ bool IsHexStr(const std::string &strValue) {
     return true;
 }
 
-bool IsWithinBounds(const std::string &strValue, const uint32 min, const uint32 max) {
+bool IsWithinBounds(const std::string &strValue, const unsigned int min, const unsigned int max) {
     if (strValue.size() < min || strValue.size() > max){
         return false;
     }
     return true;
 }
 
-void HexDump(const std::vector<byte> &_buffer){
+void HexDump(const std::vector<unsigned char> &_buffer){
 
     std::cout << std::endl;
 
     size_t c = 0;
-    uint32 offs = 0;
+    unsigned int offs = 0;
     printf("%04X   ", offs);
 
     for (size_t i = 0; i < _buffer.size(); i++){
@@ -199,16 +200,32 @@ void HexDump(const std::vector<byte> &_buffer){
 
 }
 
-sint32 custom_strncpy_s(pchar8 dest, size_t dest_s, pcchar8 src, size_t src_s){
+int custom_strncpy_s(char *dest, size_t dest_s, const char * src, size_t src_s){
 
 #if defined(_WIN64) || defined(_WIN32)
-    sint32 r = strncpy_s(dest, dest_s, src, src_s);
+    int r = strncpy_s(dest, dest_s, src, src_s);
     return r;
 #else
     pchar8 r = std::strncpy(dest, src, src_s);
     (void)r;
     (void)dest_s;
     return 0;
+#endif
+
+}
+
+int custom_sprintf_s(char *dest, unsigned int destsize, const char * format, ...) {
+
+	va_list args;
+	va_start(args, format);
+	va_list args_copy;
+	va_copy(args_copy, args);
+
+#ifdef _WIN32
+	return sprintf_s(dest, destsize, format, args_copy);
+#else
+	(void)destsize;
+	return std::sprintf(dest, format, args_copy);
 #endif
 
 }
@@ -239,8 +256,8 @@ std::string RTrim(const std::string &source){
     if (source[source.size()-1] != ' '){
         return source;
     }
-    sint32 n = -1;
-    for (sint32 i = source.size()-1; i!=-1; i--){
+    int n = -1;
+    for (int i = source.size()-1; i!=-1; i--){
         if (source[i] != ' '){
             n = i;
             break;

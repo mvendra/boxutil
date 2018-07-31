@@ -2,8 +2,6 @@
 #ifndef __BOXUTIL_DATEHELPER_H__
 #define __BOXUTIL_DATEHELPER_H__
 
-#include "types.h"
-
 #include <string>
 
 namespace boxutil {
@@ -19,9 +17,9 @@ public:
 
     DateHelper(const std::string &textdate);
 
-    DateHelper(const uint16 _day,
-               const uint16 _month,
-               const uint16 _year);
+    DateHelper(const unsigned short param_day,
+               const unsigned short param_month,
+               const unsigned short param_year);
 
     DateHelper(DateHelper&&);
 
@@ -32,35 +30,35 @@ public:
     DateHelper& operator=(DateHelper&&) = delete;
 
     static bool IsValidDate(const std::string &textdate);
-    static bool IsValidDate(const uint16 _day,
-                     const uint16 _month,
-                     const uint16 _year);
+    static bool IsValidDate(const unsigned short param_day,
+                     const unsigned short param_month,
+                     const unsigned short param_year);
 
     static void ConvertFromText(const std::string &textdate,
-                                uint16 &_day,
-                                uint16 &_month,
-                                uint16 &_year);
-    static std::string ConvertFromNumbers(const uint16 _day,
-                                          const uint16 _month,
-                                          const uint16 _year);
+                                unsigned short &param_day,
+                                unsigned short &param_month,
+                                unsigned short &param_year);
+    static std::string ConvertFromNumbers(const unsigned short param_day,
+                                          const unsigned short param_month,
+                                          const unsigned short param_year);
 
     bool SetDate(const std::string &textdate);
-    bool SetDate(const uint16 _day,
-                 const uint16 _month,
-                 const uint16 _year);
+    bool SetDate(const unsigned short param_day,
+                 const unsigned short param_month,
+                 const unsigned short param_year);
 
     std::string GetDateString() const;
-    void GetDateNumbers(uint16 &_day,
-                        uint16 &_month,
-                        uint16 &_year) const;
+    void GetDateNumbers(unsigned short &param_day,
+                        unsigned short &param_month,
+                        unsigned short &param_year) const;
 
     void ClearDate();
 
 private:
 
-    uint16 day;
-    uint16 month;
-    uint16 year;
+    unsigned short m_day;
+    unsigned short m_month;
+    unsigned short m_year;
 
 };
 

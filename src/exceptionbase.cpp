@@ -1,5 +1,6 @@
 
 #include "exceptionbase.h"
+#include "stringmanip.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,7 +20,7 @@ ExceptionBase::ExceptionBase(const ExceptionBase &&other):m_message(nullptr), m_
     SetLine(other.GetLine());
 }
 
-ExceptionBase::ExceptionBase(pcchar8 msg, pcchar8 func, uint32 line):m_message(nullptr), m_function(nullptr), m_line(0){
+ExceptionBase::ExceptionBase(const char *msg, const char * func, unsigned int line):m_message(nullptr), m_function(nullptr), m_line(0){
     SetMsg(msg);
     SetFunc(func);
     SetLine(line);
@@ -30,35 +31,35 @@ ExceptionBase::~ExceptionBase(){
     free(m_function);
 }
 
-pcchar8 ExceptionBase::GetMessage() const {
+const char *ExceptionBase::GetMessage() const {
     return this->m_message;
 }
 
-pcchar8 ExceptionBase::GetFunction() const {
+const char *ExceptionBase::GetFunction() const {
     return this->m_function;
 }
 
-uint32 ExceptionBase::GetLine() const {
+unsigned int ExceptionBase::GetLine() const {
     return this->m_line;
 }
 
-void ExceptionBase::SetMsg(pcchar8 newmsg){
+void ExceptionBase::SetMsg(const char *newmsg){
     free(m_message);
     m_message = nullptr;
-    uint32 msglen = strlen(newmsg);
-    m_message = static_cast<pchar8>(calloc(msglen+1, sizeof(char8)));
-    strncpy(m_message, newmsg, msglen);
+    unsigned int msglen = strlen(newmsg);
+    m_message = static_cast<char *>(calloc(msglen+1, sizeof(char)));
+	custom_strncpy_s(m_message, msglen + 1, newmsg, msglen);
 }
 
-void ExceptionBase::SetFunc(pcchar8 newfunc){
+void ExceptionBase::SetFunc(const char * newfunc){
     free(m_function);
     m_function = nullptr;
-    uint32 funclen = strlen(newfunc);
-    m_function = static_cast<pchar8>(calloc(funclen+1, sizeof(char8)));
-    strncpy(m_function, newfunc, funclen);
+    unsigned int funclen = strlen(newfunc);
+    m_function = static_cast<char *>(calloc(funclen+1, sizeof(char)));
+	custom_strncpy_s(m_function, funclen + 1, newfunc, funclen);
 }
 
-void ExceptionBase::SetLine(uint32 line){
+void ExceptionBase::SetLine(unsigned int line){
     this->m_line = line;
 }
 

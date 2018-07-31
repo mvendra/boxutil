@@ -2,8 +2,6 @@
 #ifndef __BOXUTIL_CONVERSIONS_H__
 #define __BOXUTIL_CONVERSIONS_H__
 
-#include "types.h"
-
 #include <string>
 #include <vector>
 
@@ -21,37 +19,37 @@ std::string NumberToDecStr(T i);
 template< typename T >
 T DecStrToNumber(const std::string &strSource);
 
-sint32 DecStrToInt(const std::string &strSource);
-uint32 DecStrToUint(const std::string &strSource);
-std::string IntToDecStr( sint32 i );
-std::string UintToDecStr( uint32 i );
+int DecStrToInt(const std::string &strSource);
+unsigned int DecStrToUint(const std::string &strSource);
+std::string IntToDecStr( int i );
+std::string UintToDecStr( unsigned int i );
 
-sint16 DecStrToShort(const std::string &strSource);
-uint16 DecStrToUshort(const std::string &strSource);
-std::string ShortToDecStr(sint16 i);
-std::string UshortToDecStr(uint16 i);
+short DecStrToShort(const std::string &strSource);
+unsigned short DecStrToUshort(const std::string &strSource);
+std::string ShortToDecStr(short i);
+std::string UshortToDecStr(unsigned short i);
 
-fp32 DecStrToFloat(const std::string &strSource);
-fp64 DecStrToDouble(const std::string &strSource);
-std::string FloatToDecStr(fp32 i);
-std::string DoubleToDecStr(fp64 i);
+float DecStrToFloat(const std::string &strSource);
+double DecStrToDouble(const std::string &strSource);
+std::string FloatToDecStr(float i);
+std::string DoubleToDecStr(double i);
 
-sint32 HexStrToInt(const std::string &strSource);
-uint32 HexStrToUint(const std::string &strSource);
-std::string IntToHexStr( sint32 i, bool bAutoFill = true );
-std::string UintToHexStr( uint32 i, bool bAutoFill = true );
+int HexStrToInt(const std::string &strSource);
+unsigned int HexStrToUint(const std::string &strSource);
+std::string IntToHexStr( int i, bool bAutoFill = true );
+std::string UintToHexStr( unsigned int i, bool bAutoFill = true );
 
-sint16 HexStrToShort(const std::string &strSource);
-uint16 HexStrToUshort(const std::string &strSource);
-std::string ShortToHexStr(sint16 i, bool bAutoFill = true);
-std::string UshortToHexStr(uint16 i, bool bAutoFill = true);
+short HexStrToShort(const std::string &strSource);
+unsigned short HexStrToUshort(const std::string &strSource);
+std::string ShortToHexStr(short i, bool bAutoFill = true);
+std::string UshortToHexStr(unsigned short i, bool bAutoFill = true);
 
-fp32 HexStrToFloat(const std::string &strSource);
-fp64 HexStrToDouble(const std::string &strSource);
-std::string FloatToHexStr(fp32 i, bool bAutoFill = true);
-std::string DoubleToHexStr(fp64 i, bool bAutoFill = true);
+float HexStrToFloat(const std::string &strSource);
+double HexStrToDouble(const std::string &strSource);
+std::string FloatToHexStr(float i, bool bAutoFill = true);
+std::string DoubleToHexStr(double i, bool bAutoFill = true);
 
-sint32 BytearrayFromHexString(const std::string &hs, pbyte buf, size_t max_buf_size);
+int BytearrayFromHexString(const std::string &hs, unsigned char *buf, size_t max_buf_size);
 
 } // ns: boxutil
 

@@ -1,6 +1,7 @@
 
 #include "datehelper.h"
 #include "conversions.h"
+#include "stringmanip.h"
 
 #include <cstring>
 
@@ -13,7 +14,7 @@
 
 namespace boxutil {
 
-DateHelper::DateHelper():day{0}, month{0}, year{0}{
+DateHelper::DateHelper():m_day{0}, m_month{0}, m_year{0}{
 
 #ifdef __linux__
 
@@ -24,13 +25,6 @@ DateHelper::DateHelper():day{0}, month{0}, year{0}{
     gettimeofday(&tv, &tz);
     tm = localtime(&tv.tv_sec);
 
-    /*sysTime.m_seconds = tm->tm_sec;
-    sysTime.m_minutes = tm->tm_min;
-    sysTime.m_hours = tm->tm_hour;
-    sysTime.m_monthday = tm->tm_mday;
-    sysTime.m_month = tm->tm_mon+1;
-    sysTime.m_year = tm->tm_year%100;*/
-
     this->day = tm->tm_mday;
     this->month = tm->tm_mon+1;
     this->year = tm->tm_year + 1900;
@@ -40,9 +34,9 @@ DateHelper::DateHelper():day{0}, month{0}, year{0}{
     SYSTEMTIME stSysTime;
     GetLocalTime(&stSysTime);
 
-    this->day = stSysTime.wDay;
-    this->month = stSysTime.wMonth;
-    this->year = stSysTime.wYear;
+    this->m_day = stSysTime.wDay;
+    this->m_month = stSysTime.wMonth;
+    this->m_year = stSysTime.wYear;
 
 #else
     #error "Present-date probing not implemented on this platform"
@@ -50,48 +44,48 @@ DateHelper::DateHelper():day{0}, month{0}, year{0}{
 
 }
 
-DateHelper::DateHelper(const uint16 _day,
-                       const uint16 _month,
-                       const uint16 _year):
-day{0}, month{0}, year{0}
+DateHelper::DateHelper(const unsigned short param_day,
+                       const unsigned short param_month,
+                       const unsigned short param_year):
+m_day{0}, m_month{0}, m_year{0}
 {
-    SetDate(_day, _month, _year);
+    SetDate(param_day, param_month, param_year);
 }
 
 DateHelper::DateHelper(DateHelper &&other):
-day{ std::move(other.day) },
-month{ std::move(other.month) },
-year{ std::move(other.year) }
+m_day{ std::move(other.m_day) },
+m_month{ std::move(other.m_month) },
+m_year{ std::move(other.m_year) }
 {
-    SetDate(day, month, year);
+    SetDate(m_day, m_month, m_year);
 }
 
 DateHelper::DateHelper(const std::string &textdate):
-day{0}, month{0}, year{0}
+m_day{0}, m_month{0}, m_year{0}
 {
     SetDate(textdate);
 }
 
 DateHelper::DateHelper(const DateHelper &other):
-day{other.day}, month{other.month}, year{other.year}
+m_day{other.m_day}, m_month{other.m_month}, m_year{other.m_year}
 {
 }
 
 DateHelper& DateHelper::operator=(const DateHelper &other){
-    this->day = other.day;
-    this->month = other.month;
-    this->year = other.year;
+    this->m_day = other.m_day;
+    this->m_month = other.m_month;
+    this->m_year = other.m_year;
     return (*this);
 }
 
 bool DateHelper::IsValidDate(const std::string &textdate) {
 
 #ifdef _WIN32
-    uint16 _day;
-    uint16 _month;
-    uint16 _year;
-    ConvertFromText(textdate, _day, _month, _year);
-    if (_day >= 1 && _day <= 30 && _month >= 1 && _month <= 12 && _year >= 1970 && _year <= 2080) { return true; }
+    unsigned short param_day;
+    unsigned short param_month;
+    unsigned short param_year;
+    ConvertFromText(textdate, param_day, param_month, param_year);
+    if (param_day >= 1 && param_day <= 30 && param_month >= 1 && param_month <= 12 && param_year >= 1970 && param_year <= 2080) { return true; }
     else { return false; }
 #else
     tm aux;
@@ -100,15 +94,15 @@ bool DateHelper::IsValidDate(const std::string &textdate) {
 
 }
 
-bool DateHelper::IsValidDate(const uint16 _day,
-                 const uint16 _month,
-                 const uint16 _year) {
+bool DateHelper::IsValidDate(const unsigned short param_day,
+                 const unsigned short param_month,
+                 const unsigned short param_year) {
 
 #ifdef _WIN32
-    if (_day >= 1 && _day <= 30 && _month >= 1 && _month <= 12 && _year >= 1970 && _year <= 2080) { return true; }
+    if (param_day >= 1 && param_day <= 30 && param_month >= 1 && param_month <= 12 && param_year >= 1970 && param_year <= 2080) { return true; }
     else { return false; }
 #else
-    std::string txtdate = ConvertFromNumbers(_day, _month, _year);
+    std::string txtdate = ConvertFromNumbers(param_day, param_month, param_year);
     tm aux;
     return strptime(txtdate.c_str(), "%d/%m/%Y", &aux);
 #endif
@@ -116,15 +110,15 @@ bool DateHelper::IsValidDate(const uint16 _day,
 }
 
 void DateHelper::ConvertFromText(const std::string &textdate,
-                                 uint16 &_day,
-                                 uint16 &_month,
-                                 uint16 &_year)
+                                 unsigned short &param_day,
+                                 unsigned short &param_month,
+                                 unsigned short &param_year)
 {
 
     if (textdate.size() < 10){
-        _day = 0;
-        _month = 0;
-        _year = 0;
+        param_day = 0;
+        param_month = 0;
+        param_year = 0;
         return; // no cake.
     }
 
@@ -136,20 +130,20 @@ void DateHelper::ConvertFromText(const std::string &textdate,
     strmonth = textdate.substr(3, 2);
     stryear = textdate.substr(6, 4);
 
-    _day = DecStrToUshort(strday);
-    _month = DecStrToUshort(strmonth);
-    _year = DecStrToUshort(stryear);
+    param_day = DecStrToUshort(strday);
+    param_month = DecStrToUshort(strmonth);
+    param_year = DecStrToUshort(stryear);
 
 }
 
-std::string DateHelper::ConvertFromNumbers(const uint16 _day,
-                                           const uint16 _month,
-                                           const uint16 _year)
+std::string DateHelper::ConvertFromNumbers(const unsigned short param_day,
+                                           const unsigned short param_month,
+                                           const unsigned short param_year)
 {
 
     char chdate[32];
     std::memset(chdate, 0x00, 32);
-    std::sprintf(chdate, "%02d/%02d/%04d", _day, _month, _year);
+	custom_sprintf_s(chdate, 32, "%02d/%02d/%04d", param_day, param_month, param_year);
     std::string ret {chdate};
     return ret;
 
@@ -162,50 +156,50 @@ bool DateHelper::SetDate(const std::string &textdate){
         return false;
     }
 
-    uint16 _d{0}, _m{0}, _y{0};
+    unsigned short _d{0}, _m{0}, _y{0};
     ConvertFromText(textdate, _d, _m, _y);
 
-    this->day = _d;
-    this->month = _m;
-    this->year = _y;
+    this->m_day = _d;
+    this->m_month = _m;
+    this->m_year = _y;
 
     return true;
 
 }
 
-bool DateHelper::SetDate(const uint16 _day,
-             const uint16 _month,
-             const uint16 _year) {
+bool DateHelper::SetDate(const unsigned short param_day,
+             const unsigned short param_month,
+             const unsigned short param_year) {
 
-    if (!IsValidDate(_day, _month, _year)){
+    if (!IsValidDate(param_day, param_month, param_year)){
         ClearDate();
         return false;
     }
 
-    this->day = _day;
-    this->month = _month;
-    this->year = _year;
+    this->m_day = param_day;
+    this->m_month = param_month;
+    this->m_year = param_year;
 
     return true;
 
 }
 
 std::string DateHelper::GetDateString() const {
-    return ConvertFromNumbers(day, month, year);
+    return ConvertFromNumbers(m_day, m_month, m_year);
 }
 
-void DateHelper::GetDateNumbers(uint16 &_day,
-                    uint16 &_month,
-                    uint16 &_year) const {
-    _day = day;
-    _month = month;
-    _year = year;
+void DateHelper::GetDateNumbers(unsigned short &param_day,
+                    unsigned short &param_month,
+                    unsigned short &param_year) const {
+    param_day = m_day;
+    param_month = m_month;
+    param_year = m_year;
 }
 
 void DateHelper::ClearDate(){
-    day = 0;
-    month = 0;
-    year = 0;
+	m_day = 0;
+    m_month = 0;
+	m_year = 0;
 }
 
 } // ns: boxutil

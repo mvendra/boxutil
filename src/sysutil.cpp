@@ -35,14 +35,14 @@ Platform GetPlatform(){
 }
 
 SysTime::SysTime():
-m_seconds{0}, m_minutes{0}, m_hours{0},
-m_monthday{0}, m_month{0}, m_year{0}
+m_box_seconds{0}, m_box_minutes{0}, m_box_hours{0},
+m_box_monthday{0}, m_box_month{0}, m_box_year{0}
 {
 }
 
 SysTime::SysTime(const SysTime &other):
-m_seconds{0}, m_minutes{0}, m_hours{0},
-m_monthday{0}, m_month{0}, m_year{0}
+m_box_seconds{0}, m_box_minutes{0}, m_box_hours{0},
+m_box_monthday{0}, m_box_month{0}, m_box_year{0}
 {
     Copy(other);
 }
@@ -52,8 +52,8 @@ SysTime::~SysTime(){
 }
 
 SysTime::SysTime(const SysTime &&other):
-m_seconds{0}, m_minutes{0}, m_hours{0},
-m_monthday{0}, m_month{0}, m_year{0}
+m_box_seconds{0}, m_box_minutes{0}, m_box_hours{0},
+m_box_monthday{0}, m_box_month{0}, m_box_year{0}
 {
     Copy(other);
 }
@@ -65,12 +65,12 @@ SysTime &SysTime::operator= (const SysTime &other){
 }
 
 bool SysTime::operator== (const SysTime &other){
-    if (this->m_seconds == other.m_seconds &&
-        this->m_minutes == other.m_minutes &&
-        this->m_hours == other.m_hours &&
-        this->m_monthday == other.m_monthday &&
-        this->m_month == other.m_month &&
-        this->m_year == other.m_year)
+    if (this->m_box_seconds == other.m_box_seconds &&
+        this->m_box_minutes == other.m_box_minutes &&
+        this->m_box_hours == other.m_box_hours &&
+        this->m_box_monthday == other.m_box_monthday &&
+        this->m_box_month == other.m_box_month &&
+        this->m_box_year == other.m_box_year)
     {
         return true;
     }
@@ -78,18 +78,18 @@ bool SysTime::operator== (const SysTime &other){
 }
 
 std::string SysTime::ToString(){
-    char8 chAux[22] = {0}; // sample: "19:48:31 - 01/12/2013"
-    std::sprintf(chAux, "%02d:%02d:%02d - %02d/%02d/%04d", m_hours, m_minutes, m_seconds, m_monthday, m_month, m_year);
+    char chAux[32] = {0}; // sample: "19:48:31 - 01/12/2013"
+	custom_sprintf_s(chAux, 32, "%02d:%02d:%02d - %02d/%02d/%04d", m_box_hours, m_box_minutes, m_box_seconds, m_box_monthday, m_box_month, m_box_year);
     return chAux;
 }
 
 void SysTime::Copy(const SysTime &other){
-    this->m_seconds = other.m_seconds;
-    this->m_minutes = other.m_minutes;
-    this->m_hours = other.m_hours;
-    this->m_monthday = other.m_monthday;
-    this->m_month = other.m_month;
-    this->m_year = other.m_year;
+    this->m_box_seconds = other.m_box_seconds;
+    this->m_box_minutes = other.m_box_minutes;
+    this->m_box_hours = other.m_box_hours;
+    this->m_box_monthday = other.m_box_monthday;
+    this->m_box_month = other.m_box_month;
+    this->m_box_year = other.m_box_year;
 }
 
 SysTime GetSystemTime(){
@@ -105,23 +105,23 @@ SysTime GetSystemTime(){
     gettimeofday(&tv, &tz);
     tm = localtime(&tv.tv_sec);
 
-    sysTime.m_seconds = tm->tm_sec;
-    sysTime.m_minutes = tm->tm_min;
-    sysTime.m_hours = tm->tm_hour;
-    sysTime.m_monthday = tm->tm_mday;
-    sysTime.m_month = tm->tm_mon+1;
-    sysTime.m_year = tm->tm_year%100;
+    sysTime.m_box_seconds = tm->tm_sec;
+    sysTime.m_box_minutes = tm->tm_min;
+    sysTime.m_box_hours = tm->tm_hour;
+    sysTime.m_box_monthday = tm->tm_mday;
+    sysTime.m_box_month = tm->tm_mon+1;
+    sysTime.m_box_year = tm->tm_box_year%100;
 
 #elif _WIN32
     SYSTEMTIME stSysTime;
     GetLocalTime(&stSysTime);
 
-    sysTime.m_seconds = stSysTime.wSecond;
-    sysTime.m_minutes = stSysTime.wMinute;
-    sysTime.m_hours = stSysTime.wHour;
-    sysTime.m_monthday = stSysTime.wDay;
-    sysTime.m_month = stSysTime.wMonth;
-    sysTime.m_year = stSysTime.wYear%100;
+    sysTime.m_box_seconds = stSysTime.wSecond;
+    sysTime.m_box_minutes = stSysTime.wMinute;
+    sysTime.m_box_hours = stSysTime.wHour;
+    sysTime.m_box_monthday = stSysTime.wDay;
+    sysTime.m_box_month = stSysTime.wMonth;
+    sysTime.m_box_year = stSysTime.wYear%100;
 
 #else
     #error "Not implemented for this platform."
@@ -131,6 +131,20 @@ SysTime GetSystemTime(){
 
 }
 
+#ifdef _WIN32
+bool FileExists(const std::string &strFileName) {
+
+	bool bRet = false;
+	FILE * fp = nullptr;
+	errno_t r = fopen_s(&fp, strFileName.c_str(), "r+");
+	if (r == 0) {
+		bRet = true;
+	}
+	fclose(fp);
+	return bRet;
+
+}
+#else
 bool FileExists(const std::string &strFileName){
 
     bool bRet = false;
@@ -142,10 +156,11 @@ bool FileExists(const std::string &strFileName){
     return bRet;
 
 }
+#endif
 
 bool FileDelete(const std::string &fn){
 #ifdef _WIN32
-    std::wstring stemp = std::wstring(fn.begin(), fn.end());
+    std::string stemp = std::string(fn.begin(), fn.end());
     BOOL r = DeleteFile(stemp.c_str());
     if (r == 0) {
         int v = GetLastError();
@@ -156,7 +171,7 @@ bool FileDelete(const std::string &fn){
 #endif
 }
 
-bool FileSize(const std::string &strFileName, uint32 &filesize){
+bool FileSize(const std::string &strFileName, unsigned int &filesize){
 
     std::ifstream file;
     file.open(strFileName.c_str());
@@ -179,9 +194,9 @@ bool GetFileContents(const std::string &strFileName, std::string &contents){
         return false;
     }
 
-    uint32 fs;
+    unsigned int fs;
     if (!FileSize(strFileName, fs)) return false;
-    ManagedBuffer<char8> mb { fs+1 };
+    ManagedBuffer<char> mb { fs+1 };
     std::memset(mb.buffer, 0x00, mb.length);
     file.read(mb.buffer, mb.length);
     contents = mb.buffer;
@@ -324,8 +339,8 @@ bool HasWritePermission(const std::string &strDirName){
 
 #ifdef _WIN32
 bool HasWritePermission(const std::string &strDirName){
-    #error "This function is unimplemented for Windows";
-    return false; // nag me not
+	EX_RAISE(ExceptionBase, "This function is unimplemented for Windows")
+    return false; // unimplemented on windows
 }
 #endif
 
@@ -364,10 +379,10 @@ bool GetAppWorkingDir(std::string &output){
         return false;
     }
 #elif _WIN32
-    ManagedBuffer<WCHAR> mb{2048};
+    ManagedBuffer<CHAR> mb{2048};
     memset(mb.buffer, 0x00, 2048);
     if (GetCurrentDirectory(2048, mb.buffer) > 0) {
-        output = CW2A(mb.buffer);
+        output = mb.buffer;
         return true;
     } else {
         return false;
@@ -390,13 +405,16 @@ std::string GetSysTmpDir() {
 
 std::string GetUserHomeFolder(){
 
-    pchar8 homedir;
+    char *homedir = nullptr;
 
 #if defined(_WIN64) || defined(_WIN32)
-    if ((homedir = getenv("USERPROFILE")) == NULL){
-        return "";
+	size_t sz{ 0 };
+	if (_dupenv_s(&homedir, &sz, "USERPROFILE") == 0 && homedir != nullptr){
+		std::string ret = homedir;
+		free(homedir);
+		return ret;
     } else {
-        return homedir;
+        return "";
     }
 #else 
     if ((homedir = getenv("HOME")) == NULL) {
@@ -409,11 +427,11 @@ std::string GetUserHomeFolder(){
 
 }
 
-void GetTimeStampString(pchar8 *pstrBuf){
+void GetTimeStampString(char **pstrBuf){
     SysTime sysTime = GetSystemTime();
-    *pstrBuf = static_cast<pchar8>(calloc(22, sizeof(char8)));
+    *pstrBuf = static_cast<char *>(calloc(22, sizeof(char)));
     std::string sysTimeStr = sysTime.ToString();
-    strncpy(*pstrBuf, sysTimeStr.c_str(), sysTimeStr.size());
+	custom_strncpy_s(*pstrBuf, 22, sysTimeStr.c_str(), sysTimeStr.size());
 }
 
 void GetTimeStampString(std::string &strTimestamp){

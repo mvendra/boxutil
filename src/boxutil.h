@@ -12,6 +12,5 @@
 #include "stringmanip.h"
 #include "strveccont.h"
 #include "sysutil.h"
-#include "types.h"
 
 #endif // __BOXUTIL_H__
