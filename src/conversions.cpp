@@ -15,7 +15,7 @@ std::string NumberToHexStr( T i, bool bAutoFill){
     bool flipsign = false;
     if (i < 0){
         flipsign = true;
-		i = std::fabs(i);
+        i = std::fabs(i);
     }
     if (bAutoFill)
         stream << std::setfill('0') << std::setw(std::fabs(i) > 0xFF ? 4 : 2) << std::hex << i;

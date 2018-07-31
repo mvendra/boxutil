@@ -25,9 +25,9 @@ DateHelper::DateHelper():m_day{0}, m_month{0}, m_year{0}{
     gettimeofday(&tv, &tz);
     tm = localtime(&tv.tv_sec);
 
-    this->day = tm->tm_mday;
-    this->month = tm->tm_mon+1;
-    this->year = tm->tm_year + 1900;
+    this->m_day = tm->tm_mday;
+    this->m_month = tm->tm_mon+1;
+    this->m_year = tm->tm_year + 1900;
 
 #elif _WIN32
 
@@ -143,7 +143,7 @@ std::string DateHelper::ConvertFromNumbers(const unsigned short param_day,
 
     char chdate[32];
     std::memset(chdate, 0x00, 32);
-	box_snprintf(chdate, 32, "%02d/%02d/%04d", param_day, param_month, param_year);
+    box_snprintf(chdate, 32, "%02d/%02d/%04d", param_day, param_month, param_year);
     std::string ret {chdate};
     return ret;
 
@@ -197,9 +197,9 @@ void DateHelper::GetDateNumbers(unsigned short &param_day,
 }
 
 void DateHelper::ClearDate(){
-	m_day = 0;
+    m_day = 0;
     m_month = 0;
-	m_year = 0;
+    m_year = 0;
 }
 
 } // ns: boxutil

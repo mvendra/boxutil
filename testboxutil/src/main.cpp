@@ -38,8 +38,8 @@ unsigned int test_bytearray(){
     testforecho::test_true(r, "ByteArray: Must have changed", bar2.EraseSection(0, 1));
     testforecho::test_eq(r, "ByteArray: Size must be 8", bar2.GetLength(), 8);
 
-	unsigned char p0 = 112;
-	unsigned char p1;
+    unsigned char p0 = 112;
+    unsigned char p1;
     bar2.Append(&p0, 1);
     testforecho::test_false(r, "ByeArray: Should not be able to get last byte", bar.GetByte(9, p1));
     testforecho::test_true(r, "ByeArray: Should be able to get last byte", bar2.GetByte(8, p1));
@@ -123,7 +123,7 @@ unsigned int test_stringmanip(){
     testforecho::test_eq(r, "StringManip: Should get next", boxutil::GetNext(strTeste), "c");
     testforecho::test_eq(r, "StringManip: Should get next", boxutil::GetNext(strTeste), "");
 
-	unsigned char p[1]; p[0] = 112;
+    unsigned char p[1]; p[0] = 112;
     testforecho::test_eq(r, "StringManip: Should convert from byte buffer to string", boxutil::TxtStrFromBuffer(p, 1), "p");
 
     p[0] = 0xaa;
@@ -266,7 +266,7 @@ unsigned int test_managedfile(){
     std::string strFilename = "./testfile.txt";
     testforecho::test_false(r, "ManagedFile: File should not pre-exist", boxutil::FileExists(strFilename));
     boxutil::SaveFileContents(strFilename, "one");
-	testforecho::test_true(r, "ManagedFile: File should exist now", boxutil::FileExists(strFilename));
+    testforecho::test_true(r, "ManagedFile: File should exist now", boxutil::FileExists(strFilename));
     std::string s;
     testforecho::test_true(r, "ManagedFile: File should be readable", boxutil::GetFileContents(strFilename, s));
     testforecho::test_eq(r, "ManagedFile: File content should match", s, "one");

@@ -79,7 +79,7 @@ bool SysTime::operator== (const SysTime &other){
 
 std::string SysTime::ToString(){
     char chAux[32] = {0}; // sample: "19:48:31 - 01/12/2013"
-	box_snprintf(chAux, 32, "%02d:%02d:%02d - %02d/%02d/%04d", m_box_hours, m_box_minutes, m_box_seconds, m_box_monthday, m_box_month, m_box_year);
+    box_snprintf(chAux, 32, "%02d:%02d:%02d - %02d/%02d/%04d", m_box_hours, m_box_minutes, m_box_seconds, m_box_monthday, m_box_month, m_box_year);
     return chAux;
 }
 
@@ -110,7 +110,7 @@ SysTime GetSystemTime(){
     sysTime.m_box_hours = tm->tm_hour;
     sysTime.m_box_monthday = tm->tm_mday;
     sysTime.m_box_month = tm->tm_mon+1;
-    sysTime.m_box_year = tm->tm_box_year%100;
+    sysTime.m_box_year = tm->tm_year%100;
 
 #elif _WIN32
     SYSTEMTIME stSysTime;
@@ -134,14 +134,14 @@ SysTime GetSystemTime(){
 #ifdef _WIN32
 bool FileExists(const std::string &strFileName) {
 
-	bool bRet = false;
-	FILE * fp = nullptr;
-	errno_t r = fopen_s(&fp, strFileName.c_str(), "r+");
-	if (r == 0) {
-		bRet = true;
-		fclose(fp);
-	}
-	return bRet;
+    bool bRet = false;
+    FILE * fp = nullptr;
+    errno_t r = fopen_s(&fp, strFileName.c_str(), "r+");
+    if (r == 0) {
+        bRet = true;
+        fclose(fp);
+    }
+    return bRet;
 
 }
 #else
@@ -339,7 +339,7 @@ bool HasWritePermission(const std::string &strDirName){
 
 #ifdef _WIN32
 bool HasWritePermission(const std::string &strDirName){
-	EX_RAISE(ExceptionBase, "This function is unimplemented for Windows")
+    EX_RAISE(ExceptionBase, "This function is unimplemented for Windows")
     return false; // unimplemented on windows
 }
 #endif
@@ -408,11 +408,11 @@ std::string GetUserHomeFolder(){
     char *homedir = nullptr;
 
 #if defined(_WIN64) || defined(_WIN32)
-	size_t sz{ 0 };
-	if (_dupenv_s(&homedir, &sz, "USERPROFILE") == 0 && homedir != nullptr){
-		std::string ret = homedir;
-		free(homedir);
-		return ret;
+    size_t sz{ 0 };
+    if (_dupenv_s(&homedir, &sz, "USERPROFILE") == 0 && homedir != nullptr){
+        std::string ret = homedir;
+        free(homedir);
+        return ret;
     } else {
         return "";
     }
@@ -431,7 +431,7 @@ void GetTimeStampString(char **pstrBuf){
     SysTime sysTime = GetSystemTime();
     *pstrBuf = static_cast<char *>(calloc(22, sizeof(char)));
     std::string sysTimeStr = sysTime.ToString();
-	custom_strncpy_s(*pstrBuf, 22, sysTimeStr.c_str(), sysTimeStr.size());
+    custom_strncpy_s(*pstrBuf, 22, sysTimeStr.c_str(), sysTimeStr.size());
 }
 
 void GetTimeStampString(std::string &strTimestamp){

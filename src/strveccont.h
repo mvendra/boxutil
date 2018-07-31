@@ -19,7 +19,7 @@ public:
     bool Get(const unsigned int index, std::string &output) const;
     void PopBack();
     void Pop(unsigned int index);
-	unsigned int Size() const;
+    unsigned int Size() const;
     void Clear();
     bool HasElement(const std::string &element) const;
     bool operator==(const StrVecCont &other);

@@ -95,8 +95,8 @@ bool ByteArray::EraseSection(const unsigned int offset, const unsigned int lengt
     unsigned int len_low = offset;
     unsigned int len_high = m_internallength-offset-length;
 
-	unsigned char *backup_low = static_cast<unsigned char*>(calloc(len_low, sizeof(unsigned char)));
-	unsigned char *backup_high = static_cast<unsigned char*>(calloc(len_high, sizeof(unsigned char)));
+    unsigned char *backup_low = static_cast<unsigned char*>(calloc(len_low, sizeof(unsigned char)));
+    unsigned char *backup_high = static_cast<unsigned char*>(calloc(len_high, sizeof(unsigned char)));
 
     memcpy(backup_low, m_internalcontents, len_low);
     memcpy(backup_high, m_internalcontents+m_internallength-len_high, len_high);
@@ -129,7 +129,7 @@ void ByteArray::CopyOther(const unsigned char * otherbuff, unsigned int otherbuf
 }
 
 unsigned int ByteArray::ExpandBy(unsigned int amount){
-	unsigned char *backupbuff = static_cast<unsigned char*>(calloc(m_internallength, sizeof(unsigned char)));
+    unsigned char *backupbuff = static_cast<unsigned char*>(calloc(m_internallength, sizeof(unsigned char)));
     memcpy(backupbuff, m_internalcontents, m_internallength);
     unsigned int backuplen = m_internallength;
     FlushInternalMem();

@@ -67,7 +67,7 @@ std::string HexStrFromBuffer(const unsigned char * pcbBuffer, const unsigned int
     std::string strRet;
     char chAux[3] = {0};
     for (unsigned int i = 0; i < iBuffSize; i++){
-		box_snprintf(chAux, 3, "%02X", pcbBuffer[i]);
+        box_snprintf(chAux, 3, "%02X", pcbBuffer[i]);
         strRet += chAux;
     }
     return strRet;
@@ -203,15 +203,15 @@ void HexDump(const std::vector<unsigned char> &_buffer){
 int custom_strncpy_s(char *dest, size_t dest_s, const char * src, size_t src_s){
 
 #if defined(_WIN64) || defined(_WIN32)
-	for (unsigned int i = 0; i < src_s; i++) {
-		if (i >= dest_s) {
-			return -1;
-		}
-		dest[i] = src[i];
-	}
+    for (unsigned int i = 0; i < src_s; i++) {
+        if (i >= dest_s) {
+            return -1;
+        }
+        dest[i] = src[i];
+    }
     return 0;
 #else
-    pchar8 r = std::strncpy(dest, src, src_s);
+    char *r = std::strncpy(dest, src, src_s);
     (void)r;
     (void)dest_s;
     return 0;

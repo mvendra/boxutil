@@ -12,7 +12,7 @@ namespace boxutil {
 Logger::Logger(const char *pszFilename):m_pszFilename(nullptr){
     size_t thesize = strlen(pszFilename);
     this->m_pszFilename = static_cast<char *>(calloc(thesize+1, sizeof(char)));
-	custom_strncpy_s(this->m_pszFilename, thesize + 1, pszFilename, thesize);
+    custom_strncpy_s(this->m_pszFilename, thesize + 1, pszFilename, thesize);
 }
 
 Logger::~Logger(){
@@ -54,28 +54,28 @@ void Logger::LogCustom(const char * pszId, const char * pszMessage){
     size_t extralen = 6;
     size_t total_len = idlen + msglen + tslen + extralen;
 
-	char * msgbuffer = static_cast<char *>(calloc(total_len+1,sizeof(char)));
+    char * msgbuffer = static_cast<char *>(calloc(total_len+1,sizeof(char)));
 
-	msgbuffer[0] = '[';
-	custom_strncpy_s(msgbuffer + 1, total_len + 1, pszId, idlen);
-	custom_strncpy_s(msgbuffer + (1 + idlen), total_len + 1, "] ", 2);
-	custom_strncpy_s(msgbuffer + (idlen + 3), total_len + 1, pszTSBuff, tslen);
-	custom_strncpy_s(msgbuffer + (3 + idlen + tslen), total_len + 1, ": ", 2);
-	custom_strncpy_s(msgbuffer + (idlen + 5 + tslen), total_len + 1, pszMessage, msglen);
-	custom_strncpy_s(msgbuffer + (idlen + 5 + msglen + tslen), total_len + 1, "\n", 1);
+    msgbuffer[0] = '[';
+    custom_strncpy_s(msgbuffer + 1, total_len + 1, pszId, idlen);
+    custom_strncpy_s(msgbuffer + (1 + idlen), total_len + 1, "] ", 2);
+    custom_strncpy_s(msgbuffer + (idlen + 3), total_len + 1, pszTSBuff, tslen);
+    custom_strncpy_s(msgbuffer + (3 + idlen + tslen), total_len + 1, ": ", 2);
+    custom_strncpy_s(msgbuffer + (idlen + 5 + tslen), total_len + 1, pszMessage, msglen);
+    custom_strncpy_s(msgbuffer + (idlen + 5 + msglen + tslen), total_len + 1, "\n", 1);
 
     Log(msgbuffer, total_len);
 
-	free(msgbuffer);
-	free(pszTSBuff);
+    free(msgbuffer);
+    free(pszTSBuff);
 
 }
 
 #ifdef _WIN32
 void Logger::Log(const char * pszMessage, unsigned int pszMsgLen){
 
-	FILE *fp = nullptr;
-	errno_t r = fopen_s(&fp, this->m_pszFilename, "a");
+    FILE *fp = nullptr;
+    errno_t r = fopen_s(&fp, this->m_pszFilename, "a");
     if (r == 0){
         fwrite(pszMessage, sizeof(char), pszMsgLen, fp);
         fclose(fp);
@@ -83,13 +83,13 @@ void Logger::Log(const char * pszMessage, unsigned int pszMsgLen){
 
 }
 #else
-void Logger::Log(const char * pszMessage, uint32 pszMsgLen) {
+void Logger::Log(const char * pszMessage, unsigned int pszMsgLen) {
 
-	FILE *fp = fopen(this->m_pszFilename, "a");
-	if (fp != nullptr) {
-		fwrite(pszMessage, sizeof(char8), pszMsgLen, fp);
-		fclose(fp);
-	}
+    FILE *fp = fopen(this->m_pszFilename, "a");
+    if (fp != nullptr) {
+        fwrite(pszMessage, sizeof(char), pszMsgLen, fp);
+        fclose(fp);
+    }
 
 }
 #endif

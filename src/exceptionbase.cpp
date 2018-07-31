@@ -48,7 +48,7 @@ void ExceptionBase::SetMsg(const char *newmsg){
     m_message = nullptr;
     unsigned int msglen = strlen(newmsg);
     m_message = static_cast<char *>(calloc(msglen+1, sizeof(char)));
-	custom_strncpy_s(m_message, msglen + 1, newmsg, msglen);
+    custom_strncpy_s(m_message, msglen + 1, newmsg, msglen);
 }
 
 void ExceptionBase::SetFunc(const char * newfunc){
@@ -56,7 +56,7 @@ void ExceptionBase::SetFunc(const char * newfunc){
     m_function = nullptr;
     unsigned int funclen = strlen(newfunc);
     m_function = static_cast<char *>(calloc(funclen+1, sizeof(char)));
-	custom_strncpy_s(m_function, funclen + 1, newfunc, funclen);
+    custom_strncpy_s(m_function, funclen + 1, newfunc, funclen);
 }
 
 void ExceptionBase::SetLine(unsigned int line){
