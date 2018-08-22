@@ -2,17 +2,12 @@
 #ifndef __BOXUTIL_EXCEPTIONBASE_H__
 #define __BOXUTIL_EXCEPTIONBASE_H__ 
 
-#ifdef _WIN32
-#define EX_RAISE(CLASS, MSG) throw CLASS(MSG, __FUNCSIG__, __LINE__);
-#else
-#define EX_RAISE(CLASS, MSG) throw CLASS(MSG, __PRETTY_FUNCTION__, __LINE__);
-#endif
+#include "traceutil.h"
 
+#define EX_RAISE(CLASS, MSG) throw CLASS(MSG, FUNCLINE);
 #define NOTREACHED EX_RAISE(ExceptionBase, "Should not get here")
 
 #include <stddef.h>
-
-#include "exceptionbase.h"
 
 namespace boxutil {
 
