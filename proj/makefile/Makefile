@@ -40,7 +40,6 @@ INTFLAGS = \
 	-fPIC \
 	-D_GLIBCXX_DEBUG \
 	-std=c++14
-POSTBUILD= touch
 endif
 
 ifeq ($(MODE),release)
@@ -53,7 +52,6 @@ INTFLAGS = \
 	-Werror \
 	-fPIC \
 	-std=c++14
-POSTBUILD= strip
 endif
 
 ifeq ($(ARCH),64)
@@ -82,7 +80,6 @@ compile:
 	$(foreach src,$(SRC),$(COMPILER) $(INCLUDES) $(CPPFLAGS) -c $(BASE_SRC)/$(src) -o $(BASE_OBJ_FULL)/$(notdir $(src:.cpp=.o));)
 
 link:
-	$(POSTBUILD) $(ALL_OBJS)
 	ar -rcs $(FULL_APP_NAME) $(ALL_OBJS)
 
 clean:
