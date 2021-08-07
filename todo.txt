@@ -8,4 +8,5 @@
 * get rid of all warnings
 * Boxutil::console with polymorphic-frontend (either stdin and out or a ingame rendered console)
 * time prettyprinting (given 90 seconds, return "1 minute 30 secs" and etc; including days, hours etc)
+* A generic tree template
 
