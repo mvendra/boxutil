@@ -12,5 +12,6 @@
 #include "stringmanip.h"
 #include "strveccont.h"
 #include "sysutil.h"
+#include "traceutil.h"
 
 #endif // __BOXUTIL_H__

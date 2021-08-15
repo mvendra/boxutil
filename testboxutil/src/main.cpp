@@ -32,11 +32,11 @@ unsigned int test_bytearray(){
     bar2 = bar;
 
     testforecho::test_eq(r, "ByteArray: Should match", bar.GetHexString(), bar2.GetHexString());
-    testforecho::test_eq(r, "ByeArray: Size must be 9", bar.GetLength(), 9);
-    testforecho::test_eq(r, "ByeArray: Size must not have changed", bar2.GetLength(), 9);
+    testforecho::test_eq(r, "ByeArray: Size must be 9", bar.GetLength(), static_cast<unsigned int>(9));
+    testforecho::test_eq(r, "ByeArray: Size must not have changed", bar2.GetLength(), static_cast<unsigned int>(9));
     testforecho::test_false(r, "ByteArray: Must not have changed", bar2.EraseSection(10, 1));
     testforecho::test_true(r, "ByteArray: Must have changed", bar2.EraseSection(0, 1));
-    testforecho::test_eq(r, "ByteArray: Size must be 8", bar2.GetLength(), 8);
+    testforecho::test_eq(r, "ByteArray: Size must be 8", bar2.GetLength(), static_cast<unsigned int>(8));
 
     unsigned char p0 = 112;
     unsigned char p1;
@@ -58,7 +58,7 @@ unsigned int test_bfl(){
     
     boxutil::StrVecCont svcTest;
     testforecho::test_true(r, "BuldFileList: Should be able to make file list", boxutil::BuildFileList("../../testprops/folder", "txt", svcTest));
-    testforecho::test_eq(r, "BuildFileList: Size should be 3", svcTest.Size(), 3);
+    testforecho::test_eq(r, "BuildFileList: Size should be 3", svcTest.Size(), static_cast<unsigned int>(3));
 
     testforecho::test_true(r, "BuildFileList: Should have element", (svcTest.HasElement("one.txt")));
     testforecho::test_true(r, "BuildFileList: Should have element", (svcTest.HasElement("two.txt")));
@@ -115,7 +115,7 @@ unsigned int test_stringmanip(){
     testforecho::test_true(r, "StringManip: extremes trim, should be able to extract mid", boxutil::GetStringMidByBoundingChars(strTeste, '*', strOut));
     testforecho::test_eq(r, "StringManip: extremes trim", strOut, "uuu");
 
-    testforecho::test_eq(r, "StringManip: Should count chars in string", boxutil::CountCharsInString("aaaaazaaaaaaza", 'z'), 2);
+    testforecho::test_eq(r, "StringManip: Should count chars in string", boxutil::CountCharsInString("aaaaazaaaaaaza", 'z'), static_cast<unsigned int>(2));
 
     strTeste = "a b c";
     testforecho::test_eq(r, "StringManip: Should get next", boxutil::GetNext(strTeste), "a");
@@ -242,7 +242,7 @@ unsigned int test_conversions(){
     testforecho::test_eq(r, "Conversions: Conversion from double to decstr should work", boxutil::DoubleToDecStr(500.32), "500.32");
 
     testforecho::test_eq(r, "Conversions: Conversion from hexstr to int should work", boxutil::HexStrToInt("-28"), -40);
-    testforecho::test_eq(r, "Conversions: Conversion from hexstr to uint should work", boxutil::HexStrToUint("15"), 21);
+    testforecho::test_eq(r, "Conversions: Conversion from hexstr to uint should work", boxutil::HexStrToUint("15"), static_cast<unsigned int>(21));
     testforecho::test_eq(r, "Conversions: Conversion from hexstr to short should work", boxutil::HexStrToShort("-FA"), -250);
     testforecho::test_eq(r, "Conversions: Conversion from hexstr to ushort should work", boxutil::HexStrToUshort("DC"), 220);
     testforecho::test_eq(r, "Conversions: Conversion from hexstr to float should work", boxutil::HexStrToFloat("A"), 10);
@@ -285,6 +285,13 @@ int main(int argc, char *argv[]){
     (void)argc; (void)argv;
 
     unsigned int r {0};
+
+    PRINT_BREAKPOINT
+    std::string test_string = "the-test-string";
+    PRINT_BREAKPOINT_STR(test_string.c_str())
+    int test_integer = 21;
+    PRINT_BREAKPOINT_INT(test_integer)
+    PRINT_BREAKPOINT_MSG("custom message: [%f]", 1.1f)
 
     r += test_timestamp();
     r += test_bytearray();

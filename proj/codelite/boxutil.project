@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="boxutil" InternalType="Console" Version="11000">
-  <VirtualDirectory Name="inc">
-    <File Name="../../src/logger.h"/>
-    <File Name="../../src/traceutil.h"/>
-    <File Name="../../src/sysutil.h"/>
-    <File Name="../../src/strveccont.h"/>
-    <File Name="../../src/stringmanip.h"/>
-    <File Name="../../src/managedfile.h"/>
-    <File Name="../../src/managedbuffer.h"/>
-    <File Name="../../src/exceptionbase.h"/>
-    <File Name="../../src/datehelper.h"/>
-    <File Name="../../src/conversions.h"/>
-    <File Name="../../src/bytearray.h"/>
-    <File Name="../../src/boxutil.h"/>
-  </VirtualDirectory>
   <Plugins>
     <Plugin Name="qmake">
       <![CDATA[00040001N0005Debug0000000000000001N0012Debug (LLVM)0000000000000001N0007Release0000000000000001N0014Release (LLVM)000000000000]]>
@@ -58,6 +44,20 @@
  }]]]>
     </Plugin>
   </Plugins>
+  <VirtualDirectory Name="inc">
+    <File Name="../../src/logger.h"/>
+    <File Name="../../src/traceutil.h"/>
+    <File Name="../../src/sysutil.h"/>
+    <File Name="../../src/strveccont.h"/>
+    <File Name="../../src/stringmanip.h"/>
+    <File Name="../../src/managedfile.h"/>
+    <File Name="../../src/managedbuffer.h"/>
+    <File Name="../../src/exceptionbase.h"/>
+    <File Name="../../src/datehelper.h"/>
+    <File Name="../../src/conversions.h"/>
+    <File Name="../../src/bytearray.h"/>
+    <File Name="../../src/boxutil.h"/>
+  </VirtualDirectory>
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
@@ -123,7 +123,7 @@
         <SearchPaths/>
       </Completion>
     </Configuration>
-    <Configuration Name="Debug (LLVM)" CompilerType="" DebuggerType="LLDB Debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Debug (LLVM)" CompilerType="CLANG-11" DebuggerType="" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;-O0;-pedantic;-W;-std=c++14;-Wall;-Wextra;-Weffc++;-Werror;-fPIC" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="../../src"/>
       </Compiler>
@@ -202,7 +202,7 @@
         <SearchPaths/>
       </Completion>
     </Configuration>
-    <Configuration Name="Release (LLVM)" CompilerType="" DebuggerType="LLDB Debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Release (LLVM)" CompilerType="CLANG-11" DebuggerType="" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-O2;-pedantic;-W;-std=c++14;-Wall;-Wextra;-Weffc++;-Werror;-fPIC" C_Options="-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="../../src"/>
         <Preprocessor Value="NDEBUG"/>
