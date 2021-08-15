@@ -15,6 +15,9 @@ namespace boxutil {
 
 int custom_strncpy_s(char *dest, size_t dest_s, const char *src, size_t src_s);
 
+template<typename T>
+void Split(const std::string &s, char delim, T result);
+std::vector<std::string> Split(const std::string &s, char delim);
 std::string GetNext(std::string &source, const std::string &delim = " ");
 unsigned int CountCharsInString(const std::string &strTarget, char chChar);
 bool GetStringMidByBoundingChars(const std::string &strTarget, char chBound, std::string &strOutput);

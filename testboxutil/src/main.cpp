@@ -156,6 +156,21 @@ unsigned int test_stringmanip(){
     testforecho::test_eq(r, "StringManip: Should not change anything", boxutil::PopSurroundingChar("test-string}", '{', ']'), "test-string}");
     testforecho::test_eq(r, "StringManip: Should not change anything", boxutil::PopSurroundingChar("", '{', '}'), "");
 
+    {
+        std::vector<std::string> result = boxutil::Split("a|b|c", '|');
+        testforecho::test_eq(r, "StringManip: Split result's size shoud match", result.size(), static_cast<unsigned int>(3));
+        testforecho::test_eq(r, "StringManip: Partial split result shoud match", result[0], "a");
+        testforecho::test_eq(r, "StringManip: Partial split result shoud match", result[1], "b");
+        testforecho::test_eq(r, "StringManip: Partial split result shoud match", result[2], "c");
+    }
+
+    {
+        std::vector<std::string> result = boxutil::Split("one|two%three", '%');
+        testforecho::test_eq(r, "StringManip: Split result's size shoud match", result.size(), static_cast<unsigned int>(2));
+        testforecho::test_eq(r, "StringManip: Partial split result shoud match", result[0], "one|two");
+        testforecho::test_eq(r, "StringManip: Partial split result shoud match", result[1], "three");
+    }
+
     return r;
 
 }
