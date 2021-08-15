@@ -25,10 +25,10 @@ namespace boxutil {
 Platform GetPlatform(){
     #ifdef __linux__
         return Platform::Linux;
-    #elif _WIN32
-        return Platform::Win32;
     #elif _WIN64
         return Platform::Win64;
+    #elif _WIN32
+        return Platform::Win32;
     #else
         #error "Unsupported Platform"
     #endif
