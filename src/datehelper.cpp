@@ -14,6 +14,23 @@
 
 namespace boxutil {
 
+static int CompareTwo(const int num_l, const int num_r) {
+
+    // returns codes:
+    // -1: num_l is greater
+    //  0: equals
+    //  1: num_r is greater
+
+    if (num_l > num_r){
+        return -1;
+    } else if (num_l < num_r){
+        return 1;
+    }
+
+    return 0;
+
+}
+
 DateHelper::DateHelper():m_day{0}, m_month{0}, m_year{0}{
 
 #ifdef __linux__
@@ -200,6 +217,61 @@ void DateHelper::ClearDate(){
     m_day = 0;
     m_month = 0;
     m_year = 0;
+}
+
+bool DateHelper::operator == (const DateHelper &other) const {
+    int r = CompareTo(other);
+    if (r == 0) return true;
+    return false;
+}
+
+bool DateHelper::operator >= (const DateHelper &other) const {
+    int r = CompareTo(other);
+    if (r == 0 || r == -1) return true;
+    return false;
+}
+
+bool DateHelper::operator <= (const DateHelper &other) const {
+    int r = CompareTo(other);
+    if (r == 0 || r == 1) return true;
+    return false;
+}
+
+bool DateHelper::operator > (const DateHelper &other) const {
+    int r = CompareTo(other);
+    if (r == -1) return true;
+    return false;
+}
+
+bool DateHelper::operator < (const DateHelper &other) const {
+    int r = CompareTo(other);
+    if (r == 1) return true;
+    return false;
+}
+
+int DateHelper::CompareTo(const DateHelper &_other) const{
+
+    // return codes:
+    // -1: left (this) is greater (more recent)
+    //  0: equals
+    //  1: right (other) is greater (more recent)
+
+    int r{0};
+
+    // years
+    r = CompareTwo(m_year, _other.m_year);
+    if (r != 0) return r;
+
+    // months
+    r = CompareTwo(m_month, _other.m_month);
+    if (r != 0) return r;
+
+    // days
+    r = CompareTwo(m_day, _other.m_day);
+    if (r != 0) return r;
+
+    return 0;
+
 }
 
 } // ns: boxutil

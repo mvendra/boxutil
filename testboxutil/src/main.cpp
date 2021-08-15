@@ -241,6 +241,90 @@ unsigned int test_datehelper(){
         testforecho::test_eq(r, "Datehelper: Should match by the copy constructor", dh2.GetDateString(), dh3.GetDateString());
     }
 
+    {
+        boxutil::DateHelper dh1{"01/01/2004"};
+        boxutil::DateHelper dh2{"01/01/2004"};
+        testforecho::test_true(r, "Datehelper: Dates should be equal", (dh1 == dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"01/01/2004"};
+        boxutil::DateHelper dh2{"02/01/2004"};
+        testforecho::test_false(r, "Datehelper: Dates should not be equal", (dh1 == dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"01/01/2004"};
+        boxutil::DateHelper dh2{"01/01/2004"};
+        testforecho::test_true(r, "Datehelper: First date should be equal-or-greater", (dh1 >= dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"01/01/2005"};
+        boxutil::DateHelper dh2{"01/01/2004"};
+        testforecho::test_true(r, "Datehelper: First date should be equal-or-greater", (dh1 >= dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"01/01/2003"};
+        boxutil::DateHelper dh2{"01/01/2004"};
+        testforecho::test_false(r, "Datehelper: First date should not be equal-or-greater", (dh1 >= dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"01/01/2004"};
+        boxutil::DateHelper dh2{"01/01/2004"};
+        testforecho::test_true(r, "Datehelper: First date should be equal-or-lesser", (dh1 <= dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"01/01/2001"};
+        boxutil::DateHelper dh2{"01/01/2004"};
+        testforecho::test_true(r, "Datehelper: First date should be equal-or-lesser", (dh1 <= dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"01/02/2004"};
+        boxutil::DateHelper dh2{"01/01/2004"};
+        testforecho::test_false(r, "Datehelper: First date should not be equal-or-lesser", (dh1 <= dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"05/06/2007"};
+        boxutil::DateHelper dh2{"05/06/2007"};
+        testforecho::test_false(r, "Datehelper: First date should not be greater", (dh1 > dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"05/07/2007"};
+        boxutil::DateHelper dh2{"05/06/2007"};
+        testforecho::test_true(r, "Datehelper: First date should be greater", (dh1 > dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"05/06/1997"};
+        boxutil::DateHelper dh2{"05/06/2007"};
+        testforecho::test_false(r, "Datehelper: First date should not be greater", (dh1 > dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"05/06/2007"};
+        boxutil::DateHelper dh2{"05/06/2007"};
+        testforecho::test_false(r, "Datehelper: First date should not be lesser", (dh1 < dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"05/05/2007"};
+        boxutil::DateHelper dh2{"05/06/2007"};
+        testforecho::test_true(r, "Datehelper: First date should be lesser", (dh1 < dh2) );
+    }
+
+    {
+        boxutil::DateHelper dh1{"05/06/2007"};
+        boxutil::DateHelper dh2{"05/06/1997"};
+        testforecho::test_false(r, "Datehelper: First date should not be lesser", (dh1 < dh2) );
+    }
+
     return r;
 
 }

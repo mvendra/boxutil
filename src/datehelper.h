@@ -54,7 +54,15 @@ public:
 
     void ClearDate();
 
+    bool operator == (const DateHelper &other) const;
+    bool operator >= (const DateHelper &other) const;
+    bool operator <= (const DateHelper &other) const;
+    bool operator > (const DateHelper &other) const;
+    bool operator < (const DateHelper &other) const;
+
 private:
+
+    int CompareTo(const DateHelper &_other) const;
 
     unsigned short m_day;
     unsigned short m_month;
