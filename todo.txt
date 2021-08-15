@@ -9,4 +9,9 @@
 * Boxutil::console with polymorphic-frontend (either stdin and out or a ingame rendered console)
 * time prettyprinting (given 90 seconds, return "1 minute 30 secs" and etc; including days, hours etc)
 * A generic tree template
-
+* Message passing architecture for boxutil? Very minimal. Easy to test and mock too. Similar to "Rte"
+* timermanager for boxutil (callback-based)
+* clipboard caps for boxutil
+* Create skip_warning macro for boxutil
+* improve (greatly) unit test coverage on boxutil
+* Add instrumentation caps for boxutil

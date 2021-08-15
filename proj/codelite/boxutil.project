@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CodeLite_Project Name="boxutil" InternalType="Console" Version="10.0.0">
+<CodeLite_Project Name="boxutil" InternalType="Console" Version="11000">
+  <VirtualDirectory Name="inc">
+    <File Name="../../src/logger.h"/>
+    <File Name="../../src/traceutil.h"/>
+    <File Name="../../src/sysutil.h"/>
+    <File Name="../../src/strveccont.h"/>
+    <File Name="../../src/stringmanip.h"/>
+    <File Name="../../src/managedfile.h"/>
+    <File Name="../../src/managedbuffer.h"/>
+    <File Name="../../src/exceptionbase.h"/>
+    <File Name="../../src/datehelper.h"/>
+    <File Name="../../src/conversions.h"/>
+    <File Name="../../src/bytearray.h"/>
+    <File Name="../../src/boxutil.h"/>
+  </VirtualDirectory>
   <Plugins>
     <Plugin Name="qmake">
       <![CDATA[00040001N0005Debug0000000000000001N0012Debug (LLVM)0000000000000001N0007Release0000000000000001N0014Release (LLVM)000000000000]]>
@@ -47,26 +61,14 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="../../src/traceutil.h"/>
-    <File Name="../../src/managedfile.h"/>
-    <File Name="../../src/datehelper.h"/>
     <File Name="../../src/datehelper.cpp"/>
-    <File Name="../../src/managedbuffer.h"/>
-    <File Name="../../src/conversions.h"/>
     <File Name="../../src/conversions.cpp"/>
-    <File Name="../../src/sysutil.h"/>
     <File Name="../../src/sysutil.cpp"/>
-    <File Name="../../src/strveccont.h"/>
     <File Name="../../src/strveccont.cpp"/>
-    <File Name="../../src/stringmanip.h"/>
     <File Name="../../src/stringmanip.cpp"/>
-    <File Name="../../src/logger.h"/>
     <File Name="../../src/logger.cpp"/>
-    <File Name="../../src/exceptionbase.h"/>
     <File Name="../../src/exceptionbase.cpp"/>
-    <File Name="../../src/bytearray.h"/>
     <File Name="../../src/bytearray.cpp"/>
-    <File Name="../../src/boxutil.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Debug (LLVM)"/>

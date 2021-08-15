@@ -10,4 +10,5 @@ proj/codelite/testboxutil.txt
 /proj/msvc15/.vs
 /proj/msvc15/testboxutil.VC.db
 /proj/msvc15/testboxutil.vcxproj.user
+/proj/codelite/compile_flags.txt
 
