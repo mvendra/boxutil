@@ -14,4 +14,5 @@
 * clipboard caps for boxutil
 * Create skip_warning macro for boxutil
 * improve (greatly) unit test coverage on boxutil
-* Add instrumentation caps for boxutil
+* improve instrumentation caps for boxutil
+* add support for cygwin (on GetPlatform() and across the library whereever that is itself used too)
