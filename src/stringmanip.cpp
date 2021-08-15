@@ -74,6 +74,25 @@ std::string HexStrFromBuffer(const unsigned char * pcbBuffer, const unsigned int
 
 }
 
+std::string PopSurroundingChar(const std::string &strSource, const char leftChar, const char rightChar){
+    if (strSource.size() < 2){
+        return "";
+    }
+    size_t q1 = strSource.find(leftChar);
+    if (q1 == std::string::npos){
+        q1 = 0;
+    } else {
+        q1++;
+    }
+    size_t q2 = strSource.find(rightChar, q1+1);
+    if (q2 == std::string::npos){
+        q2 = strSource.size() - q1;
+    } else {
+        q2 -= q1;
+    }
+    return strSource.substr(q1, q2);
+}
+
 std::string PopExtension(const std::string &strFilename){
 
     size_t dotpos = strFilename.rfind(".");

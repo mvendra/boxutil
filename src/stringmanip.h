@@ -21,6 +21,7 @@ bool GetStringMidByBoundingChars(const std::string &strTarget, char chBound, std
 std::string TxtStrFromBuffer(const unsigned char * pcbBuffer, const unsigned int iBuffSize);
 std::string HexStrFromBuffer(const unsigned char * pcbBuffer, const unsigned int iBuffSize);
 
+std::string PopSurroundingChar(const std::string &strSource, const char leftChar, const char rightChar);
 std::string PopExtension(const std::string &strFilename);
 std::string GetExtension(const std::string &strFilename);
 

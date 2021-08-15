@@ -149,6 +149,13 @@ unsigned int test_stringmanip(){
     testforecho::test_eq(r, "StringManip: Should left-trim", boxutil::LTrim("   abc"), "abc");
     testforecho::test_eq(r, "StringManip: Should trim", boxutil::Trim("   abc   "), "abc");
 
+    testforecho::test_eq(r, "StringManip: Should pop surrounding curly brackets", boxutil::PopSurroundingChar("{test-string}", '{', '}'), "test-string");
+    testforecho::test_eq(r, "StringManip: Should pop surrounding bracket", boxutil::PopSurroundingChar("[test-string", '[', '}'), "test-string");
+    testforecho::test_eq(r, "StringManip: Should not change anything", boxutil::PopSurroundingChar("test-string", '[', '}'), "test-string");
+    testforecho::test_eq(r, "StringManip: Should pop surrounding curly bracket", boxutil::PopSurroundingChar("test-string}", '{', '}'), "test-string");
+    testforecho::test_eq(r, "StringManip: Should not change anything", boxutil::PopSurroundingChar("test-string}", '{', ']'), "test-string}");
+    testforecho::test_eq(r, "StringManip: Should not change anything", boxutil::PopSurroundingChar("", '{', '}'), "");
+
     return r;
 
 }
