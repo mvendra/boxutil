@@ -45,6 +45,7 @@
     </Plugin>
   </Plugins>
   <VirtualDirectory Name="inc">
+    <File Name="../../src/optional.h"/>
     <File Name="../../src/logger.h"/>
     <File Name="../../src/traceutil.h"/>
     <File Name="../../src/sysutil.h"/>

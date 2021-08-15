@@ -280,6 +280,31 @@ unsigned int test_managedfile(){
 
 }
 
+unsigned int test_optional(){
+
+    unsigned int r {0};
+
+    {
+        boxutil::Optional<int> test;
+        testforecho::test_false(r, "Optional: value should not have been set", test.IsSet());
+    }
+
+    {
+        boxutil::Optional<int> test;
+        test.SetValue(21);
+        testforecho::test_true(r, "Optional: value should have been set", test.IsSet());
+    }
+
+    {
+        boxutil::Optional<int> test;
+        test.SetValue(21);
+        testforecho::test_eq(r, "Optional: values should be equal", test.GetValue(), 21);
+    }
+
+    return r;
+
+}
+
 int main(int argc, char *argv[]){
 
     (void)argc; (void)argv;
@@ -297,11 +322,12 @@ int main(int argc, char *argv[]){
     r += test_bytearray();
     r += test_bfl();
     r += test_strveccont();
+    r += test_logger();
+    r += test_stringmanip();
     r += test_datehelper();
     r += test_conversions();
-    r += test_stringmanip();
     r += test_managedfile();
-    r += test_logger();
+    r += test_optional();
 
     if (r > 0){
         std::cout << r << " tests failed." << std::endl;

@@ -13,5 +13,6 @@
 #include "strveccont.h"
 #include "sysutil.h"
 #include "traceutil.h"
+#include "optional.h"
 
 #endif // __BOXUTIL_H__
