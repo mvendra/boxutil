@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
+#include <iterator>
 #include <cstring>
 #include <sstream>
 #include <cstdarg>
