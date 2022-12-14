@@ -1,3 +1,0 @@
-[submodule "testboxutil/lib/testforecho"]
-	path = testboxutil/lib/testforecho
-	url = https://github.com/mvendra/testforecho.git

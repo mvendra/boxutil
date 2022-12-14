@@ -5,6 +5,8 @@
 build
 run
 
+testboxutil/lib/
+
 proj/codelite/boxutil.mk
 proj/codelite/boxutil.txt
 
